@@ -22,9 +22,9 @@ public class ToDoController(ToDoService service) : ControllerBase {
         );
 
         return CreatedAtAction(
-            nameof(GetById),
-            new { id = todo.Id },
-            ToDoMappers.AsDetails(todo)
+            nameof(GetById), 
+            new { id = todo.Id }, 
+            todo.AsDetails()
         );
     }
 
@@ -35,7 +35,7 @@ public class ToDoController(ToDoService service) : ControllerBase {
 
         if (todo is null) return NotFound();
 
-        return Ok(ToDoMappers.AsDetails(todo));
+        return Ok(todo.AsDetails());
     }
 
     [HttpGet]
@@ -44,10 +44,10 @@ public class ToDoController(ToDoService service) : ControllerBase {
         var todos = await service.GetAllAsync(
             query.IsPriority,
             query.IsCompleted,
-            ToDoMappers.AsSortBy(query.SortBy)
+            query.SortBy.AsSortBy()
         );
 
-        return Ok(ToDoMappers.AsItemList(todos));
+        return Ok(todos.AsItemList());
     }
 
     [HttpPut("{id}/description")]
@@ -60,7 +60,7 @@ public class ToDoController(ToDoService service) : ControllerBase {
         var todo = await service.UpdateDescriptionAsync(id, command.Value);
         if (todo is null) return NotFound();
 
-        return Ok(ToDoMappers.AsDetails(todo));
+        return Ok(todo.AsDetails());
     }
 
     [HttpPut("{id}/due-date")]
@@ -73,7 +73,7 @@ public class ToDoController(ToDoService service) : ControllerBase {
         var todo = await service.UpdateDueDateAsync(id, command.Value);
         if (todo is null) return NotFound();
 
-        return Ok(ToDoMappers.AsDetails(todo));
+        return Ok(todo.AsDetails());
     }
 
     [HttpPatch("{id}/toggle-priority")]
