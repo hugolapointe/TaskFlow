@@ -19,7 +19,7 @@ public record ToDoDetails(
 );
 
 public record ToDoItemList(
-  IEnumerable<ToDoItem> Items,
+    IEnumerable<ToDoItem> Items,
     int TotalCount,
     int CompletedCount
 );

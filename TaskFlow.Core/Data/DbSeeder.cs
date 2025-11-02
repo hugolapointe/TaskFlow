@@ -11,6 +11,7 @@ public static class DbSeeder {
         bool isCompleted = false,
         bool isArchived = false,
         int? dueDaysOffset = null) {
+
         return new(description) {
             CreatedAt = DateTime.UtcNow.AddDays(daysOffset),
             DueDate = dueDaysOffset.HasValue ? DateTime.UtcNow.AddDays(dueDaysOffset.Value) : null,
@@ -21,84 +22,18 @@ public static class DbSeeder {
     }
 
     private static IEnumerable<ToDo> InitialTodos => [
-        // Daily priority tasks
-        CreateTodo(
-            description: "Walk the dog",
-            daysOffset: 0,
-            dueDaysOffset: 0,
-            isPriority: true
-        ),
-        CreateTodo(
-            description: "Take medication",
-            daysOffset: 0,
-            dueDaysOffset: 0,
-            isPriority: true
-        ),
-        CreateTodo(
-            description: "Pick up kids from school",
-            daysOffset: 0,
-            dueDaysOffset: 0,
-            isPriority: true
-        ),
-
-        // Regular household tasks
-        CreateTodo(
-            description: "Do the laundry",
-            daysOffset: -1,
-            dueDaysOffset: 1
-        ),
-        CreateTodo(
-            description: "Clean the bathroom",
-            daysOffset: -2,
-            dueDaysOffset: 2
-        ),
-        CreateTodo(
-            description: "Water the plants",
-            daysOffset: -1
-        ),
-
-        // Urgent tasks
-        CreateTodo(
-            description: "Pay electricity bill",
-            daysOffset: -3,
-            dueDaysOffset: 1,
-            isPriority: true
-        ),
-        CreateTodo(
-            description: "Buy groceries",
-            daysOffset: -1,
-            dueDaysOffset: 0,
-            isPriority: true
-        ),
-
-        // Completed tasks
-        CreateTodo(
-            description: "Take out the trash",
-            daysOffset: -1,
-            isPriority: true,
-            isCompleted: true
-        ),
-        CreateTodo(
-            description: "Make the bed",
-            daysOffset: 0,
-            isCompleted: true
-        ),
-
-        // Archived tasks
-        CreateTodo(
-            description: "Shovel the snow",
-            daysOffset: -10,
-            isCompleted: true,
-            isArchived: true
-        ),
-
-        // Future tasks
-        CreateTodo(
-            description: "Schedule dentist appointment",
-            daysOffset: -1,
-            dueDaysOffset: 5,
-            isPriority: true
-        )
+        CreateTodo("Promener le chien", 0, true, false, false, 0),
+        CreateTodo("Prendre les médicaments", 0, true, false, false, 0),
+        CreateTodo("Aller chercher les enfants à l'école", 0, true, false, false, 0),
+        CreateTodo("Faire la lessive", -1, false, false, false, 1),
+        CreateTodo("Nettoyer la salle de bain", -2, false, false, false, 2),
+        CreateTodo("Arroser les plantes", -1),
+        CreateTodo("Payer la facture d'électricité", -3, true, false, false, 1),
+        CreateTodo("Faire l'épicerie", -1, true, false, false, 0),
+        CreateTodo("Sortir les poubelles", -1, true, true),
+        CreateTodo("Faire le lit", 0, false, true),
+        CreateTodo("Pelleter la neige", -10, false, true, true),
+        CreateTodo("Prendre rendez-vous chez le dentiste", -1, true, false, false, 5)
     ];
 
     public static async Task SeedAsync(TaskFlowDbContext context) {

@@ -4,7 +4,7 @@ namespace TaskFlow.WebAPI.Models.ToDo;
 
 public record CreateToDo(
     [Required]
-    [StringLength(200)]
+    [StringLength(200, MinimumLength = 3)]
     string Description,
 
     DateTime? DueDate = null,
@@ -12,9 +12,10 @@ public record CreateToDo(
 );
 
 public static class UpdateToDo {
+
     public record Description(
         [Required]
-        [StringLength(200)]
+        [StringLength(200, MinimumLength = 3)]
         string Value
     );
 

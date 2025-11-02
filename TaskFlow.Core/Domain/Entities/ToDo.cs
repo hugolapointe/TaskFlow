@@ -10,14 +10,16 @@ public class ToDo {
     public string Description { get; set; } = string.Empty;
     public DateTime? DueDate { get; set; }
 
+    // Status fields
     public bool IsPriority { get; set; }
     public bool IsCompleted { get; set; }
     public bool IsArchived { get; set; }
 
+    // Audit fields
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
-    // Needed by EF Core
+    // EF Core requires a parameterless constructor
     private ToDo() { }
 
     public ToDo(string description) {
