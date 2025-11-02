@@ -13,24 +13,18 @@ public class ToDoRepository(TaskFlowDbContext context) {
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsArchived);
     }
 
-    public async Task<(IEnumerable<ToDo> Items, int TotalCount)> GetAllAsync(
+    public async Task<IEnumerable<ToDo>> GetAllAsync(
         bool? isPriority = null,
         bool? isCompleted = null,
-        ToDoSortBy? sortBy = ToDoSortBy.CreatedAt,
-        int skip = 0,
-        int take = 10) {
+        ToDoSortBy? sortBy = ToDoSortBy.CreatedAt) {
 
         var query = context.ToDos.AsNoTracking()
             .Where(todo => !todo.IsArchived);
 
         query = ApplyFilters(query, isPriority, isCompleted);
-
-        var totalCount = await query.CountAsync();
-
         query = ApplySorting(query, sortBy!.Value);
-        var items = await query.Skip(skip).Take(take).ToListAsync();
 
-        return (items, totalCount);
+        return await query.ToListAsync();
     }
 
     private static IQueryable<ToDo> ApplyFilters(

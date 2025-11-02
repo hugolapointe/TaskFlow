@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Core.Domain.Repositories;
 using TaskFlow.Core.Domain.Services;
 using TaskFlow.WebAPI.Mappers;
-using TaskFlow.WebAPI.Models.Common;
 using TaskFlow.WebAPI.Models.ToDo;
 
 namespace TaskFlow.WebAPI.Controllers;
@@ -45,18 +44,16 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
     }
 
     [HttpGet]
-    public async Task<ActionResult<PagedResponse<ToDoItem>>> GetAll(
+    public async Task<ActionResult<ToDoItemList>> GetAll(
         [FromQuery] ToDoQuery query) {
 
-        var (items, totalCount) = await repository.GetAllAsync(
+        var items = await repository.GetAllAsync(
             query.IsPriority,
             query.IsCompleted,
-            query.SortBy.AsSortBy(),
-            query.Skip,
-            query.Take
+            query.SortBy.AsSortBy()
         );
 
-        var response = items.AsPagedResponse(query.Page, query.PageSize, totalCount);
+        var response = items.AsItemList();
         return Ok(response);
     }
 
