@@ -1,0 +1,21 @@
+.container {
+  text-align: center;
+  padding: var(--spacing-2xl) 0;
+}
+
+.icon {
+  margin: 0 auto;
+  height: 3rem;
+  width: 3rem;
+  color: var(--color-gray-600);
+}
+
+.title {
+  color: var(--color-text-muted);
+  margin-top: var(--spacing-sm);
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--color-gray-500);
+}

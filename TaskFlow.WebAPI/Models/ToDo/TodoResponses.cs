@@ -23,3 +23,10 @@ public record ToDoItemList(
     int TotalCount,
     int CompletedCount
 );
+
+public record ToDoStats(
+    int Total,
+    int Priority,
+    int NonPriority,
+    int Completed
+);
