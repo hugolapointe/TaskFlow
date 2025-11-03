@@ -27,6 +27,18 @@ public class ToDoRepository(TaskFlowDbContext context) {
         return await query.ToListAsync();
     }
 
+    public async Task<(int Total, int Priority, int NonPriority, int Completed)> GetStatsAsync() {
+        var activeQuery = context.ToDos.AsNoTracking()
+            .Where(todo => !todo.IsArchived);
+
+        var total = await activeQuery.CountAsync();
+        var completed = await activeQuery.CountAsync(t => t.IsCompleted);
+        var priority = await activeQuery.CountAsync(t => t.IsPriority && !t.IsCompleted);
+        var nonPriority = await activeQuery.CountAsync(t => !t.IsPriority && !t.IsCompleted);
+
+        return (total, priority, nonPriority, completed);
+    }
+
     private static IQueryable<ToDo> ApplyFilters(
         IQueryable<ToDo> query,
         bool? isPriority,

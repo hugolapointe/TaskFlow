@@ -57,6 +57,20 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
         return Ok(response);
     }
 
+    [HttpGet("stats")]
+    public async Task<ActionResult<ToDoStats>> GetStats() {
+        var (total, priority, nonPriority, completed) = await repository.GetStatsAsync();
+    
+        var stats = new ToDoStats(
+            Total: total,
+            Priority: priority,
+            NonPriority: nonPriority,
+            Completed: completed
+        );
+
+        return Ok(stats);
+    }
+
     [HttpPut("{id}/description")]
     public async Task<ActionResult<ToDoDetails>> UpdateDescription(
         int id, [FromBody] UpdateToDo.Description command) {
@@ -113,7 +127,7 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
         return Ok(todo.AsDetails());
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}/archive")]
     public async Task<IActionResult> Archive(int id) {
         var success = await service.ArchiveAsync(id);
 

@@ -1,12 +1,12 @@
 import { useTodos } from '../contexts/TodoContext';
 
 const TodoItem = ({ todo }) => {
-  const { selectTodo, toggleComplete, togglePriority, deleteTodo } = useTodos();
+  const { selectTodo, selectedTodo, toggleComplete, archiveTodo } = useTodos();
 
   const formatDate = (dateString) => {
     if (!dateString) return null;
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-CA'); // Format YYYY-MM-DD
+    return date.toLocaleDateString('en-CA');
   };
 
   const isOverdue = (dateString) => {
@@ -22,114 +22,116 @@ const TodoItem = ({ todo }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleAction = () => {
+    if (todo.isCompleted) {
+      if (window.confirm('Archive this task permanently?')) {
+        archiveTodo(todo.id);
+      }
+    } else {
+      toggleComplete(todo.id);
+    }
+  };
+
+  const isSelected = selectedTodo?.id === todo.id;
+
   return (
     <div
-      className={`bg-white rounded-lg shadow-sm border-l-4 p-4 transition-all hover:shadow-md ${
-        todo.isPriority ? 'border-red-500' : 'border-gray-300'
-      } ${todo.isCompleted ? 'opacity-60' : ''}`}
->
-      <div className="flex items-start justify-between gap-3">
-        {/* Checkbox + Description */}
-        <div className="flex items-start gap-3 flex-1 min-w-0">
-   <button
-   onClick={() => toggleComplete(todo.id)}
-         className="mt-1 flex-shrink-0"
- aria-label={todo.isCompleted ? 'Mark as incomplete' : 'Mark as complete'}
-          >
- <div
-   className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
-         todo.isCompleted
-      ? 'bg-green-500 border-green-500'
-      : 'border-gray-300 hover:border-green-500'
-        }`}
-      >
-          {todo.isCompleted && (
-          <svg className="w-3 h-3 text-white" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-        <path d="M5 13l4 4L19 7"></path>
- </svg>
-           )}
-   </div>
-       </button>
-
-       <div className="flex-1 min-w-0">
-     <p
-              className={`text-gray-800 break-words ${
-    todo.isCompleted ? 'line-through text-gray-500' : ''
-           }`}
-      >
-              {todo.description}
-     </p>
-
-       {/* Date and badges */}
-  <div className="flex flex-wrap items-center gap-2 mt-2">
-     {todo.dueDate && (
-            <span
-             className={`text-xs px-2 py-1 rounded-full flex items-center gap-1 ${
-          isOverdue(todo.dueDate)
-      ? 'bg-red-100 text-red-700'
-      : 'bg-blue-100 text-blue-700'
-     }`}
-         >
-       <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-   </svg>
- {formatDate(todo.dueDate)}
-        </span>
-      )}
-
-              {todo.isPriority && (
-      <span className="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700 flex items-center gap-1">
-  <svg className="w-3 h-3 fill-red-500" viewBox="0 0 24 24">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-        </svg>
-                  Priority
-     </span>
-   )}
-            </div>
-   </div>
-    </div>
-
-        {/* Actions */}
-        <div className="flex gap-1 flex-shrink-0">
-          <button
-          onClick={() => togglePriority(todo.id)}
-            className={`p-2 rounded hover:bg-gray-100 transition-all ${
-      todo.isPriority ? 'text-red-500' : 'text-gray-400'
-         }`}
-         aria-label="Toggle priority"
-       title="Toggle priority"
-          >
-  <svg className={`w-5 h-5 transition-all ${todo.isPriority ? 'fill-red-500 scale-110' : 'fill-gray-400'}`} viewBox="0 0 24 24">
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-   </svg>
-          </button>
-
-       <button
-  onClick={handleEdit}
-         className="p-2 rounded hover:bg-gray-100 text-blue-600 transition-colors"
-         aria-label="Edit"
-     title="Edit"
-  >
-            <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-      <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+      className={`relative rounded-lg p-4 transition-all cursor-pointer border-2 ${
+        isSelected
+          ? 'border-blue-500 bg-blue-900/30 shadow-lg shadow-blue-500/20'
+          : todo.isCompleted
+          ? 'bg-gray-800/50 border-gray-700 opacity-60'
+          : todo.isPriority
+          ? 'bg-amber-900/20 border-amber-700/50 shadow-md shadow-amber-900/20'
+          : 'bg-gray-800 border-gray-700 hover:border-gray-600 hover:shadow-sm'
+      }`}
+      onClick={handleEdit}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex-1 min-w-0 flex items-center gap-3">
+          {todo.isPriority && (
+            <svg
+              className={`w-4 h-4 flex-shrink-0 ${
+                todo.isCompleted ? 'fill-gray-500' : 'fill-amber-500'
+              }`}
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
-       </button>
+          )}
 
- <button
-            onClick={() => {
-         if (window.confirm('Delete this task? No going back!')) {
-        deleteTodo(todo.id);
-  }
-            }}
- className="p-2 rounded hover:bg-gray-100 text-red-600 transition-colors"
-  aria-label="Delete"
-        title="Delete"
+          <p
+            className={`text-base font-medium flex-1 ${
+              todo.isCompleted ? 'line-through text-gray-500' : 'text-gray-100'
+            }`}
           >
-            <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-   </svg>
-          </button>
+            {todo.description}
+          </p>
+
+          {todo.dueDate && (
+            <div className="flex items-center gap-1 text-xs flex-shrink-0">
+              <svg
+                className="w-3 h-3 text-gray-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span
+                className={
+                  isOverdue(todo.dueDate)
+                    ? 'text-red-400 font-medium'
+                    : 'text-gray-400'
+                }
+              >
+                {formatDate(todo.dueDate)}
+              </span>
+            </div>
+          )}
         </div>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAction();
+          }}
+          className={`flex-shrink-0 p-2 rounded-lg transition-all ${
+            todo.isCompleted
+              ? 'text-gray-500 hover:bg-gray-700 hover:text-red-400'
+              : 'text-gray-400 hover:bg-green-900/30 hover:text-green-400'
+          }`}
+          title={todo.isCompleted ? 'Archive' : 'Complete'}
+        >
+          {todo.isCompleted ? (
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+          ) : (
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          )}
+        </button>
       </div>
     </div>
   );
