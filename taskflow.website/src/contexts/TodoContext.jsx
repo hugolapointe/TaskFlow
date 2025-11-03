@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import * as todoApi from '../services/ToDoApi';
 import { updateTodoInList, removeTodoFromList } from '../utils/todoUtils';
@@ -18,9 +18,16 @@ export const ToDoProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
   const [stats, setStats] = useState({ total: 0, priority: 0, nonPriority: 0, completed: 0 });
   const [loading, setLoading] = useState(false);
-  const [selectedTodo, setSelectedTodo] = useState(null);
+  const [selectedTodoId, setSelectedTodoId] = useState(null);
   
   const filterState = useToDoFilters();
+
+  // ? selectedTodo est calculé depuis todos + selectedTodoId
+  // Utilise useMemo pour éviter de recalculer à chaque render
+  const selectedTodo = useMemo(() => {
+if (!selectedTodoId) return null;
+    return todos.find(todo => todo.id === selectedTodoId) || null;
+  }, [todos, selectedTodoId]);
 
   useEffect(() => {
     fetchTodos();
@@ -29,7 +36,7 @@ export const ToDoProvider = ({ children }) => {
 
   const fetchStats = async () => {
     try {
-      const data = await todoApi.getStats();
+    const data = await todoApi.getStats();
       setStats(data);
     } catch (error) {
       // Silent fail
@@ -37,11 +44,11 @@ export const ToDoProvider = ({ children }) => {
   };
 
   const fetchTodos = async () => {
-    setLoading(true);
+setLoading(true);
     try {
       const data = await todoApi.getTodos(filterState.filters);
       setTodos(data?.items || []);
-    } catch (error) {
+  } catch (error) {
       toast.error('Failed to load tasks');
     } finally {
       setLoading(false);
@@ -54,8 +61,8 @@ export const ToDoProvider = ({ children }) => {
       setTodos(prev => [newTodo, ...prev]);
       await fetchStats();
       toast.success("Task created!");
-      return newTodo;
-    } catch (error) {
+    return newTodo;
+  } catch (error) {
       toast.error("Failed to create task");
       throw error;
     }
@@ -66,16 +73,16 @@ export const ToDoProvider = ({ children }) => {
       let updatedTodo;
 
       if (updates.description !== undefined) {
-        updatedTodo = await todoApi.updateTodoDescription(id, updates.description);
+   updatedTodo = await todoApi.updateTodoDescription(id, updates.description);
       }
 
  if (updates.dueDate !== undefined) {
-   updatedTodo = await todoApi.updateTodoDueDate(id, updates.dueDate);
+        updatedTodo = await todoApi.updateTodoDueDate(id, updates.dueDate);
       }
 
-      setTodos(prev => updateTodoInList(prev, id, updatedTodo));
+  setTodos(prev => updateTodoInList(prev, id, updatedTodo));
       toast.success('Task updated!');
-      return updatedTodo;
+ return updatedTodo;
     } catch (error) {
       toast.error('Failed to update task');
       throw error;
@@ -86,14 +93,14 @@ export const ToDoProvider = ({ children }) => {
     try {
       const updatedTodo = await todoApi.toggleTodoPriority(id);
       setTodos(prev => updateTodoInList(prev, id, updatedTodo));
-      await fetchStats();
+   await fetchStats();
       if (!silent) {
-      toast.success('Priority updated!');
+        toast.success('Priority updated!');
       }
     } catch (error) {
-    toast.error('Failed to update priority');
-  }
-  };
+      toast.error('Failed to update priority');
+    }
+};
 
   const markAsComplete = async (id) => {
     try {
@@ -110,10 +117,13 @@ export const ToDoProvider = ({ children }) => {
     try {
       await todoApi.archiveTodo(id);
       setTodos(prev => removeTodoFromList(prev, id));
-    if (selectedTodo?.id === id) {
-        setSelectedTodo(null);
+      
+      // ? Si la tâche archivée était sélectionnée, la désélectionner
+   if (selectedTodoId === id) {
+  setSelectedTodoId(null);
       }
-await fetchStats();
+   
+   await fetchStats();
       toast.success('Task archived!');
     } catch (error) {
       toast.error('Failed to archive task');
@@ -121,17 +131,17 @@ await fetchStats();
   };
 
   const selectTodo = (todo) => {
-    setSelectedTodo(todo);
+    setSelectedTodoId(todo.id);
   };
 
   const clearSelection = () => {
-    setSelectedTodo(null);
+    setSelectedTodoId(null);
   };
 
   const value = {
     todos,
     stats,
-    loading,
+  loading,
     selectedTodo,
     filterState,
     createTodo,

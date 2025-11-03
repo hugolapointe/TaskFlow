@@ -4,7 +4,7 @@ import { StarIcon, CalendarIcon, CheckCircleIcon, ArchiveBoxIcon } from '@heroic
 import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 
 const ToDoItem = ({ todo }) => {
-  const { selectTodo, selectedTodo, markAsComplete, archiveTodo } = useToDos();
+  const { selectTodo, selectedTodo, markAsComplete, archiveTodo, changePriority } = useToDos();
 
   const handleEdit = () => {
     selectTodo(todo);
@@ -19,6 +19,11 @@ const ToDoItem = ({ todo }) => {
     } else {
       markAsComplete(todo.id);
     }
+  };
+
+  const handlePriorityToggle = (e) => {
+    e.stopPropagation();
+    changePriority(todo.id);
   };
 
   const isSelected = selectedTodo?.id === todo.id;
@@ -39,13 +44,17 @@ const ToDoItem = ({ todo }) => {
     >
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 min-w-0 flex items-center gap-3">
-          {todo.isPriority && (
-            <StarIconSolid
-              className={`w-4 h-4 flex-shrink-0 ${
-                todo.isCompleted ? 'fill-gray-500' : 'fill-amber-500'
-              }`}
-            />
-          )}
+          <button
+            onClick={handlePriorityToggle}
+            className="flex-shrink-0 rounded transition-all hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-transparent border-0"
+            title={todo.isPriority ? 'Remove priority' : 'Mark as priority'}
+          >
+            {todo.isPriority ? (
+              <StarIconSolid className="w-6 h-6 fill-amber-500 hover:fill-amber-400 transition-colors" />
+            ) : (
+              <StarIcon className="w-6 h-6 text-gray-500 hover:text-amber-500 transition-colors" />
+            )}
+          </button>
 
           <p
             className={`text-base font-medium flex-1 ${
