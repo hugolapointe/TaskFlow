@@ -6,25 +6,25 @@ const FilterBar = ({ filterState }) => {
   
   const filters = [
     {
-    label: 'Status',
-    value: filterState.getStatusValue(),
-  onChange: (e) => {
-     const value = parseFilterValue(e.target.value, 'boolean');
+      label: 'Status',
+      value: filterState.getStatusValue(),
+      onChange: (e) => {
+        const value = parseFilterValue(e.target.value, 'boolean');
         filterState.updateFilter('isCompleted', value);
       },
-   options: FILTER_OPTIONS.status
-},
+      options: FILTER_OPTIONS.status
+    },
     {
       label: 'Priority',
       value: filterState.getPriorityValue(),
       onChange: (e) => {
-const value = parseFilterValue(e.target.value, 'priority');
+        const value = parseFilterValue(e.target.value, 'priority');
         filterState.updateFilter('isPriority', value);
       },
       options: FILTER_OPTIONS.priority
     },
     {
-    label: 'Sort by',
+      label: 'Sort by',
       value: filterState.filters.sortBy,
       onChange: (e) => filterState.updateFilter('sortBy', e.target.value),
       options: FILTER_OPTIONS.sortBy
@@ -34,9 +34,9 @@ const value = parseFilterValue(e.target.value, 'priority');
   return (
     <div className={styles.filterBar}>
       {filters.map(filter => (
-  <FilterSelect
+        <FilterSelect
           key={filter.label}
-  {...filter}
+          {...filter}
         />
       ))}
     </div>

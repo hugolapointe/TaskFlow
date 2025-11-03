@@ -28,15 +28,18 @@ public class ToDoRepository(TaskFlowDbContext context) {
   }
 
     public async Task<(int Total, int Priority, int NonPriority, int Completed)> GetStatsAsync() {
-        var activeQuery = context.ToDos.AsNoTracking()
-   .Where(todo => !todo.IsArchived);
+        var stats = await context.ToDos.AsNoTracking()
+            .Where(todo => !todo.IsArchived)
+            .GroupBy(_ => 1)
+            .Select(g => new {
+                Total = g.Count(),
+                Completed = g.Count(t => t.IsCompleted),
+                Priority = g.Count(t => t.IsPriority && !t.IsCompleted),
+                NonPriority = g.Count(t => !t.IsPriority && !t.IsCompleted)
+            })
+            .FirstOrDefaultAsync();
 
- var total = await activeQuery.CountAsync();
-        var completed = await activeQuery.CountAsync(t => t.IsCompleted);
-     var priority = await activeQuery.CountAsync(t => t.IsPriority && !t.IsCompleted);
-    var nonPriority = await activeQuery.CountAsync(t => !t.IsPriority && !t.IsCompleted);
-
-        return (total, priority, nonPriority, completed);
+        return (stats?.Total ?? 0, stats?.Priority ?? 0, stats?.NonPriority ?? 0, stats?.Completed ?? 0);
     }
 
     private static IQueryable<ToDo> ApplyFilters(
@@ -58,10 +61,10 @@ public class ToDoRepository(TaskFlowDbContext context) {
  ToDoSortBy sortBy) {
 
         return sortBy switch {
-    ToDoSortBy.DueDate => query
-          .OrderByDescending(todo => todo.DueDate == null)
- .ThenBy(todo => todo.DueDate),
-    _ => query.OrderByDescending(todo => todo.CreatedAt)
+            ToDoSortBy.DueDate => query
+                .OrderBy(todo => todo.DueDate == null)
+                .ThenBy(todo => todo.DueDate),
+            _ => query.OrderByDescending(todo => todo.CreatedAt)
         };
     }
 }

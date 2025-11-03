@@ -17,7 +17,7 @@
   /* Blue Colors */
   --color-blue-400: hsl(213, 94%, 68%);
   --color-blue-500: hsl(213, 94%, 60%);
---color-blue-600: hsl(217, 91%, 53%);
+  --color-blue-600: hsl(217, 91%, 53%);
   --color-blue-700: hsl(221, 83%, 48%);
   --color-blue-800: hsl(224, 76%, 40%);
   --color-blue-900: hsl(226, 64%, 33%);

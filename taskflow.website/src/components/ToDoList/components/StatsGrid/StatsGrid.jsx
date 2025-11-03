@@ -14,18 +14,18 @@ const createStatConfigs = (stats, sortBy) => [
     label: 'Total',
     value: stats.total,
     filters: {
-    sortBy,
-   isCompleted: undefined,
+      sortBy,
+      isCompleted: undefined,
       isPriority: undefined
     }
   },
   {
-type: STAT_TYPES.PRIORITY,
+    type: STAT_TYPES.PRIORITY,
     label: 'Priority',
     value: stats.priority,
     filters: {
-sortBy,
-isCompleted: false,
+      sortBy,
+      isCompleted: false,
       isPriority: true
     }
   },
@@ -57,14 +57,14 @@ const StatsGrid = ({ stats, currentFilters, activeStatType, onFilterChange }) =>
   return (
     <div className={styles.statsGrid}>
       {statConfigs.map(config => (
-      <StatCard
-    key={config.type}
+        <StatCard
+          key={config.type}
           label={config.label}
           value={config.value}
           type={config.type}
-       isActive={config.type === activeStatType}
-        onClick={() => onFilterChange(config.filters)}
-   />
+          isActive={config.type === activeStatType}
+          onClick={() => onFilterChange(config.filters)}
+        />
       ))}
     </div>
   );
