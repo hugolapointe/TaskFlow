@@ -1,5 +1,37 @@
 import { useState, useMemo } from 'react';
-import { SORT_BY } from '../utils/constants';
+
+const SORT_BY = {
+  CREATED_AT: 'CreatedAt',
+  DUE_DATE: 'DueDate'
+};
+
+const FILTER_OPTIONS = {
+  status: [
+    { value: 'all', label: 'All' },
+    { value: 'false', label: 'Pending' },
+    { value: 'true', label: 'Completed' }
+  ],
+  priority: [
+    { value: 'all', label: 'All' },
+    { value: 'priority', label: 'Priority Only' },
+    { value: 'nonpriority', label: 'Non Priority Only' }
+  ],
+  sortBy: [
+    { value: SORT_BY.CREATED_AT, label: 'Created Date' },
+    { value: SORT_BY.DUE_DATE, label: 'Due Date' }
+  ]
+};
+
+const parseFilterValue = (value, type) => {
+  if (value === 'all') return undefined;
+  if (type === 'boolean') return value === 'true';
+  if (type === 'priority') {
+    if (value === 'priority') return true;
+    if (value === 'nonpriority') return false;
+    return undefined;
+  }
+  return value;
+};
 
 const DEFAULT_FILTERS = {
   sortBy: SORT_BY.CREATED_AT,
@@ -41,7 +73,7 @@ export const useToDoFilters = () => {
     if (isCompleted === false && isPriority === false) return 'nonpriority';
     if (isCompleted === true && isPriority === undefined) return 'completed';
     
-  return null;
+    return null;
   }, [filters]);
 
   return {
@@ -51,6 +83,8 @@ export const useToDoFilters = () => {
     resetFilters,
     getStatusValue,
     getPriorityValue,
-    getActiveStatType
+    getActiveStatType,
+    FILTER_OPTIONS,
+    parseFilterValue
   };
 };

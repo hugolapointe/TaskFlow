@@ -1,5 +1,7 @@
 import { useToDos } from '../../contexts/ToDoContext';
-import { formatDate, isOverdue } from '../../utils/todoHelpers';
+import { formatDate, isOverdue } from '../../utils/todoUtils';
+import { StarIcon, CalendarIcon, CheckCircleIcon, ArchiveBoxIcon } from '@heroicons/react/24/outline';
+import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
 
 const ToDoItem = ({ todo }) => {
   const { selectTodo, selectedTodo, markAsComplete, archiveTodo } = useToDos();
@@ -38,14 +40,11 @@ const ToDoItem = ({ todo }) => {
       <div className="flex items-center justify-between gap-4">
         <div className="flex-1 min-w-0 flex items-center gap-3">
           {todo.isPriority && (
-            <svg
+            <StarIconSolid
               className={`w-4 h-4 flex-shrink-0 ${
                 todo.isCompleted ? 'fill-gray-500' : 'fill-amber-500'
               }`}
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
+            />
           )}
 
           <p
@@ -58,17 +57,7 @@ const ToDoItem = ({ todo }) => {
 
           {todo.dueDate && (
             <div className="flex items-center gap-1 text-xs flex-shrink-0">
-              <svg
-                className="w-3 h-3 text-gray-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <CalendarIcon className="w-3 h-3 text-gray-500" />
               <span
                 className={
                   isTaskOverdue ? 'text-red-400 font-medium' : 'text-gray-400'
@@ -93,29 +82,9 @@ const ToDoItem = ({ todo }) => {
           title={todo.isCompleted ? 'Archive' : 'Complete'}
         >
           {todo.isCompleted ? (
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-            </svg>
+            <ArchiveBoxIcon className="w-5 h-5" />
           ) : (
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <CheckCircleIcon className="w-5 h-5" />
           )}
         </button>
       </div>

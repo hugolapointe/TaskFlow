@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import * as todoApi from '../services/ToDoApi';
-import { updateTodoInList, removeTodoFromList } from '../utils/todoHelpers';
+import { updateTodoInList, removeTodoFromList } from '../utils/todoUtils';
 import { useToDoFilters } from '../hooks/useToDoFilters';
 
 const ToDoContext = createContext();
