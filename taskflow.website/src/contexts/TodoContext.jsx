@@ -1,34 +1,33 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import * as todoApi from '../services/ToDoApi';
+import { updateTodoInList, removeTodoFromList } from '../utils/todoHelpers';
+import { useToDoFilters } from '../hooks/useToDoFilters';
 
-const TodoContext = createContext();
+const ToDoContext = createContext();
 
-export const useTodos = () => {
-  const context = useContext(TodoContext);
+export const useToDos = () => {
+  const context = useContext(ToDoContext);
   if (!context) {
-    throw new Error('useTodos must be used within a TodoProvider');
+    throw new Error('useToDos must be used within a ToDoProvider');
   }
   return context;
 };
 
-export const TodoProvider = ({ children }) => {
+export const ToDoProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
   const [stats, setStats] = useState({ total: 0, priority: 0, nonPriority: 0, completed: 0 });
   const [loading, setLoading] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState(null);
-  const [filters, setFilters] = useState({
-    sortBy: 'CreatedAt',
-    isPriority: undefined,
-    isCompleted: undefined,
-  });
+  
+  const filterState = useToDoFilters();
 
   useEffect(() => {
-    loadTodos();
-    loadStats();
-  }, [filters]);
+    fetchTodos();
+    fetchStats();
+  }, [filterState.filters]);
 
-  const loadStats = async () => {
+  const fetchStats = async () => {
     try {
       const data = await todoApi.getStats();
       setStats(data);
@@ -37,15 +36,11 @@ export const TodoProvider = ({ children }) => {
     }
   };
 
-  const loadTodos = async () => {
+  const fetchTodos = async () => {
     setLoading(true);
     try {
-      const data = await todoApi.getTodos(filters);
-      if (data && data.items) {
-        setTodos(data.items);
-      } else {
-        setTodos([]);
-      }
+      const data = await todoApi.getTodos(filterState.filters);
+      setTodos(data?.items || []);
     } catch (error) {
       toast.error('Failed to load tasks');
     } finally {
@@ -56,8 +51,8 @@ export const TodoProvider = ({ children }) => {
   const createTodo = async (todoData) => {
     try {
       const newTodo = await todoApi.createTodo(todoData);
-      setTodos((prev) => [newTodo, ...prev]);
-      await loadStats();
+      setTodos(prev => [newTodo, ...prev]);
+      await fetchStats();
       toast.success("Task created!");
       return newTodo;
     } catch (error) {
@@ -69,18 +64,16 @@ export const TodoProvider = ({ children }) => {
   const updateTodo = async (id, updates) => {
     try {
       let updatedTodo;
- 
+
       if (updates.description !== undefined) {
         updatedTodo = await todoApi.updateTodoDescription(id, updates.description);
       }
-    
-      if (updates.dueDate !== undefined) {
-        updatedTodo = await todoApi.updateTodoDueDate(id, updates.dueDate);
+
+ if (updates.dueDate !== undefined) {
+   updatedTodo = await todoApi.updateTodoDueDate(id, updates.dueDate);
       }
 
-      setTodos((prev) =>
-        prev.map((todo) => (todo.id === id ? updatedTodo : todo))
-      );
+      setTodos(prev => updateTodoInList(prev, id, updatedTodo));
       toast.success('Task updated!');
       return updatedTodo;
     } catch (error) {
@@ -89,28 +82,24 @@ export const TodoProvider = ({ children }) => {
     }
   };
 
-  const togglePriority = async (id, silent = false) => {
+  const changePriority = async (id, silent = false) => {
     try {
       const updatedTodo = await todoApi.toggleTodoPriority(id);
-      setTodos((prev) =>
-        prev.map((todo) => (todo.id === id ? updatedTodo : todo))
-      );
-      await loadStats();
+      setTodos(prev => updateTodoInList(prev, id, updatedTodo));
+      await fetchStats();
       if (!silent) {
-        toast.success('Priority updated!');
+      toast.success('Priority updated!');
       }
     } catch (error) {
-      toast.error('Failed to update priority');
-    }
+    toast.error('Failed to update priority');
+  }
   };
 
-  const toggleComplete = async (id) => {
+  const markAsComplete = async (id) => {
     try {
       const updatedTodo = await todoApi.toggleTodoComplete(id);
-      setTodos((prev) =>
-        prev.map((todo) => (todo.id === id ? updatedTodo : todo))
-      );
-      await loadStats();
+      setTodos(prev => updateTodoInList(prev, id, updatedTodo));
+      await fetchStats();
       toast.success(updatedTodo.isCompleted ? 'Task completed!' : 'Task reopened!');
     } catch (error) {
       toast.error('Failed to update status');
@@ -120,11 +109,11 @@ export const TodoProvider = ({ children }) => {
   const archiveTodo = async (id) => {
     try {
       await todoApi.archiveTodo(id);
-      setTodos((prev) => prev.filter((todo) => todo.id !== id));
-      if (selectedTodo?.id === id) {
+      setTodos(prev => removeTodoFromList(prev, id));
+    if (selectedTodo?.id === id) {
         setSelectedTodo(null);
       }
-      await loadStats();
+await fetchStats();
       toast.success('Task archived!');
     } catch (error) {
       toast.error('Failed to archive task');
@@ -139,26 +128,21 @@ export const TodoProvider = ({ children }) => {
     setSelectedTodo(null);
   };
 
-  const updateFilters = (newFilters) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
-  };
-
   const value = {
     todos,
     stats,
     loading,
     selectedTodo,
-    filters,
+    filterState,
     createTodo,
     updateTodo,
-    togglePriority,
-    toggleComplete,
+    changePriority,
+    markAsComplete,
     archiveTodo,
     selectTodo,
     clearSelection,
-    updateFilters,
-    loadTodos,
+    refreshTodos: fetchTodos,
   };
 
-  return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
+  return <ToDoContext.Provider value={value}>{children}</ToDoContext.Provider>;
 };

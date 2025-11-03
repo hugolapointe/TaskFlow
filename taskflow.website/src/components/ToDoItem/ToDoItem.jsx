@@ -1,21 +1,8 @@
-import { useTodos } from '../contexts/TodoContext';
+import { useToDos } from '../../contexts/ToDoContext';
+import { formatDate, isOverdue } from '../../utils/todoHelpers';
 
-const TodoItem = ({ todo }) => {
-  const { selectTodo, selectedTodo, toggleComplete, archiveTodo } = useTodos();
-
-  const formatDate = (dateString) => {
-    if (!dateString) return null;
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-CA');
-  };
-
-  const isOverdue = (dateString) => {
-    if (!dateString || todo.isCompleted) return false;
-    const dueDate = new Date(dateString);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return dueDate < today;
-  };
+const ToDoItem = ({ todo }) => {
+  const { selectTodo, selectedTodo, markAsComplete, archiveTodo } = useToDos();
 
   const handleEdit = () => {
     selectTodo(todo);
@@ -28,11 +15,12 @@ const TodoItem = ({ todo }) => {
         archiveTodo(todo.id);
       }
     } else {
-      toggleComplete(todo.id);
+      markAsComplete(todo.id);
     }
   };
 
   const isSelected = selectedTodo?.id === todo.id;
+  const isTaskOverdue = isOverdue(todo.dueDate, todo.isCompleted);
 
   return (
     <div
@@ -83,9 +71,7 @@ const TodoItem = ({ todo }) => {
               </svg>
               <span
                 className={
-                  isOverdue(todo.dueDate)
-                    ? 'text-red-400 font-medium'
-                    : 'text-gray-400'
+                  isTaskOverdue ? 'text-red-400 font-medium' : 'text-gray-400'
                 }
               >
                 {formatDate(todo.dueDate)}
@@ -137,4 +123,4 @@ const TodoItem = ({ todo }) => {
   );
 };
 
-export default TodoItem;
+export default ToDoItem;

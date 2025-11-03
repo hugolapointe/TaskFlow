@@ -1,0 +1,93 @@
+.card {
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
+  text-align: center;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.card.active {
+  box-shadow: var(--shadow-lg);
+  border: 2px solid;
+}
+
+.value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.card.total.active {
+  background-color: var(--color-gray-600);
+  border-color: var(--color-gray-400);
+}
+
+.card.total.inactive {
+  background-color: var(--color-gray-700);
+}
+
+.card.total.inactive:hover {
+  background-color: var(--color-gray-600);
+}
+
+.card.total .value {
+  color: var(--color-gray-100);
+}
+
+.card.priority.active {
+  background-color: var(--color-amber-800);
+  border-color: var(--color-amber-700);
+}
+
+.card.priority.inactive {
+  background-color: rgba(120, 53, 15, 0.5);
+  border: 1px solid var(--color-amber-800);
+}
+
+.card.priority.inactive:hover {
+  background-color: rgba(146, 64, 14, 0.7);
+}
+
+.card.priority .value {
+  color: var(--color-amber-400);
+}
+
+.card.nonPriority.active {
+  background-color: var(--color-blue-800);
+  border-color: var(--color-blue-600);
+}
+
+.card.nonPriority.inactive {
+  background-color: rgba(30, 58, 138, 0.5);
+  border: 1px solid var(--color-blue-800);
+}
+
+.card.nonPriority.inactive:hover {
+  background-color: rgba(30, 64, 175, 0.7);
+}
+
+.card.nonPriority .value {
+  color: var(--color-blue-400);
+}
+
+.card.completed.active {
+  background-color: var(--color-green-800);
+  border-color: var(--color-green-600);
+}
+
+.card.completed.inactive {
+  background-color: rgba(20, 83, 45, 0.5);
+  border: 1px solid var(--color-green-800);
+}
+
+.card.completed.inactive:hover {
+  background-color: rgba(22, 101, 52, 0.7);
+}
+
+.card.completed .value {
+  color: var(--color-green-400);
+}
