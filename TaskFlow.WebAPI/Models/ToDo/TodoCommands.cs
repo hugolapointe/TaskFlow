@@ -17,6 +17,5 @@ public record UpdateToDo(
     string Description,
 
     DateTime? DueDate = null,
-    bool IsPriority = false,
-    bool IsCompleted = false
+    bool IsPriority = false
 );

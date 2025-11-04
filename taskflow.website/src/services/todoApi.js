@@ -31,20 +31,21 @@ export const getToDoById = async (id) => {
   return response.data;
 };
 
-export const createToDo = async (toDo) => {
+export const createToDo = async (todo) => {
   const response = await toDoApi.post('/todos', {
-    description: toDo.description,
-    dueDate: toDo.dueDate || null,
-    isPriority: toDo.isPriority || false,
+    description: todo.description,
+    dueDate: todo.dueDate || null,
+    isPriority: todo.isPriority || false,
   });
   return response.data;
 };
 
-export const updateToDo = async (id, toDo) => {
+export const updateToDo = async (id, todo) => {
   const response = await toDoApi.put(`/todos/${id}`, {
-    description: toDo.description,
-    dueDate: toDo.dueDate || null,
-    isPriority: toDo.isPriority || false
+    description: todo.description,
+    dueDate: todo.dueDate || null,
+    isPriority: todo.isPriority || false,
+    isCompleted: todo.isCompleted || false  // ? Ajouter isCompleted
   });
   return response.data;
 };

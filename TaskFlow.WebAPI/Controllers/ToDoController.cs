@@ -87,8 +87,7 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
             id,
             command.Description,
             command.DueDate,
-            command.IsPriority,
-            command.IsCompleted
+            command.IsPriority
         );
 
         if (todo is null) {

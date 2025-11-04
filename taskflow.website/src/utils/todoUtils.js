@@ -1,29 +1,21 @@
-export const formatDate = (dateString) => {
-  if (!dateString) return null;
-  return dateString;
+export const formatDate = (date) => {
+    if (!date) return null;
+
+    return new Date(date).toISOString().split('T')[0];
 };
 
-export const formatTimestamp = (dateString) => {
-  if (!dateString) return null;
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  });
+export const isOverdue = (date, completed) => {
+    if (!date || completed) return false;
+
+    const today = new Date().toISOString().split('T')[0];
+
+    return date < today;
 };
 
-export const isOverdue = (dateString, isCompleted) => {
-  if (!dateString || isCompleted) return false;
-  const today = new Date();
-  const todayStr = today.toISOString().split('T')[0];
-  return dateString < todayStr;
+export const updateInList = (list, id, item) => {
+    return list.map(current => current.id === id ? item : current);
 };
 
-export const updateToDoInList = (toDos, id, updatedToDo) => {
-  return toDos.map(toDo => toDo.id === id ? updatedToDo : toDo);
-};
-
-export const removeToDoFromList = (toDos, id) => {
-  return toDos.filter(toDo => toDo.id !== id);
+export const removeFromList = (list, id) => {
+    return list.filter(item => item.id !== id);
 };

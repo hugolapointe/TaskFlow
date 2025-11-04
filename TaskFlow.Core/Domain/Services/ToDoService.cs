@@ -26,8 +26,7 @@ public class ToDoService(TaskFlowDbContext context) {
         int id,
         string description,
         DateTime? dueDate,
-        bool isPriority,
-        bool isCompleted) {
+        bool isPriority) {
 
         var todo = await context.ToDos
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsArchived);
@@ -37,7 +36,6 @@ public class ToDoService(TaskFlowDbContext context) {
         todo.Description = description;
         todo.DueDate = dueDate;
         todo.IsPriority = isPriority;
-        todo.IsCompleted = isCompleted;
         await context.SaveChangesAsync();
 
         return todo;

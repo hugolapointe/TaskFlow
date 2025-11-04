@@ -1,197 +1,40 @@
 .container {
   position: relative;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  transition: all 0.2s;
+  border-radius: var(--radius-xl);  /* Uniformisé */
+  padding: var(--spacing-lg);
+  transition: all var(--transition-normal);
   cursor: pointer;
   border: 2px solid;
+  background-color: var(--color-bg-surface);
+  border-color: var(--color-border-subtle);
 }
 
-.container.selected {
-  border-color: rgb(59 130 246);
-  background-color: rgb(30 58 138 / 0.3);
-box-shadow: 0 10px 15px -3px rgb(59 130 246 / 0.2);
+.container:hover {
+  border-color: var(--color-border-default);
+  box-shadow: var(--shadow-sm);
 }
 
-.container.completed {
-  background-color: rgb(31 41 55 / 0.5);
-  border-color: rgb(55 65 81);
+.container[data-selected="true"] {
+  border-color: var(--color-action-primary);
+  background-color: var(--color-task-selected);
+  box-shadow: 0 10px 15px -3px hsla(217, 91%, 53%, 0.2);
+}
+
+.container[data-completed="true"] {
+  background-color: hsla(220, 26%, 18%, 0.5);
+  border-color: var(--color-border-subtle);
   opacity: 0.6;
 }
 
-.container.priority {
-  background-color: rgb(120 53 15 / 0.2);
-  border-color: rgb(180 83 9 / 0.5);
-  box-shadow: 0 4px 6px -1px rgb(120 53 15 / 0.2);
-}
-
-.container.default {
-  background-color: rgb(31 41 55);
-  border-color: rgb(55 65 81);
-}
-
-.container.default:hover {
-  border-color: rgb(75 85 99);
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+.container[data-priority="true"]:not([data-selected="true"]):not([data-completed="true"]) {
+  background-color: hsla(25, 77%, 26%, 0.2);
+  border-color: hsla(26, 90%, 37%, 0.5);
+  box-shadow: 0 4px 6px -1px hsla(25, 77%, 26%, 0.2);
 }
 
 .mainContent {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-}
-
-.leftSection {
-  display: flex;
-  flex: 1;
-  min-width: 0;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.priorityButton {
-  flex-shrink: 0;
-  border-radius: 0.25rem;
-  transition: all 0.2s;
-  background: transparent;
-  border: 0;
-  padding: 0;
-}
-
-.priorityButton:hover {
-  transform: scale(1.1);
-}
-
-.priorityButton:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgb(245 158 11);
-}
-
-.priorityIcon {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.priorityIcon.active {
-  fill: rgb(245 158 11);
-}
-
-.priorityIcon.active:hover {
-  fill: rgb(251 191 36);
-}
-
-.priorityIcon.inactive {
-  color: rgb(107 114 128);
-}
-
-.priorityIcon.inactive:hover {
-  color: rgb(245 158 11);
-}
-
-.description {
-  font-size: 1rem;
-  font-weight: 500;
-  flex: 1;
-}
-
-.description.completed {
-  text-decoration: line-through;
-  color: rgb(107 114 128);
-}
-
-.description.active {
-  color: rgb(243 244 246);
-}
-
-.dueDateContainer {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
-  flex-shrink: 0;
-}
-
-.dueDateIcon {
-  width: 0.75rem;
-  height: 0.75rem;
-  color: rgb(107 114 128);
-}
-
-.dueDate {
-  color: rgb(156 163 175);
-}
-
-.dueDate.overdue {
-  color: rgb(248 113 113);
-  font-weight: 500;
-}
-
-.actionButton {
-  flex-shrink: 0;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
-}
-
-.actionButton.completed {
-  color: rgb(107 114 128);
-}
-
-.actionButton.completed:hover {
-  background-color: rgb(55 65 81);
-  color: rgb(248 113 113);
-}
-
-.actionButton.active {
-  color: rgb(156 163 175);
-}
-
-.actionButton.active:hover {
-  background-color: rgb(20 83 45 / 0.3);
-  color: rgb(74 222 128);
-}
-
-.actionIcon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.auditSection {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgb(55 65 81);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.auditRow {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: rgb(156 163 175);
-}
-
-.auditIcon {
-  width: 1rem;
-  height: 1rem;
-  color: rgb(107 114 128);
-}
-
-.auditLabel {
-  font-weight: 500;
-  color: rgb(209 213 219);
-}
-
-.auditValue {
-  color: rgb(156 163 175);
-}
-
-.separator {
-  color: rgb(107 114 128);
-  font-size: 0.75rem;
-  user-select: none;
+  gap: var(--spacing-lg);
 }

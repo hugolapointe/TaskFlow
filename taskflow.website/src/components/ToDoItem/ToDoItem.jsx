@@ -1,111 +1,67 @@
 import { memo } from 'react';
 import { useToDos } from '../../contexts/ToDoContext';
-import { formatDate, formatTimestamp, isOverdue } from '../../utils/toDoUtils';
-import { StarIcon, CalendarIcon, CheckCircleIcon, ArchiveBoxIcon, ClockIcon } from '@heroicons/react/24/outline';
-import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
+import { isOverdue } from '../../utils/toDoUtils';
+import { confirmArchive } from '../../utils/confirmations';
+import ToDoItemContent from './components/ToDoItemContent';
+import ToDoItemAction from './components/ToDoItemAction';
+import ToDoItemAudit from './components/ToDoItemAudit';
 import styles from './ToDoItem.module.css';
 
-const ToDoItem = memo(({ toDo }) => {
-    const { selectToDo, selectedToDo, markAsComplete, archiveToDo, changePriority } = useToDos();
+const ToDoItem = memo(({ todo, isSelected, onSelectTodo, onClearSelection }) => {
+  const { actions } = useToDos();
 
-    const handleEdit = () => {
-        selectToDo(toDo);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+  const isTaskOverdue = isOverdue(todo.dueDate, todo.isCompleted);
 
-    const handleAction = () => {
-        if (toDo.isCompleted) {
-            if (window.confirm('Archive this task permanently?')) {
-                archiveToDo(toDo.id);
-            }
-        } else {
-            markAsComplete(toDo.id);
+  const handleClick = () => {
+    if (isSelected) {
+      onClearSelection();
+    } else {
+      onSelectTodo(todo.id);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleComplete = () => {
+    if (todo.isCompleted) {
+      if (confirmArchive()) {
+        actions.archive(todo.id);
+        if (isSelected) {
+          onClearSelection();
         }
-    };
+      }
+    } else {
+      actions.toggleComplete(todo.id);
+    }
+  };
 
-    const handlePriorityToggle = (e) => {
-        e.stopPropagation();
-        changePriority(toDo.id);
-    };
+  const handleTogglePriority = (e) => {
+    e.stopPropagation();
+    actions.togglePriority(todo.id);
+  };
 
-    const isSelected = selectedToDo?.id === toDo.id;
-    const isTaskOverdue = isOverdue(toDo.dueDate, toDo.isCompleted);
+  return (
+    <div
+      className={styles.container}
+      data-selected={isSelected}
+      data-completed={todo.isCompleted}
+      data-priority={todo.isPriority}
+      onClick={handleClick}
+    >
+      <div className={styles.mainContent}>
+        <ToDoItemContent
+          todo={todo}
+          isOverdue={isTaskOverdue}
+          onTogglePriority={handleTogglePriority}
+        />
+        <ToDoItemAction
+          todo={todo}
+          onComplete={handleComplete}
+        />
+      </div>
 
-    const getContainerClass = () => {
-        if (isSelected) return `${styles.container} ${styles.selected}`;
-        if (toDo.isCompleted) return `${styles.container} ${styles.completed}`;
-        if (toDo.isPriority) return `${styles.container} ${styles.priority}`;
-        return `${styles.container} ${styles.default}`;
-    };
-
-    return (
-        <div className={getContainerClass()} onClick={handleEdit}>
-            <div className={styles.mainContent}>
-                <div className={styles.leftSection}>
-                    <button
-                        onClick={handlePriorityToggle}
-                        className={styles.priorityButton}
-                        title={toDo.isPriority ? 'Remove priority' : 'Mark as priority'}
-                    >
-                        {toDo.isPriority ? (
-                            <StarIconSolid className={`${styles.priorityIcon} ${styles.active}`} />
-                        ) : (
-                            <StarIcon className={`${styles.priorityIcon} ${styles.inactive}`} />
-                        )}
-                    </button>
-
-                    <p className={`${styles.description} ${toDo.isCompleted ? styles.completed : styles.active}`}>
-                        {toDo.description}
-                    </p>
-
-                    {toDo.dueDate && (
-                        <div className={styles.dueDateContainer}>
-                            <CalendarIcon className={styles.dueDateIcon} />
-                            <span className={`${styles.dueDate} ${isTaskOverdue ? styles.overdue : ''}`}>
-                                {formatDate(toDo.dueDate)}
-                            </span>
-                        </div>
-                    )}
-                </div>
-
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        handleAction();
-                    }}
-                    className={`${styles.actionButton} ${toDo.isCompleted ? styles.completed : styles.active}`}
-                    title={toDo.isCompleted ? 'Archive' : 'Complete'}
-                >
-                    {toDo.isCompleted ? (
-                        <ArchiveBoxIcon className={styles.actionIcon} />
-                    ) : (
-                        <CheckCircleIcon className={styles.actionIcon} />
-                    )}
-                </button>
-            </div>
-
-            {isSelected && (
-                <div className={styles.auditSection}>
-                    <div className={styles.auditRow}>
-                        <ClockIcon className={styles.auditIcon} />
-                        <span className={styles.auditLabel}>Created:</span>
-                        <span className={styles.auditValue}>{formatTimestamp(toDo.createdAt)}</span>
-                    </div>
-
-                    {toDo.updatedAt && (
-                        <>
-                            <span className={styles.separator}>|</span>
-                            <div className={styles.auditRow}>
-                                <ClockIcon className={styles.auditIcon} />
-                                <span className={styles.auditLabel}>Updated:</span>
-                                <span className={styles.auditValue}>{formatTimestamp(toDo.updatedAt)}</span>
-                            </div>
-                        </>
-                    )}
-                </div>
-            )}
-        </div>
-    );
+      {isSelected && <ToDoItemAudit todo={todo} />}
+    </div>
+  );
 });
 
 ToDoItem.displayName = 'ToDoItem';

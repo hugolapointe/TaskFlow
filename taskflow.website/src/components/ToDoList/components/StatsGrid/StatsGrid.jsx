@@ -1,72 +1,47 @@
 import StatCard from './components/StatCard';
 import styles from './StatsGrid.module.css';
 
-const STAT_TYPES = {
-  TOTAL: 'total',
-  PRIORITY: 'priority',
-  NON_PRIORITY: 'nonpriority',
-  COMPLETED: 'completed'
-};
-
-const createStatConfigs = (stats, sortBy) => [
+const STAT_CONFIGS = [
   {
-    type: STAT_TYPES.TOTAL,
+  type: 'total',
     label: 'Total',
-    value: stats.total,
-    filters: {
-      sortBy,
-      isCompleted: undefined,
-      isPriority: undefined
-    }
+    getValue: (stats) => stats.total,
+    filters: { isCompleted: undefined, isPriority: undefined }
   },
   {
-    type: STAT_TYPES.PRIORITY,
+  type: 'priority',
     label: 'Priority',
-    value: stats.priority,
-    filters: {
-      sortBy,
-      isCompleted: false,
-      isPriority: true
-    }
+    getValue: (stats) => stats.priority,
+    filters: { isCompleted: false, isPriority: true }
   },
   {
-    type: STAT_TYPES.NON_PRIORITY,
+    type: 'nonpriority',
     label: 'Non Priority',
-    value: stats.nonPriority,
-    filters: {
-      sortBy,
-      isCompleted: false,
-      isPriority: false
-    }
+    getValue: (stats) => stats.nonPriority,
+    filters: { isCompleted: false, isPriority: false }
   },
   {
-    type: STAT_TYPES.COMPLETED,
+    type: 'completed',
     label: 'Completed',
-    value: stats.completed,
-    filters: {
-      sortBy,
-      isCompleted: true,
-      isPriority: undefined
-    }
+    getValue: (stats) => stats.completed,
+    filters: { isCompleted: true, isPriority: undefined }
   }
 ];
 
 const StatsGrid = ({ stats, currentFilters, activeStatType, onFilterChange }) => {
-  const statConfigs = createStatConfigs(stats, currentFilters.sortBy);
-
   return (
     <div className={styles.statsGrid}>
-      {statConfigs.map(config => (
-        <StatCard
-          key={config.type}
+      {STAT_CONFIGS.map(config => (
+    <StatCard
+       key={config.type}
           label={config.label}
-          value={config.value}
-          type={config.type}
-          isActive={config.type === activeStatType}
-          onClick={() => onFilterChange(config.filters)}
+       value={config.getValue(stats)}
+     type={config.type}
+ isActive={config.type === activeStatType}
+          onClick={() => onFilterChange({ ...config.filters, sortBy: currentFilters.sortBy })}
         />
       ))}
-    </div>
+</div>
   );
 };
 

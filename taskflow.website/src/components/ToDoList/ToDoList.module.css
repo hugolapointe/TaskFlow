@@ -1,9 +1,9 @@
 .container {
-  background-color: var(--color-gray-800);
-  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-xl);  /* Uniformisé avec ToDoForm */
   box-shadow: var(--shadow-xl);
   padding: var(--spacing-lg);
-  border: 1px solid var(--color-gray-700);
+  border: 1px solid var(--color-border-subtle);
 }
 
 .header {
