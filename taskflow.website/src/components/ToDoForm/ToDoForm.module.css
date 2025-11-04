@@ -1,77 +1,28 @@
 .container {
-  background-color: var(--color-bg-surface);
-  border-radius: var(--radius-xl);  /* Uniformisé */
-  box-shadow: var(--shadow-xl);
   padding: var(--spacing-xl);
   margin-bottom: var(--spacing-xl);
-  border: 1px solid var(--color-border-subtle);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
   transition: all var(--transition-slow);
 }
 
 .container.editing {
-  background-color: var(--color-editing-bg);
-  border-color: var(--color-editing-border);
+  background-color: var(--editing-bg);
+  border-color: var(--editing-border);
 }
 
 .form {
-  display: flex;
+display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-/* Priority Button - Glow on star shape only, no background */
-.priorityButton {
-  flex-shrink: 0;
-  transition: transform var(--transition-normal);
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-}
-
-.priorityButton:hover {
-  transform: scale(1.1);
-}
-
-.priorityButton:focus {
-  outline: none;
-}
-
-.priorityButton:focus .priorityIcon {
-  filter: drop-shadow(0 0 0 2px var(--color-priority-active));
-}
-
-.priorityIcon {
-  width: 1.5rem;
-  height: 1.5rem;
-  transition: all var(--transition-normal);
-  display: block;
-}
-
-.priorityIcon.active {
-  fill: var(--color-priority-active);
-  filter: var(--glow-priority);
-}
-
-.priorityIcon.active:hover {
-  fill: var(--color-priority-active-hover);
-  filter: var(--glow-priority-hover);
-}
-
-.priorityIcon.inactive {
-  color: var(--color-priority-inactive);
-}
-
-.priorityIcon.inactive:hover {
-  color: var(--color-priority-inactive-hover);
-  filter: var(--glow-priority-inactive);
-}
-
-/* Inline Form Row - All fields on one line */
 .formRow {
   display: flex;
-  gap: var(--spacing-md);
   align-items: center;
+  gap: var(--spacing-md);
 }
 
 .formRow .priorityButton {
@@ -92,58 +43,95 @@
   flex-shrink: 0;
 }
 
-/* Input Fields - Pas d'icônes, padding uniforme */
+.priorityButton {
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: transform var(--transition-normal);
+}
+
+.priorityButton:hover {
+  transform: scale(1.1);
+}
+
+.priorityButton:focus {
+  outline: none;
+}
+
+.priorityButton:focus .priorityIcon {
+  filter: drop-shadow(0 0 0 2px var(--danger));
+}
+
+.priorityIcon {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke-width: 2;
+  transition: all var(--transition-normal);
+}
+
+.priorityIcon.active {
+  color: var(--danger);
+}
+
+.priorityIcon.active:hover {
+  color: var(--danger-hover);
+}
+
+.priorityIcon.inactive {
+  color: var(--gray-500);
+}
+
+.priorityIcon.inactive:hover {
+  color: var(--danger);
+  filter: var(--glow-priority);
+}
+
 .inputGroup {
   position: relative;
 }
 
 .input {
   width: 100%;
-  padding: var(--spacing-md) var(--spacing-lg);/* Padding uniforme */
+  padding: var(--spacing-md) var(--spacing-lg);
   font-size: 1rem;
-  background-color: var(--color-form-bg);
-  border: 2px solid var(--color-form-border);
-  color: var(--color-text-primary);
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 2px solid var(--border-default);
   border-radius: var(--radius-xl);
-  transition: all var(--transition-normal);
   outline: none;
+  transition: all var(--transition-normal);
 }
 
 .input::placeholder {
-  color: var(--color-text-tertiary);
+  color: var(--text-tertiary);
 }
 
 .input:hover {
-  border-color: var(--color-border-default);
+  border-color: var(--border-default);
 }
 
 .input:focus {
-  border-color: var(--color-form-focus);
-  box-shadow: var(--glow-focus-primary);
+  border-color: var(--action-primary);
+  box-shadow: var(--glow-focus);
 }
 
-/* Date Input - Styles spécifiques */
 .dateInput {
-  cursor: pointer;
   color-scheme: dark;
+  cursor: pointer;
 }
 
-/* Quand le champ est VIDE: texte gris (placeholder) */
 .dateInput:not(:focus):invalid {
-  color: var(--color-text-tertiary);
+  color: var(--text-tertiary);
 }
 
-/* Quand le champ est REMPLI: texte BLANC */
-.dateInput:valid {
-  color: var(--color-text-primary);
-}
-
-/* Quand le champ a le focus: toujours blanc */
+.dateInput:valid,
 .dateInput:focus {
-  color: var(--color-text-primary);
+  color: var(--text-primary);
 }
 
-/* Style les parties individuelles du placeholder de date */
 .dateInput::-webkit-datetime-edit-text,
 .dateInput::-webkit-datetime-edit-month-field,
 .dateInput::-webkit-datetime-edit-day-field,
@@ -151,13 +139,12 @@
   color: inherit;
 }
 
-/* Icône calendrier native du navigateur - Bien visible */
 .dateInput::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  opacity: 0.8;
-  transition: opacity var(--transition-normal);
-  filter: invert(0.7) brightness(1.2);
   margin-right: 0;
+  opacity: 0.8;
+  filter: invert(0.7) brightness(1.2);
+  cursor: pointer;
+  transition: opacity var(--transition-normal);
 }
 
 .dateInput::-webkit-calendar-picker-indicator:hover {
@@ -165,47 +152,46 @@
   filter: invert(0.9) brightness(1.3);
 }
 
-/* Submit Button - Blue for create, Orange for edit */
 .submitButton {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
   width: 48px;
   height: 48px;
   padding: 0;
-  background-color: var(--color-action-primary);
-  color: var(--color-text-primary);
-  border-radius: var(--radius-lg);
+  background-color: var(--action-primary);
+  color: var(--text-primary);
   border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
   cursor: pointer;
   transition: all var(--transition-normal);
-  box-shadow: var(--shadow-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
 .submitButton.editing {
-background-color: var(--color-editing-action);
-  box-shadow: var(--shadow-action-secondary);
+  background-color: var(--action-secondary);
+  box-shadow: var(--shadow-secondary);
 }
 
 .submitButton:hover {
-  background-color: var(--color-action-primary-hover);
+  background-color: var(--action-primary-hover);
   box-shadow: var(--shadow-lg);
   transform: scale(1.05);
 }
 
 .submitButton.editing:hover {
-  background-color: var(--color-editing-action-hover);
-  box-shadow: var(--shadow-action-secondary-hover);
+  background-color: var(--action-secondary-hover);
+box-shadow: var(--shadow-secondary-hover);
 }
 
 .submitButton:focus {
   outline: none;
-  box-shadow: var(--glow-focus-primary), var(--shadow-lg);
+  box-shadow: var(--glow-focus), var(--shadow-lg);
 }
 
 .submitButton.editing:focus {
-  box-shadow: var(--glow-focus-secondary), var(--shadow-action-secondary);
+  box-shadow: var(--glow-focus-secondary), var(--shadow-secondary);
 }
 
 .submitButton:active {
@@ -217,10 +203,10 @@ background-color: var(--color-editing-action);
   height: 1.5rem;
 }
 
-/* Responsive: Stack on small screens */
+/* Responsive - Mobile */
 @media (max-width: 768px) {
   .formRow {
-  flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 
   .formRow .priorityButton {
@@ -233,7 +219,7 @@ background-color: var(--color-editing-action);
   }
 
   .formRow .inputGroup:nth-child(3) {
-order: 3;
+    order: 3;
     flex: 1 1 calc(100% - 60px);
     min-width: 0;
   }

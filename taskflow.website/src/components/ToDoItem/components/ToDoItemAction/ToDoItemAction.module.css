@@ -1,29 +1,31 @@
 .actionButton {
   flex-shrink: 0;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
+  padding: var(--spacing-sm);
   background: transparent;
   border: 0;
+  border-radius: var(--radius-md);
   cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
+/* Completed state - Archive button */
 .actionButton.completed {
-  color: rgb(107 114 128);
+  color: var(--gray-500);
 }
 
 .actionButton.completed:hover {
-  background-color: rgb(55 65 81);
-  color: rgb(248 113 113);
+  background-color: var(--gray-700);
+  color: var(--red-400);
 }
 
+/* Active state - Complete button */
 .actionButton.active {
-  color: rgb(156 163 175);
+  color: var(--gray-400);
 }
 
 .actionButton.active:hover {
-  background-color: rgb(20 83 45 / 0.3);
-  color: rgb(74 222 128);
+  background-color: hsla(142, 76%, 36%, 0.3);
+  color: var(--green-400);
 }
 
 .actionIcon {

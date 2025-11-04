@@ -1,21 +1,21 @@
 .container {
-  text-align: center;
   padding: var(--spacing-2xl) 0;
+  text-align: center;
 }
 
 .icon {
-  margin: 0 auto;
-  height: 3rem;
   width: 3rem;
-  color: var(--color-gray-600);
+  height: 3rem;
+  margin: 0 auto;
+  color: var(--gray-600);
 }
 
 .title {
-  color: var(--color-text-muted);
   margin-top: var(--spacing-sm);
+  color: var(--text-muted);
 }
 
 .subtitle {
   font-size: 0.875rem;
-  color: var(--color-gray-500);
+  color: var(--gray-500);
 }

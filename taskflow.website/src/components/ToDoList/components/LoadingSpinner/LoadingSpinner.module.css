@@ -1,15 +1,15 @@
 .container {
-  text-align: center;
   padding: var(--spacing-2xl) 0;
+  text-align: center;
 }
 
 .spinner {
   display: inline-block;
-  animation: spin 1s linear infinite;
-  border-radius: 50%;
-  height: 2rem;
   width: 2rem;
-  border-bottom: 2px solid var(--color-blue-500);
+  height: 2rem;
+  border-bottom: 2px solid var(--action-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -19,6 +19,6 @@
 }
 
 .text {
-  color: var(--color-text-muted);
   margin-top: var(--spacing-sm);
+  color: var(--text-muted);
 }

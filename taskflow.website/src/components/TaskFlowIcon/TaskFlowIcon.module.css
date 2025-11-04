@@ -1,5 +1,5 @@
 .icon {
   width: 2.5rem;
   height: 2.5rem;
-  color: rgb(59 130 246);
+  color: var(--action-primary);
 }

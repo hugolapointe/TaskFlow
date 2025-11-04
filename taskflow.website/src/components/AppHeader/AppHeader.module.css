@@ -1,5 +1,5 @@
 .header {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-2xl);
 }
 
 .titleContainer {
@@ -7,38 +7,38 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--spacing-sm);
 }
 
 .iconAndTitle {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
 .title {
   font-size: 2.25rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
 }
 
 .separator {
   display: none;
-  color: rgb(55 65 81);
   font-size: 1.5rem;
   font-weight: 300;
+  color: var(--gray-700);
 }
 
 .subtitle {
-  color: rgb(156 163 175);
   font-size: 1.125rem;
+  color: var(--text-tertiary);
 }
 
 @media (min-width: 640px) {
   .titleContainer {
     flex-direction: row;
-    gap: 1rem;
-}
+    gap: var(--spacing-lg);
+  }
 
   .separator {
     display: block;

@@ -1,34 +1,34 @@
 .container {
   position: relative;
-  border-radius: var(--radius-xl);  /* Uniformisé */
   padding: var(--spacing-lg);
-  transition: all var(--transition-normal);
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
   cursor: pointer;
-  border: 2px solid;
-  background-color: var(--color-bg-surface);
-  border-color: var(--color-border-subtle);
+  transition: all var(--transition-normal);
 }
 
 .container:hover {
-  border-color: var(--color-border-default);
+  border-color: var(--border-default);
   box-shadow: var(--shadow-sm);
 }
 
 .container[data-selected="true"] {
-  border-color: var(--color-action-primary);
-  background-color: var(--color-task-selected);
+  background-color: var(--task-selected);
+  border-color: var(--action-primary);
   box-shadow: 0 10px 15px -3px hsla(217, 91%, 53%, 0.2);
 }
 
 .container[data-completed="true"] {
   background-color: hsla(220, 26%, 18%, 0.5);
-  border-color: var(--color-border-subtle);
+  border-color: var(--border-subtle);
   opacity: 0.6;
 }
 
+/* Priority state when not selected and not completed */
 .container[data-priority="true"]:not([data-selected="true"]):not([data-completed="true"]) {
-  background-color: hsla(25, 77%, 26%, 0.2);
-  border-color: hsla(26, 90%, 37%, 0.5);
+  background-color: var(--task-priority-bg);
+  border-color: var(--task-priority-border);
   box-shadow: 0 4px 6px -1px hsla(25, 77%, 26%, 0.2);
 }
 

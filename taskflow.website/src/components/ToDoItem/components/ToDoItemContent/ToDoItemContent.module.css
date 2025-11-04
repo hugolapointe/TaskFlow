@@ -8,11 +8,11 @@
 
 .priorityButton {
   flex-shrink: 0;
-  transition: transform var(--transition-normal);
+  padding: 0;
   background: transparent;
   border: 0;
-  padding: 0;
   cursor: pointer;
+  transition: transform var(--transition-normal);
 }
 
 .priorityButton:hover {
@@ -24,65 +24,64 @@
 }
 
 .priorityButton:focus .priorityIcon {
-  filter: drop-shadow(0 0 0 2px var(--color-priority-active));
+  filter: drop-shadow(0 0 0 2px var(--danger));
 }
 
 .priorityIcon {
   width: 1.5rem;
   height: 1.5rem;
+  stroke-width: 2;
   transition: all var(--transition-normal);
 }
 
 .priorityIcon.active {
-  fill: var(--color-priority-active);
-  filter: var(--glow-priority);
+  color: var(--danger);
 }
 
 .priorityIcon.active:hover {
-  fill: var(--color-priority-active-hover);
-  filter: var(--glow-priority-hover);
+  color: var(--danger-hover);
 }
 
 .priorityIcon.inactive {
-  color: var(--color-priority-inactive);
+  color: var(--gray-500);
 }
 
 .priorityIcon.inactive:hover {
-  color: var(--color-priority-inactive-hover);
-  filter: var(--glow-priority-inactive);
+  color: var(--danger);
+  filter: var(--glow-priority);
 }
 
 .description {
+  flex: 1;
   font-size: 1rem;
   font-weight: 500;
-  flex: 1;
-  color: var(--color-text-primary);
+  color: var(--text-primary);
 }
 
 .description.completed {
+  color: var(--text-muted);
   text-decoration: line-through;
-  color: var(--color-task-completed);
 }
 
 .dueDateContainer {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 0.25rem;
   font-size: 0.75rem;
-  flex-shrink: 0;
 }
 
 .dueDateIcon {
   width: 0.75rem;
   height: 0.75rem;
-  color: var(--color-text-disabled);
+  color: var(--text-muted);
 }
 
 .dueDate {
-  color: var(--color-text-tertiary);
+  color: var(--text-tertiary);
 }
 
 .dueDate.overdue {
-  color: var(--color-task-overdue);
   font-weight: 500;
+  color: var(--danger);
 }
