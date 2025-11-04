@@ -12,31 +12,39 @@ public static class DbSeeder {
         bool isArchived = false,
         int? dueDaysOffset = null) {
 
-        return new(description) {
-            CreatedAt = DateTime.UtcNow.AddDays(daysOffset),
+        var todo = new ToDo(description) {
             DueDate = dueDaysOffset.HasValue ? DateTime.UtcNow.AddDays(dueDaysOffset.Value) : null,
             IsPriority = isPriority,
             IsCompleted = isCompleted,
             IsArchived = isArchived
         };
+
+        if (daysOffset != 0) {
+            todo.CreatedAt = DateTime.UtcNow.AddDays(daysOffset);
+            todo.UpdatedAt = todo.CreatedAt;
+        }
+
+        return todo;
     }
 
     private static IEnumerable<ToDo> InitialTodos => [
-        CreateTodo("Promener le chien", 0, true, false, false, 0),
-        CreateTodo("Prendre les médicaments", 0, true, false, false, 0),
-        CreateTodo("Aller chercher les enfants à l'école", 0, true, false, false, 0),
-        CreateTodo("Faire la lessive", -1, false, false, false, 1),
-        CreateTodo("Nettoyer la salle de bain", -2, false, false, false, 2),
-        CreateTodo("Arroser les plantes", -1),
-        CreateTodo("Payer la facture d'électricité", -3, true, false, false, 1),
-        CreateTodo("Faire l'épicerie", -1, true, false, false, 0),
-        CreateTodo("Sortir les poubelles", -1, true, true),
-        CreateTodo("Faire le lit", 0, false, true),
-        CreateTodo("Pelleter la neige", -10, false, true, true),
-        CreateTodo("Prendre rendez-vous chez le dentiste", -1, true, false, false, 5)
+        
+        CreateTodo("Walk the dog", 0, true, false, false, 0),
+        CreateTodo("Take medication", 0, true, false, false, 0),
+        CreateTodo("Pick up kids from school", 0, true, false, false, 0),
+        CreateTodo("Do the laundry", -1, false, false, false, 1),
+        CreateTodo("Clean the bathroom", -2, false, false, false, 2),
+        CreateTodo("Water the plants", -1, false, false, false, 3),
+        CreateTodo("Pay electricity bill", -3, true, false, false, 5),
+        CreateTodo("Buy groceries", -1, true, false, false, 0),
+        CreateTodo("Take out the trash", -1, true, true),
+        CreateTodo("Make the bed", 0, false, true),
+        CreateTodo("Shovel snow", -10, false, true, true),
+        CreateTodo("Schedule dentist appointment", -2, true, false, false, 7)
     ];
 
     public static async Task SeedAsync(TaskFlowDbContext context) {
+        
         if (context.ToDos.Any()) return;
 
         var todos = InitialTodos;

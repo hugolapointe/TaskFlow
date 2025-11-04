@@ -3,17 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Core.Domain.Repositories;
 using TaskFlow.Core.Domain.Services;
 using TaskFlow.WebAPI.Mappers;
+using TaskFlow.WebAPI.Models.Common;
 using TaskFlow.WebAPI.Models.ToDo;
 
 namespace TaskFlow.WebAPI.Controllers;
 
 [ApiController]
 [Route("api/todos")]
+[Produces("application/json")]
 public class ToDoController(ToDoService service, ToDoRepository repository) : ControllerBase {
-    
+
     [HttpPost]
+    [ProducesResponseType(typeof(ToDoDetails), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ToDoDetails>> Create(
-        [FromBody] CreateToDo command) {
+          [FromBody] CreateToDo command) {
 
         if (!ModelState.IsValid) {
             return BadRequest(ModelState);
@@ -26,13 +30,15 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
         );
 
         return CreatedAtAction(
-            nameof(GetById),
-            new { id = todo.Id },
+        nameof(GetById),
+     new { id = todo.Id },
             todo.AsDetails()
-        );
+);
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ToDoDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ToDoDetails>> GetById(int id) {
         var todo = await repository.GetByIdAsync(id);
 
@@ -44,59 +50,46 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
     }
 
     [HttpGet]
-    public async Task<ActionResult<ToDoItemList>> GetAll(
-        [FromQuery] ToDoQuery query) {
+    [ProducesResponseType(typeof(ItemList<ToDoItem>), StatusCodes.Status200OK)]
+    public async Task<ActionResult<ItemList<ToDoItem>>> GetAll(
+          [FromQuery] ToDoQuery query) {
 
         var items = await repository.GetAllAsync(
-            query.IsPriority,
-            query.IsCompleted,
-            query.SortBy.AsSortBy()
-        );
+              query.IsPriority,
+              query.IsCompleted,
+              query.SortBy.AsSortBy()
+          );
 
         var response = items.AsItemList();
         return Ok(response);
     }
 
     [HttpGet("stats")]
+    [ProducesResponseType(typeof(ToDoStats), StatusCodes.Status200OK)]
     public async Task<ActionResult<ToDoStats>> GetStats() {
-        var (total, priority, nonPriority, completed) = await repository.GetStatsAsync();
-    
-        var stats = new ToDoStats(
-            Total: total,
-            Priority: priority,
-            NonPriority: nonPriority,
-            Completed: completed
+        var statistics = await repository.GetStatsAsync();
+        return Ok(statistics.AsStatsDto());
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(typeof(ToDoDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ToDoDetails>> Update(
+        int id,
+        [FromBody] UpdateToDo command) {
+
+        if (!ModelState.IsValid) {
+            return BadRequest(ModelState);
+        }
+
+        var todo = await service.UpdateAsync(
+            id,
+            command.Description,
+            command.DueDate,
+            command.IsPriority,
+            command.IsCompleted
         );
-
-        return Ok(stats);
-    }
-
-    [HttpPut("{id}/description")]
-    public async Task<ActionResult<ToDoDetails>> UpdateDescription(
-        int id, [FromBody] UpdateToDo.Description command) {
-
-        if (!ModelState.IsValid) {
-            return BadRequest(ModelState);
-        }
-
-        var todo = await service.UpdateDescriptionAsync(id, command.Value);
-
-        if (todo is null) {
-            return NotFound();
-        }
-
-        return Ok(todo.AsDetails());
-    }
-
-    [HttpPut("{id}/due-date")]
-    public async Task<ActionResult<ToDoDetails>> UpdateDueDate(
-        int id, [FromBody] UpdateToDo.DueDate command) {
-
-        if (!ModelState.IsValid) {
-            return BadRequest(ModelState);
-        }
-
-        var todo = await service.UpdateDueDateAsync(id, command.Value);
 
         if (todo is null) {
             return NotFound();
@@ -106,7 +99,10 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
     }
 
     [HttpPatch("{id}/toggle-priority")]
+    [ProducesResponseType(typeof(ToDoDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ToDoDetails>> TogglePriority(int id) {
+
         var todo = await service.TogglePriorityAsync(id);
 
         if (todo is null) {
@@ -116,8 +112,11 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
         return Ok(todo.AsDetails());
     }
 
-    [HttpPatch("{id}/toggle-complete")]
-    public async Task<ActionResult<ToDoDetails>> ToggleComplete(int id) {
+    [HttpPatch("{id}/mark-as-completed")]
+    [ProducesResponseType(typeof(ToDoDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<ToDoDetails>> MarkAsCompleted(int id) {
+
         var todo = await service.ToggleCompleteAsync(id);
 
         if (todo is null) {
@@ -128,7 +127,10 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
     }
 
     [HttpDelete("{id}/archive")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Archive(int id) {
+
         var success = await service.ArchiveAsync(id);
 
         if (!success) {

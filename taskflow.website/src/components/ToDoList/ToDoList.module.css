@@ -15,6 +15,7 @@
   font-weight: 600;
   color: var(--color-text-primary);
   margin-bottom: var(--spacing-md);
+  text-align: center;
 }
 
 .todosList {

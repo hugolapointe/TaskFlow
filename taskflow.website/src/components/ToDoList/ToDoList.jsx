@@ -7,7 +7,7 @@ import EmptyState from './components/EmptyState';
 import styles from './ToDoList.module.css';
 
 const ToDoList = () => {
-    const { todos, stats, loading, filterState } = useToDos();
+    const { toDos, stats, loading, filterState } = useToDos();
 
     return (
         <div className={styles.container}>
@@ -25,15 +25,15 @@ const ToDoList = () => {
 
             {loading ? (
                 <LoadingSpinner />
-            ) : todos.length === 0 ? (
+            ) : toDos.length === 0 ? (
                 <EmptyState
                     title="No tasks found"
                     subtitle="Time to create your first one!"
                 />
             ) : (
                 <div className={styles.todosList}>
-                    {todos.map(todo => (
-                        <ToDoItem key={todo.id} todo={todo} />
+                    {toDos.map(toDo => (
+                        <ToDoItem key={toDo.id} toDo={toDo} />
                     ))}
                 </div>
             )}

@@ -4,20 +4,19 @@ namespace TaskFlow.WebAPI.Models.ToDo;
 
 public record CreateToDo(
     [Required]
-    [StringLength(200, MinimumLength = 3)]
+    [Length(3, 200)]
     string Description,
 
     DateTime? DueDate = null,
     bool IsPriority = false
 );
 
-public static class UpdateToDo {
+public record UpdateToDo(
+    [Required]
+    [Length(3, 200)]
+    string Description,
 
-    public record Description(
-        [Required]
-        [StringLength(200, MinimumLength = 3)]
-        string Value
-    );
-
-    public record DueDate(DateTime? Value);
-}
+    DateTime? DueDate = null,
+    bool IsPriority = false,
+    bool IsCompleted = false
+);

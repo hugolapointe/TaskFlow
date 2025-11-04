@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskFlow.Core.Domain.Entities;
 
-public class ToDo {
+public class ToDo : AuditableEntity {
 
     public int Id { get; set; }
 
@@ -15,16 +15,10 @@ public class ToDo {
     public bool IsCompleted { get; set; }
     public bool IsArchived { get; set; }
 
-    // Audit fields
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-
     // EF Core requires a parameterless constructor
     private ToDo() { }
 
     public ToDo(string description) {
         Description = description;
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = CreatedAt;
     }
 }

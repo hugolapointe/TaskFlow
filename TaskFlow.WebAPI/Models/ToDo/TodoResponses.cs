@@ -5,7 +5,9 @@ public record ToDoItem(
     string Description,
     string? DueDate,
     bool IsPriority,
-    bool IsCompleted
+    bool IsCompleted,
+    string CreatedAt,
+    string? UpdatedAt
 );
 
 public record ToDoDetails(
@@ -16,12 +18,6 @@ public record ToDoDetails(
     bool IsCompleted,
     string CreatedAt,
     string? UpdatedAt
-);
-
-public record ToDoItemList(
-    IEnumerable<ToDoItem> Items,
-    int TotalCount,
-    int CompletedCount
 );
 
 public record ToDoStats(
