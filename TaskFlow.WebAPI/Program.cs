@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 using TaskFlow.Core;
 using TaskFlow.Core.Data;
@@ -15,14 +17,27 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => {
+    options.SwaggerDoc("v1", new OpenApiInfo {
+        Version = "v1",
+        Title = "TaskFlow API",
+        Contact = new OpenApiContact {
+   Name = "TaskFlow Support",
+   Url = new Uri("https://github.com/hugolapointe/TaskFlow.WebAPI")
+ }
+    });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+    options.IncludeXmlComments(xmlPath);
+});
 
 builder.Services.AddCors(options => {
-    options.AddPolicy("AllowReactApp", policy => {
-        if (builder.Environment.IsDevelopment()) {
-            policy.AllowAnyOrigin()
-                  .AllowAnyMethod()
-                  .AllowAnyHeader();
+  options.AddPolicy("AllowReactApp", policy => {
+   if (builder.Environment.IsDevelopment()) {
+       policy.AllowAnyOrigin()
+        .AllowAnyMethod()
+     .AllowAnyHeader();
         }
     });
 });
@@ -30,11 +45,14 @@ builder.Services.AddCors(options => {
 var app = builder.Build();
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options => {
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskFlow API v1");
+    options.RoutePrefix = "swagger";
+});
 
 if (app.Environment.IsDevelopment()) {
     using var scope = app.Services.CreateScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<TaskFlowDbContext>();
+  var dbContext = scope.ServiceProvider.GetRequiredService<TaskFlowDbContext>();
     await DbSeeder.SeedAsync(dbContext);
 }
 

@@ -1,14 +1,15 @@
 .card {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-xl);  /* Uniformisé */
   padding: var(--spacing-sm);
   text-align: center;
   transition: all var(--transition-normal);
   cursor: pointer;
+  border: 1px solid transparent;
 }
 
-.card.active {
+.card[data-active="true"] {
   box-shadow: var(--shadow-lg);
-  border: 2px solid;
+  border-width: 2px;
 }
 
 .value {
@@ -21,73 +22,77 @@
   color: var(--color-text-muted);
 }
 
-.card.total.active {
+/* Total */
+.card[data-type="total"][data-active="true"] {
   background-color: var(--color-gray-600);
   border-color: var(--color-gray-400);
 }
 
-.card.total.inactive {
+.card[data-type="total"][data-active="false"] {
   background-color: var(--color-gray-700);
 }
 
-.card.total.inactive:hover {
+.card[data-type="total"][data-active="false"]:hover {
   background-color: var(--color-gray-600);
 }
 
-.card.total .value {
+.card[data-type="total"] .value {
   color: var(--color-gray-100);
 }
 
-.card.priority.active {
+/* Priority */
+.card[data-type="priority"][data-active="true"] {
   background-color: var(--color-amber-800);
   border-color: var(--color-amber-700);
 }
 
-.card.priority.inactive {
+.card[data-type="priority"][data-active="false"] {
   background-color: rgba(120, 53, 15, 0.5);
-  border: 1px solid var(--color-amber-800);
+  border-color: var(--color-amber-800);
 }
 
-.card.priority.inactive:hover {
+.card[data-type="priority"][data-active="false"]:hover {
   background-color: rgba(146, 64, 14, 0.7);
 }
 
-.card.priority .value {
+.card[data-type="priority"] .value {
   color: var(--color-amber-400);
 }
 
-.card.nonPriority.active {
+/* Non-Priority */
+.card[data-type="nonpriority"][data-active="true"] {
   background-color: var(--color-blue-800);
   border-color: var(--color-blue-600);
 }
 
-.card.nonPriority.inactive {
+.card[data-type="nonpriority"][data-active="false"] {
   background-color: rgba(30, 58, 138, 0.5);
-  border: 1px solid var(--color-blue-800);
+  border-color: var(--color-blue-800);
 }
 
-.card.nonPriority.inactive:hover {
+.card[data-type="nonpriority"][data-active="false"]:hover {
   background-color: rgba(30, 64, 175, 0.7);
 }
 
-.card.nonPriority .value {
+.card[data-type="nonpriority"] .value {
   color: var(--color-blue-400);
 }
 
-.card.completed.active {
+/* Completed */
+.card[data-type="completed"][data-active="true"] {
   background-color: var(--color-green-800);
   border-color: var(--color-green-600);
 }
 
-.card.completed.inactive {
+.card[data-type="completed"][data-active="false"] {
   background-color: rgba(20, 83, 45, 0.5);
-  border: 1px solid var(--color-green-800);
+  border-color: var(--color-green-800);
 }
 
-.card.completed.inactive:hover {
+.card[data-type="completed"][data-active="false"]:hover {
   background-color: rgba(22, 101, 52, 0.7);
 }
 
-.card.completed .value {
+.card[data-type="completed"] .value {
   color: var(--color-green-400);
 }

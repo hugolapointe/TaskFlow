@@ -18,30 +18,24 @@ public class ToDoService(TaskFlowDbContext context) {
 
         context.ToDos.Add(todo);
         await context.SaveChangesAsync();
+
         return todo;
     }
 
-    public async Task<ToDo?> UpdateDescriptionAsync(int id, string description) {
+    public async Task<ToDo?> UpdateAsync(
+        int id,
+        string description,
+        DateTime? dueDate,
+        bool isPriority) {
+
         var todo = await context.ToDos
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsArchived);
 
         if (todo is null) return null;
 
         todo.Description = description;
-        todo.UpdatedAt = DateTime.UtcNow;
-        await context.SaveChangesAsync();
-
-        return todo;
-    }
-
-    public async Task<ToDo?> UpdateDueDateAsync(int id, DateTime? dueDate) {
-        var todo = await context.ToDos
-            .FirstOrDefaultAsync(x => x.Id == id && !x.IsArchived);
-
-        if (todo is null) return null;
-
         todo.DueDate = dueDate;
-        todo.UpdatedAt = DateTime.UtcNow;
+        todo.IsPriority = isPriority;
         await context.SaveChangesAsync();
 
         return todo;
@@ -54,7 +48,6 @@ public class ToDoService(TaskFlowDbContext context) {
         if (todo is null) return null;
 
         todo.IsCompleted = !todo.IsCompleted;
-        todo.UpdatedAt = DateTime.UtcNow;
         await context.SaveChangesAsync();
 
         return todo;
@@ -67,7 +60,6 @@ public class ToDoService(TaskFlowDbContext context) {
         if (todo is null) return null;
 
         todo.IsPriority = !todo.IsPriority;
-        todo.UpdatedAt = DateTime.UtcNow;
         await context.SaveChangesAsync();
 
         return todo;
@@ -75,12 +67,11 @@ public class ToDoService(TaskFlowDbContext context) {
 
     public async Task<bool> ArchiveAsync(int id) {
         var todo = await context.ToDos
-            .FirstOrDefaultAsync(x => x.Id == id && !x.IsArchived);
+                .FirstOrDefaultAsync(x => x.Id == id && !x.IsArchived);
 
         if (todo is null) return false;
 
         todo.IsArchived = true;
-        todo.UpdatedAt = DateTime.UtcNow;
         await context.SaveChangesAsync();
 
         return true;

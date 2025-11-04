@@ -1,0 +1,88 @@
+.leftSection {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.priorityButton {
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.priorityButton:hover {
+  transform: scale(1.1);
+}
+
+.priorityButton:focus {
+  outline: none;
+}
+
+.priorityButton:focus .priorityIcon {
+  filter: drop-shadow(0 0 0 2px var(--color-priority-active));
+}
+
+.priorityIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: all var(--transition-normal);
+}
+
+.priorityIcon.active {
+  fill: var(--color-priority-active);
+  filter: var(--glow-priority);
+}
+
+.priorityIcon.active:hover {
+  fill: var(--color-priority-active-hover);
+  filter: var(--glow-priority-hover);
+}
+
+.priorityIcon.inactive {
+  color: var(--color-priority-inactive);
+}
+
+.priorityIcon.inactive:hover {
+  color: var(--color-priority-inactive-hover);
+  filter: var(--glow-priority-inactive);
+}
+
+.description {
+  font-size: 1rem;
+  font-weight: 500;
+  flex: 1;
+  color: var(--color-text-primary);
+}
+
+.description.completed {
+  text-decoration: line-through;
+  color: var(--color-task-completed);
+}
+
+.dueDateContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.dueDateIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--color-text-disabled);
+}
+
+.dueDate {
+  color: var(--color-text-tertiary);
+}
+
+.dueDate.overdue {
+  color: var(--color-task-overdue);
+  font-weight: 500;
+}

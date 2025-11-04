@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.WebAPI", "TaskFlow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Core", "TaskFlow.Core\TaskFlow.Core.csproj", "{67AE97D0-05AF-42BD-88C7-9582761D8A44}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "taskflow.website", "TaskFlow.WebSite\taskflow.website.esproj", "{B32B77FC-461C-54A6-E486-533F84F9B3DB}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TaskFlow.WebSite", "TaskFlow.WebSite\TaskFlow.WebSite.esproj", "{B32B77FC-461C-54A6-E486-533F84F9B3DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
