@@ -1,4 +1,4 @@
-import FilterSelect from '../../../FilterSelect';
+import SelectInput from '../SelectInput';
 import styles from './FilterBar.module.css';
 
 const FilterBar = ({ filterState }) => {
@@ -26,19 +26,19 @@ const FilterBar = ({ filterState }) => {
 
   return (
     <div className={styles.filterBar}>
-      <FilterSelect
+      <SelectInput
         label="Status"
         value={getStatusValue()}
         onChange={(e) => handleStatusChange(e.target.value)}
         options={FILTER_OPTIONS.status}
       />
-      <FilterSelect
+      <SelectInput
         label="Priority"
         value={getPriorityValue()}
         onChange={(e) => handlePriorityChange(e.target.value)}
         options={FILTER_OPTIONS.priority}
       />
-      <FilterSelect
+      <SelectInput
         label="Sort by"
         value={filterState.filters.sortBy}
         onChange={(e) => filterState.updateFilter('sortBy', e.target.value)}
