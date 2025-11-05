@@ -13,8 +13,8 @@ const FILTER_OPTIONS = {
   ],
   priority: [
     { value: 'all', label: 'All' },
-    { value: 'priority', label: 'Priority Only' },
-    { value: 'nonpriority', label: 'Non Priority Only' }
+    { value: 'priority', label: 'Priority' },
+    { value: 'nonpriority', label: 'Non Priority' }
   ],
   sortBy: [
     { value: SORT_BY.CREATED_AT, label: 'Created Date' },
@@ -22,13 +22,14 @@ const FILTER_OPTIONS = {
   ]
 };
 
+// Default filter: show only pending tasks
 const DEFAULT_FILTERS = {
   sortBy: SORT_BY.CREATED_AT,
   isPriority: undefined,
-  isCompleted: undefined
+  isCompleted: false // Show only pending tasks by default
 };
 
-// Map pour déterminer le type de stat actif
+// Map to determine active stat type
 const STAT_TYPE_MAP = new Map([
   ['undefined-undefined', 'total'],
   ['false-true', 'priority'],
@@ -40,7 +41,7 @@ export const useToDoFilters = () => {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
 
   const updateFilter = (key, value) => {
-  setFilters(prev => ({ ...prev, [key]: value }));
+    setFilters(prev => ({ ...prev, [key]: value }));
   };
 
   const replaceFilters = (newFilters) => {
@@ -49,7 +50,7 @@ export const useToDoFilters = () => {
 
   const getActiveStatType = useMemo(() => {
     const key = `${filters.isCompleted}-${filters.isPriority}`;
- return STAT_TYPE_MAP.get(key) || null;
+    return STAT_TYPE_MAP.get(key) || null;
   }, [filters]);
 
   return {
