@@ -23,7 +23,7 @@ const FILTER_OPTIONS = {
 };
 
 // Default filter: show only pending tasks
-const DEFAULT_FILTERS = {
+export const DEFAULT_FILTERS = {
   sortBy: SORT_BY.CREATED_AT,
   isPriority: undefined,
   isCompleted: false // Show only pending tasks by default
@@ -48,6 +48,10 @@ export const useToDoFilters = () => {
     setFilters({ ...DEFAULT_FILTERS, ...newFilters });
   };
 
+  const resetToDefault = () => {
+    setFilters(DEFAULT_FILTERS);
+  };
+
   const getActiveStatType = useMemo(() => {
     const key = `${filters.isCompleted}-${filters.isPriority}`;
     return STAT_TYPE_MAP.get(key) || null;
@@ -57,6 +61,7 @@ export const useToDoFilters = () => {
     filters,
     updateFilter,
     replaceFilters,
+    resetToDefault,
     getActiveStatType,
     FILTER_OPTIONS
   };

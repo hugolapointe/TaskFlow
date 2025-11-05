@@ -25,6 +25,7 @@ const ToDoList = ({ selectedTodoId, onSelectTodo, onClearSelection }) => {
           currentFilters={filterState.filters}
           activeStatType={filterState.getActiveStatType}
           onFilterChange={filterState.replaceFilters}
+          onResetFilters={filterState.resetToDefault}
         />
       </div>
 
