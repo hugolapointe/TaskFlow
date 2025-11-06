@@ -63,25 +63,91 @@
   text-decoration: line-through;
 }
 
+.descriptionInput {
+  flex: 1;
+  min-width: 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  background-color: var(--bg-elevated);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.descriptionInput:focus {
+  border-color: var(--action-primary);
+  box-shadow: var(--glow-focus);
+}
+
 .dueDateContainer {
   display: flex;
   flex-shrink: 0;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.25rem;
-  font-size: 0.75rem;
+  padding: var(--spacing-md) var(--spacing-lg);
+  min-width: 220px;
 }
 
 .dueDateIcon {
-  width: 0.75rem;
-  height: 0.75rem;
-  color: var(--text-muted);
+  width: 1rem;
+  height: 1rem;
+  color: var(--gray-500);
 }
 
 .dueDate {
-  color: var(--text-tertiary);
+  font-size: 1rem;
+  color: var(--gray-400);
 }
 
 .dueDate.overdue {
   font-weight: 500;
   color: var(--danger);
+}
+
+.dueDateInput {
+  flex-shrink: 0;
+  width: 220px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1rem;
+  color: var(--text-primary);
+  background-color: var(--bg-elevated);
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  outline: none;
+  color-scheme: dark;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.dueDateInput:focus {
+  border-color: var(--action-primary);
+  box-shadow: var(--glow-focus);
+}
+
+.dueDateInput:not(:focus):invalid {
+  color: var(--text-tertiary);
+}
+
+.dueDateInput::-webkit-datetime-edit-text,
+.dueDateInput::-webkit-datetime-edit-month-field,
+.dueDateInput::-webkit-datetime-edit-day-field,
+.dueDateInput::-webkit-datetime-edit-year-field {
+  color: inherit;
+}
+
+.dueDateInput::-webkit-calendar-picker-indicator {
+  margin-right: 0;
+  opacity: 0.8;
+  filter: invert(0.7) brightness(1.2);
+  cursor: pointer;
+  transition: opacity var(--transition-normal);
+}
+
+.dueDateInput::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  filter: invert(0.9) brightness(1.3);
 }

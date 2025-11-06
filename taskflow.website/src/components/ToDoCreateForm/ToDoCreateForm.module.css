@@ -3,18 +3,13 @@
   margin-bottom: var(--spacing-xl);
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-border-radius: var(--radius-xl);
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
   transition: all var(--transition-slow);
 }
 
-.container.editing {
-  background-color: var(--editing-bg);
-  border-color: var(--editing-border);
-}
-
 .form {
-display: flex;
+  display: flex;
   flex-direction: column;
   gap: 0;
 }
@@ -25,72 +20,13 @@ display: flex;
   gap: var(--spacing-md);
 }
 
-.formRow .priorityButton {
-  flex-shrink: 0;
-}
-
-.formRow .inputGroup:nth-child(2) {
-  flex: 2;
+.inputGroup {
+  flex: 1;
   min-width: 0;
 }
 
-.formRow .inputGroup:nth-child(3) {
-  flex: 1;
-  min-width: 180px;
-}
-
-.formRow .submitButton {
-  flex-shrink: 0;
-}
-
-.priorityButton {
-  flex-shrink: 0;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
-  transition: transform var(--transition-normal);
-}
-
-.priorityButton:hover {
-  transform: scale(1.1);
-}
-
-.priorityButton:focus {
-  outline: none;
-}
-
-.priorityButton:focus .priorityIcon {
-  filter: drop-shadow(0 0 0 2px var(--danger));
-}
-
-.priorityIcon {
-  display: block;
-  width: 1.5rem;
-  height: 1.5rem;
-  stroke-width: 2;
-  transition: all var(--transition-normal);
-}
-
-.priorityIcon.active {
-  color: var(--danger);
-}
-
-.priorityIcon.active:hover {
-  color: var(--danger-hover);
-}
-
-.priorityIcon.inactive {
-  color: var(--gray-500);
-}
-
-.priorityIcon.inactive:hover {
-  color: var(--danger);
-  filter: var(--glow-priority);
-}
-
-.inputGroup {
-  position: relative;
+.inputGroup:last-of-type {
+  flex: 0 0 220px;
 }
 
 .input {
@@ -169,20 +105,10 @@ display: flex;
   transition: all var(--transition-normal);
 }
 
-.submitButton.editing {
-  background-color: var(--action-secondary);
-  box-shadow: var(--shadow-secondary);
-}
-
-.submitButton:hover {
+.submitButton:hover:not(:disabled) {
   background-color: var(--action-primary-hover);
   box-shadow: var(--shadow-lg);
   transform: scale(1.05);
-}
-
-.submitButton.editing:hover {
-  background-color: var(--action-secondary-hover);
-box-shadow: var(--shadow-secondary-hover);
 }
 
 .submitButton:focus {
@@ -190,12 +116,13 @@ box-shadow: var(--shadow-secondary-hover);
   box-shadow: var(--glow-focus), var(--shadow-lg);
 }
 
-.submitButton.editing:focus {
-  box-shadow: var(--glow-focus-secondary), var(--shadow-secondary);
+.submitButton:active:not(:disabled) {
+  transform: scale(0.95);
 }
 
-.submitButton:active {
-  transform: scale(0.95);
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .submitIcon {
@@ -207,25 +134,18 @@ box-shadow: var(--shadow-secondary-hover);
 @media (max-width: 768px) {
   .formRow {
     flex-wrap: wrap;
+    gap: var(--spacing-sm);
   }
 
-  .formRow .priorityButton {
-    order: 1;
-  }
-
-  .formRow .inputGroup:nth-child(2) {
-    order: 2;
+  .inputGroup {
     flex: 1 1 100%;
   }
 
-  .formRow .inputGroup:nth-child(3) {
-    order: 3;
+  .inputGroup:last-of-type {
     flex: 1 1 calc(100% - 60px);
-    min-width: 0;
   }
 
-  .formRow .submitButton {
-    order: 4;
+  .submitButton {
     margin-left: auto;
   }
 }

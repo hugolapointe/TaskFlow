@@ -4,7 +4,6 @@
   background-color: var(--bg-surface);
   border: 2px solid var(--border-subtle);
   border-radius: var(--radius-xl);
-  cursor: pointer;
   transition: all var(--transition-normal);
 }
 
@@ -17,6 +16,13 @@
   background-color: var(--task-selected);
   border-color: var(--action-primary);
   box-shadow: 0 10px 15px -3px hsla(217, 91%, 53%, 0.2);
+}
+
+.container[data-editing="true"] {
+  background-color: var(--task-selected);
+  border-color: var(--action-primary);
+  box-shadow: 0 10px 15px -3px hsla(217, 91%, 53%, 0.2);
+  cursor: default;
 }
 
 .container[data-completed="true"] {
@@ -37,4 +43,64 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-lg);
+}
+
+.actionsContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.editButton,
+.saveButton,
+.cancelButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.editButton {
+  color: var(--text-secondary);
+}
+
+.editButton:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+.saveButton {
+  color: var(--status-success);
+}
+
+.saveButton:hover:not(:disabled) {
+  background-color: hsla(142, 76%, 36%, 0.1);
+  border-color: var(--status-success);
+}
+
+.saveButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  color: var(--status-error);
+}
+
+.cancelButton:hover {
+  background-color: hsla(0, 84%, 60%, 0.1);
+  border-color: var(--status-error);
+}
+
+.actionIcon {
+  width: 20px;
+  height: 20px;
 }

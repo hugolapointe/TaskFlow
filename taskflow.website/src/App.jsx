@@ -1,36 +1,19 @@
-import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 import { ToDoProvider } from './contexts/ToDoContext';
-import { TOAST_CONFIG } from './config/toastConfig';
-import AppHeader from './components/AppHeader';
-import ToDoForm from './components/ToDoForm';
+import ToDoCreateForm from './components/ToDoCreateForm';
 import ToDoList from './components/ToDoList';
+import AppHeader from './components/AppHeader';
 
 function App() {
-  const [selectedTodoId, setSelectedTodoId] = useState(null);
-
-  const handleClearSelection = () => {
-    setSelectedTodoId(null);
-  };
-
   return (
     <ToDoProvider>
-      <div className="min-h-screen bg-gray-900 py-8 px-4">
-        <div className="max-w-3xl mx-auto">
-          <AppHeader />
-          <ToDoForm 
-            selectedTodoId={selectedTodoId}
-            onClearSelection={handleClearSelection}
-          />
-          <ToDoList 
-            selectedTodoId={selectedTodoId}
-            onSelectTodo={setSelectedTodoId}
-            onClearSelection={handleClearSelection}
-          />
-        </div>
+      <div className="app">
+        <AppHeader />
+        <main className="main-content">
+          <ToDoCreateForm />
+          <ToDoList />
+        </main>
       </div>
-      <ToastContainer {...TOAST_CONFIG} />
     </ToDoProvider>
   );
 }

@@ -1,8 +1,13 @@
 .actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
-  padding: var(--spacing-sm);
+  width: 40px;
+  height: 40px;
+  padding: 0;
   background: transparent;
-  border: 0;
+  border: 2px solid transparent;
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -15,6 +20,7 @@
 
 .actionButton.completed:hover {
   background-color: var(--gray-700);
+  border-color: var(--red-400);
   color: var(--red-400);
 }
 
@@ -24,11 +30,12 @@
 }
 
 .actionButton.active:hover {
-  background-color: hsla(142, 76%, 36%, 0.3);
+  background-color: hsla(142, 76%, 36%, 0.1);
+  border-color: var(--green-400);
   color: var(--green-400);
 }
 
 .actionIcon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
 }

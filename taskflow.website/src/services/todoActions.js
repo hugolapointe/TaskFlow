@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
-import * as toDoApi from './ToDoApi';
-import { updateInList, removeFromList } from '../utils/toDoUtils';
+import * as toDoApi from './todoApi';
+import { updateInList, removeFromList } from '../utils/todoUtils';
 
 const withStatsUpdate = async (action, successMsg, errorMsg, updateStats) => {
     try {

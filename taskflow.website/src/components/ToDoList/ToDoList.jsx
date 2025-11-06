@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useToDos } from '../../contexts/ToDoContext';
 import { useToDoFilters } from '../../hooks/useToDoFilters';
 import ToDoItem from '../ToDoItem';
@@ -8,13 +8,22 @@ import LoadingSpinner from './components/LoadingSpinner';
 import EmptyState from './components/EmptyState';
 import styles from './ToDoList.module.css';
 
-const ToDoList = ({ selectedTodoId, onSelectTodo, onClearSelection }) => {
+const ToDoList = () => {
   const { todos, stats, loading, refresh } = useToDos();
   const filterState = useToDoFilters();
+  const [editingTodoId, setEditingTodoId] = useState(null);
 
   useEffect(() => {
     refresh(filterState.filters);
   }, [filterState.filters, refresh]);
+
+  const handleEditStart = todoId => {
+    setEditingTodoId(todoId);
+  };
+
+  const handleEditCancel = () => {
+    setEditingTodoId(null);
+  };
 
   return (
     <div className={styles.container}>
@@ -44,9 +53,9 @@ const ToDoList = ({ selectedTodoId, onSelectTodo, onClearSelection }) => {
             <ToDoItem
               key={todo.id}
               todo={todo}
-              isSelected={selectedTodoId === todo.id}
-              onSelectTodo={onSelectTodo}
-              onClearSelection={onClearSelection}
+              isEditing={editingTodoId === todo.id}
+              onEditStart={() => handleEditStart(todo.id)}
+              onEditCancel={handleEditCancel}
             />
           ))}
         </div>

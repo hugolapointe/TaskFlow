@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { toast } from 'react-toastify';
-import * as toDoApi from '../services/ToDoApi';
-import * as toDoActions from '../services/toDoActions';
+import * as toDoApi from '../services/todoApi';
+import * as toDoActions from '../services/todoActions';
 
 const ToDoContext = createContext();
 

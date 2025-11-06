@@ -1,5 +1,5 @@
 import { ClockIcon } from '@heroicons/react/24/outline';
-import { formatDate } from '../../../../utils/toDoUtils';
+import { formatDate } from '../../../../utils/todoUtils';
 import styles from './ToDoItemAudit.module.css';
 
 const ToDoItemAudit = ({ todo }) => {
