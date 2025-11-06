@@ -10,6 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\FilterSelect\" />
-    <Folder Include="src\components\ToDoList\components\FilterSelect\" />
+    <Folder Include="src\components\ToDoItem\components\ToDoItemAction\" />
+    <Folder Include="src\components\ToDoItem\components\ToDoItemAudit\" />
+    <Folder Include="src\components\ToDoItem\components\ToDoItemContent\" />
+    <Folder Include="src\components\ToDoItem\components\ToDoItemEdit\" />
   </ItemGroup>
 </Project>
