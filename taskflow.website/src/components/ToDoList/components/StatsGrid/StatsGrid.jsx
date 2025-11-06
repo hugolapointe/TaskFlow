@@ -30,12 +30,11 @@ const STAT_CONFIGS = [
 
 const StatsGrid = ({ stats, currentFilters, activeStatType, onFilterChange, onResetFilters }) => {
     const handleCardClick = (config) => {
-        // If clicking on the already active card, reset to default filters
         if (config.type === activeStatType) {
+            // Reset filters if clicking active card
             onResetFilters();
-
         } else {
-            // Otherwise, apply the card's filters
+            // Apply card's filters while preserving sort
             onFilterChange({ ...config.filters, sortBy: currentFilters.sortBy });
         }
     };

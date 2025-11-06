@@ -26,16 +26,16 @@ const FILTER_OPTIONS = {
 export const DEFAULT_FILTERS = {
   sortBy: SORT_BY.CREATED_AT,
   isPriority: undefined,
-  isCompleted: false // Show only pending tasks by default
+  isCompleted: false
 };
 
-// Map to determine active stat type
-const STAT_TYPE_MAP = new Map([
-  ['undefined-undefined', 'total'],
-  ['false-true', 'priority'],
-  ['false-false', 'nonpriority'],
-  ['true-undefined', 'completed']
-]);
+// Helper to determine active stat type based on filters
+const getStatTypeFromFilters = (isCompleted, isPriority) => {
+  if (isCompleted === true) return 'completed';
+  if (isPriority === true) return 'priority';
+  if (isPriority === false) return 'nonpriority';
+  return 'total';
+};
 
 export const useToDoFilters = () => {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
@@ -53,9 +53,8 @@ export const useToDoFilters = () => {
   };
 
   const getActiveStatType = useMemo(() => {
-    const key = `${filters.isCompleted}-${filters.isPriority}`;
-    return STAT_TYPE_MAP.get(key) || null;
-  }, [filters]);
+    return getStatTypeFromFilters(filters.isCompleted, filters.isPriority);
+  }, [filters.isCompleted, filters.isPriority]);
 
   return {
     filters,

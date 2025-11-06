@@ -17,44 +17,44 @@ const ToDoCreateForm = () => {
             dueDate: dueDate || null
         });
 
-     // Reset form
+        // Reset form
         setDescription('');
         setDueDate('');
     };
 
     return (
- <div className={styles.container}>
- <form className={styles.form} onSubmit={handleSubmit}>
-<div className={styles.formRow}>
-      <div className={styles.inputGroup}>
-        <input
-       type="text"
-    value={description}
- onChange={(e) => setDescription(e.target.value)}
-        placeholder="Add a new task..."
-              className={styles.input}
-        disabled={loading}
-            />
-         </div>
-           <div className={styles.inputGroup}>
-   <input
-        type="date"
-   value={dueDate}
-         onChange={(e) => setDueDate(e.target.value)}
-         className={`${styles.input} ${styles.dateInput}`}
-        disabled={loading}
-     />
-          </div>
-     <button
-         type="submit"
-                 className={styles.submitButton}
-     disabled={loading || !description.trim()}
-       title="Add task"
-    >
-   <PlusIcon className={styles.submitIcon} />
-          </button>
-   </div>
-       </form>
+        <div className={styles.container}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.formRow}>
+                    <div className={styles.inputGroup}>
+                        <input
+                            type="text"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Add a new task..."
+                            className={styles.input}
+                            disabled={loading}
+                        />
+                    </div>
+                    <div className={styles.inputGroup}>
+                        <input
+                            type="date"
+                            value={dueDate}
+                            onChange={(e) => setDueDate(e.target.value)}
+                            className={`${styles.input} ${styles.dateInput}`}
+                            disabled={loading}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className={styles.submitButton}
+                        disabled={loading || !description.trim()}
+                        title="Add task"
+                    >
+                        <PlusIcon className={styles.submitIcon} />
+                    </button>
+                </div>
+            </form>
         </div>
     );
 };

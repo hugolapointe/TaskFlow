@@ -24,9 +24,8 @@ export const ToDoProvider = ({ children }) => {
         try {
             const data = await toDoApi.getStats();
             setStats(data);
-
         } catch (error) {
-            // Silent fail
+            // Silent fail - stats are non-critical
         }
     }, []);
 
@@ -35,15 +34,14 @@ export const ToDoProvider = ({ children }) => {
         try {
             const data = await toDoApi.getToDos(filters);
             setTodos(data?.items || []);
-
         } catch (error) {
             toast.error('Failed to load tasks');
-
         } finally {
             setLoading(false);
         }
     }, []);
 
+    // Initial data load
     useEffect(() => {
         fetchTodos();
         updateStats();
@@ -55,7 +53,7 @@ export const ToDoProvider = ({ children }) => {
         togglePriority: (id) => toDoActions.togglePriority(id, setTodos, updateStats),
         toggleComplete: (id) => toDoActions.toggleComplete(id, setTodos, updateStats),
         archive: (id) => toDoActions.archive(id, setTodos, updateStats)
-    }), [updateStats, todos]);
+    }), [todos, updateStats]);
 
     const value = useMemo(() => ({
         todos, 
