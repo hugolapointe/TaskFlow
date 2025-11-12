@@ -1,145 +1,185 @@
-# TaskFlow - React Frontend
+# Taskflow React
 
-A simple and clean React app to manage your daily tasks. Get stuff done! ??
+Bienvenue dans le projet **Taskflow React**, une application de démonstration conçue pour introduire les étudiants aux bases de **React.js** dans le cadre du cours *Développement de commerce électronique*. Ce projet est connecté à une API ASP.NET WebAPI existante et illustre les bonnes pratiques de développement front-end moderne.
 
-## ?? Technologies
 
-- **React 19** - UI Framework
-- **Vite** - Build tool
-- **Tailwind CSS** - Styling
-- **Axios** - HTTP client
-- **React Toastify** - Notifications
-- **React Context API** - Global state management
+## 🎯 Objectifs pédagogiques
 
-## ?? Installation
+- Comprendre la structure d'un projet React avec Vite
+- Utiliser **useState**, **Context API**, et **axios** pour gérer les états et les appels API
+- Implémenter une interface **mobile-first** avec **Tailwind CSS**
+- Appliquer le principe de responsabilité unique (SRP) dans les composants
+- Gérer les mises à jour optimistes et les notifications utilisateur
+
+
+## 🗂 Structure du projet
+
+Le projet est organisé pour favoriser la clarté, la réutilisabilité et la séparation des responsabilités.
+
+### 📁 Arborescence complète
 
 ```bash
-npm install
-```
-
-## ?? Getting Started
-
-```bash
-npm run dev
-```
-
-The app will be available at `http://localhost:5173`
-
-**Important**: Make sure the backend API is running on `http://localhost:5154`
-
-## ?? Project Structure
-
-```
 src/
-??? main.jsx    # Entry point
-??? App.jsx        # Main component
-??? contexts/
-?   ??? TodoContext.jsx      # Context API - Global state
-??? services/
-?   ??? todoApi.js # Axios client - API requests
-??? components/
-    ??? TodoList.jsx         # Task list + filters
-    ??? TodoItem.jsx         # Individual task item
-    ??? TodoForm.jsx         # Create/edit form
+├─ main.jsx
+├─ App.jsx
+├─ index.css
+│
+├─ styles/
+│  ├─ theme.css
+│  └─ utilities.css
+│
+├─ api/
+│  ├─ axiosClient.js
+│  └─ toDosApi.js
+│
+├─ context/
+│  └─ ToDoContext.jsx
+│
+├─ hooks/
+│  └─ useToDos.js
+│
+├─ utils/
+│  ├─ date.js
+│  ├─ constants.js
+│  └─ cn.js
+│
+├─ common/
+│  ├─ AppShell.jsx
+│  ├─ Button.jsx
+│  ├─ IconButton.jsx
+│  ├─ Select.jsx
+│  ├─ TextInput.jsx
+│  ├─ Spinner.jsx
+│  ├─ Card.jsx
+│  ├─ Notification.jsx
+│  └─ PriorityToggle.jsx
+│
+└─ toDos/
+   ├─ pages/TodosPage.jsx
+   └─ components/
+      ├─ ToDoCreate/
+      │  └─ ToDoCreate.jsx
+      ├─ ToDoSelectors/
+      │  ├─ ToDoSelectors.jsx
+      │  └─ components/
+      │     ├─ StatusSelect.jsx
+      │     ├─ PrioritySelect.jsx
+      │     └─ SortSelect.jsx
+      ├─ ToDoStatsCards/
+      │  ├─ ToDoStatsCards.jsx
+      │  └─ components/
+      │     ├─ StatsCard.jsx
+      │     └─ StatsGrid.jsx
+      ├─ ToDoList/
+      │  ├─ ToDoList.jsx
+      │  └─ components/
+      │     ├─ ToDoItem.jsx
+      │     ├─ ToDoItemView.jsx
+      │     ├─ ToDoItemEdit.jsx
+      │     └─ ToDoAudit.jsx
+      └─ EmptyState.jsx
 ```
 
-## ?? Features
+## ⚙️ Fonctionnalités principales
 
-### Task Management
-- ? Create new tasks
-- ?? Edit existing tasks
-- ?? Mark as completed
-- ?? Set priority
-- ??? Delete tasks
-- ?? Add due dates
+- Création et modification de tâche : description, date d’échéance (optionnelle), priorité (toggle via icône Heroicon), avec édition inline.
+- Complétion et archivage : une tâche peut être marquée comme complétée à tout moment, puis archivée.
+- Priorisation : une tâche peut être rendue prioritaire ou non prioritaire à tout moment.
+- Mises à jour optimistes : les actions (création, modification, complétion, archivage) sont appliquées immédiatement dans l’interface, avec rollback en cas d’erreur.
+- Statistiques interactives : 4 cartes (Remaining, Priority, Non-priority, Completed) cliquables qui appliquent les filtres et tris associés.
+- Filtres et tri : par statut (toutes, non complétées, complétées), priorité (toutes, prioritaires, non prioritaires), et date (création ou échéance).
+- Affichage des informations d’audit : dates de création et de dernière mise à jour visibles lors de l’édition.
+Notifications utilisateur : toasts via react-hot-toast pour chaque action (succès ou erreur).
 
-### Filters & Sorting
-- Filter by status (all, pending, completed)
-- Filter by priority (all, high priority, normal)
-- Sort by creation date or due date
+## 🔗 API ASP.NET WebAPI
 
-### Statistics
-- Total tasks count
-- Pending tasks
-- Completed tasks
-- High priority tasks
+**Base URL** : `http://localhost:5000/api/todos`
 
-## ?? Design
+### Endpoints disponibles
 
-- Minimalist design with Tailwind CSS
-- Mobile-first & responsive
-- Toast notifications for actions
-- Visual indicators (priority, overdue)
+- `POST /todos`
+- `GET /todos`
+- `GET /todos/{id}`
+- `GET /todos/stats`
+- `PUT /todos/{id}`
+- `PATCH /todos/{id}/toggle-priority`
+- `PATCH /todos/{id}/mark-as-completed`
+- `DELETE /todos/{id}/archive`
 
-## ?? Configuration
+### Format des données
 
-### API URL
+```json
+// Création / modification
+{
+  "description": "string",
+  "dueDate": "2025-11-10 | null",
+  "isPriority": true
+}
 
-The API URL is configured in `src/services/todoApi.js`:
+// Tâche
+{
+  "id": 1,
+  "description": "string",
+  "dueDate": "YYYY-MM-DD | null",
+  "isPriority": true,
+  "isCompleted": false,
+  "createdAt": "YYYY-MM-DD",
+  "updatedAt": "YYYY-MM-DD | null"
+}
 
-```javascript
-const API_BASE_URL = 'http://localhost:5154/api';
+// Statistiques
+{
+  "total": 10,
+  "priority": 4,
+  "nonPriority": 3,
+  "completed": 3
+}
 ```
 
-Change this value if your API is on a different port.
+## 🎨 Design et UX
 
-### CORS
+- Thème sombre uniquement
+- Mobile-first avec marges latérales en desktop
+- Police système
+- Couleurs par état :
+  - Prioritaire non complétée : orange/rouge clair
+  - Non prioritaire non complétée : bleu
+  - Complétée : gris
+- PriorityToggle : icône Heroicon clickable servant aussi de badge visuel
+- Actions : boutons sous forme d’icônes Heroicon
 
-CORS is configured in the backend API (`TaskFlow.WebAPI/Program.cs`) to accept requests from:
-- `http://localhost:5173` (Vite default)
-- `http://localhost:5174` (Vite alternative)
+## 🚀 Guide d’implémentation
 
-## ?? React Concepts Used
+### 🔑 Priorités de démarrage
 
-### React Context API
-The `TodoContext` centralizes:
-- Global task state
-- Filters and sorting
-- All CRUD operations
+1. Configurer Tailwind + thème sombre
+2. Créer les composants UI communs
+3. Mettre en place le Context
+4. Implémenter le formulaire de création
+5. Afficher la liste des tâches
 
-### Custom Hooks
-```javascript
-const { todos, createTodo, updateTodo, deleteTodo } = useTodos();
-```
+### ✅ Bonnes pratiques
 
-### Controlled Components
-All forms use controlled components with `useState`.
+#### 📦 Implémentation d’un composant
 
-### Effects
-- `useEffect` to load tasks on mount
-- `useEffect` to sync form with selected task
+- Composant simple et autonome (SRP)
+- Props claires et bien nommées
+- Styles via Tailwind ou `@apply`
+- Dossier dédié si complexe
+- Réutilisation via `common/`
 
-## ?? User Workflow
+#### 🔄 Mises à jour optimistes
 
-1. **Create a task**: Fill the form at the top
-2. **Edit a task**: Click the ?? icon, form fills automatically
-3. **Quick actions**: Checkbox to complete, ?? icon for priority
-4. **Filter**: Use filters to refine the list
-5. **Notifications**: Toast for each successful or failed action
+- Mise à jour immédiate du `state` local
+- Requête API en arrière-plan
+- Rollback en cas d’erreur
+- Toast de succès ou d’erreur
 
-## ?? Debugging
+#### 🧠 Organisation des fichiers
 
-Errors are logged to the console:
-```javascript
-console.error('Error createTodo:', error);
-```
-
-Toast notifications display user-friendly error messages.
-
-## ?? Notes
-
-- Dates are in Canadian format: `YYYY-MM-DD`
-- Pagination was removed (see `SIMPLIFICATION-PAGINATION.md`)
-- API uses in-memory database (data lost on restart)
-
-## ?? Production Build
-
-```bash
-npm run build
-```
-
-Production files will be in the `dist/` folder.
-
-## ?? License
-
-This project is for educational purposes.
+- `context/TodosContext.jsx` : store global
+- `hooks/useTodos.js` : accès au contexte
+- `api/todosApi.js` : appels API
+- `utils/` : fonctions utilitaires
+- `common/` : composants UI
+- `todos/components/` : composants métier
