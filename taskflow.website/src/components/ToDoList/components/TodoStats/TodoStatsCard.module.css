@@ -1,0 +1,99 @@
+/* ===========================================
+   STAT CARD
+   =========================================== */
+
+.card {
+  padding: var(--spacing-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.card[data-active="true"] {
+  border-width: 2px;
+  box-shadow: var(--shadow-lg);
+}
+
+.count {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Card types */
+.card[data-type="total"][data-active="false"] {
+  background-color: var(--gray-700);
+}
+
+.card[data-type="total"][data-active="false"]:hover {
+  background-color: var(--gray-600);
+}
+
+.card[data-type="total"][data-active="true"] {
+  background-color: var(--gray-600);
+  border-color: var(--gray-400);
+}
+
+.card[data-type="total"] .count {
+  color: var(--gray-100);
+}
+
+.card[data-type="priority"][data-active="false"] {
+  background-color: var(--stat-priority-bg);
+  border-color: var(--amber-800);
+}
+
+.card[data-type="priority"][data-active="false"]:hover {
+  background-color: var(--stat-priority-hover);
+}
+
+.card[data-type="priority"][data-active="true"] {
+  background-color: var(--amber-800);
+  border-color: var(--amber-700);
+}
+
+.card[data-type="priority"] .count {
+  color: var(--amber-400);
+}
+
+.card[data-type="nonpriority"][data-active="false"] {
+  background-color: var(--stat-nonpriority-bg);
+  border-color: var(--blue-800);
+}
+
+.card[data-type="nonpriority"][data-active="false"]:hover {
+  background-color: var(--stat-nonpriority-hover);
+}
+
+.card[data-type="nonpriority"][data-active="true"] {
+  background-color: var(--blue-800);
+  border-color: var(--blue-600);
+}
+
+.card[data-type="nonpriority"] .count {
+  color: var(--blue-400);
+}
+
+.card[data-type="completed"][data-active="false"] {
+  background-color: var(--stat-completed-bg);
+  border-color: var(--green-800);
+}
+
+.card[data-type="completed"][data-active="false"]:hover {
+  background-color: var(--stat-completed-hover);
+}
+
+.card[data-type="completed"][data-active="true"] {
+  background-color: var(--green-800);
+  border-color: var(--green-600);
+}
+
+.card[data-type="completed"] .count {
+  color: var(--green-400);
+}
