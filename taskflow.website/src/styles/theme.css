@@ -1,0 +1,31 @@
+/* Theme CSS - Dark mode theme variables and styles */
+:root {
+  /* Colors */
+--color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-surface-hover: #334155;
+  
+  /* Text colors */
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  
+  /* Priority colors */
+  --color-priority: #fb923c;
+  --color-priority-hover: #f97316;
+  
+  /* Non-priority colors */
+  --color-non-priority: #3b82f6;
+  --color-non-priority-hover: #2563eb;
+  
+  /* Completed colors */
+  --color-completed: #64748b;
+  
+  /* Status colors */
+  --color-success: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  
+  /* Borders */
+  --color-border: #334155;
+}
