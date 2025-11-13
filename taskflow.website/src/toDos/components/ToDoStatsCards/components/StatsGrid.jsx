@@ -22,14 +22,14 @@ const StatsCard = ({ title, value, color, onClick, isActive }) => {
     <Card
       className={cn(
         colorClasses[color],
-        'cursor-pointer transition-all py-6',
+        'cursor-pointer transition-all py-4 sm:py-6',
         isActive && activeClasses[color]
       )}
       onClick={onClick}
     >
       <div className="text-center">
         <p className="text-xs uppercase tracking-wide text-slate-400 mb-2">{title}</p>
-        <p className="text-4xl font-bold text-slate-100">{value}</p>
+        <p className="text-3xl sm:text-4xl font-bold text-slate-100">{value}</p>
       </div>
     </Card>
   );
@@ -88,7 +88,7 @@ const StatsGrid = () => {
   const isCompletedActive = statusFilter === STATUS_FILTERS.COMPLETED;
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       <StatsCard
         title="Remaining"
         value={remainingTasks}

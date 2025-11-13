@@ -15,15 +15,15 @@ const TodosPage = () => {
 
     return (
         <PageLayout>
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
                 {/* Formulaire de création */}
                 <ToDoCreate />
 
                 {/* Statistiques */}
                 <div className="bg-slate-800/50 rounded-lg border border-slate-700 overflow-hidden">
-                    <div className="p-6 border-b border-slate-700/50 min-h-[140px]">
+                    <div className="p-4 sm:p-6 border-b border-slate-700/50 min-h-[120px] sm:min-h-[140px]">
                         {loading ? (
-                            <div className="flex justify-center items-center h-24">
+                            <div className="flex justify-center items-center h-20 sm:h-24">
                                 <Spinner size="md" />
                             </div>
                         ) : (
@@ -32,14 +32,14 @@ const TodosPage = () => {
                     </div>
 
                     {/* Filtres et tri */}
-                    <div className="px-6 py-4 border-b border-slate-700/50">
+                    <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-700/50">
                         <ToDoSelectors />
                     </div>
 
                     {/* Liste des tâches */}
-                    <div className="p-6 min-h-[300px]">
+                    <div className="p-4 sm:p-6 min-h-[250px] sm:min-h-[300px]">
                         {loading ? (
-                            <div className="flex justify-center items-center h-48">
+                            <div className="flex justify-center items-center h-40 sm:h-48">
                                 <Spinner size="lg" />
                             </div>
                         ) : (
