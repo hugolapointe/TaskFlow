@@ -8,9 +8,4 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="src\context\" />
-    <Folder Include="src\features\toDos\common\feedback\" />
-    <Folder Include="src\features\toDos\common\layout\" />
-  </ItemGroup>
 </Project>

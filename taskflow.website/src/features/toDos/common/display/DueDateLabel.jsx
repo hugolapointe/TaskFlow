@@ -1,4 +1,4 @@
-import { cn } from '@utils/cn';
+import Label from '@common/display/Label';
 import { formatDate, isOverdue } from '@utils/date';
 
 
@@ -8,12 +8,14 @@ const DueDateLabel = ({ dueDate, isCompleted = false }) => {
     const isTaskOverdue = isOverdue(dueDate) && !isCompleted;
 
     return (
-        <p className={cn(
-            'text-xs sm:text-sm sm:w-44 sm:text-right',
-            isTaskOverdue ? 'text-red-400 font-medium' : 'text-slate-400'
-        )}>
+        <Label
+            size="xs"
+            weight={isTaskOverdue ? 'medium' : 'normal'}
+            color={isTaskOverdue ? 'danger' : 'secondary'}
+            className="sm:w-44 sm:text-right"
+        >
             {formatDate(dueDate)}
-        </p>
+        </Label>
     );
 };
 

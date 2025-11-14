@@ -1,15 +1,17 @@
-import { cn } from '@utils/cn';
+import Label from '@common/display/Label';
 
 
 const DescriptionLabel = ({ description, isCompleted = false }) => {
     return (
-        <p className={cn(
-            'text-sm sm:text-base font-medium flex-1 min-w-0',
-            'text-slate-100',
-            isCompleted && 'line-through text-slate-500'
-        )}>
+        <Label
+            size="sm"
+            weight="medium"
+            color={isCompleted ? 'muted' : 'primary'}
+            strikethrough={isCompleted}
+            className="flex-1 min-w-0"
+        >
             {description}
-        </p>
+        </Label>
     );
 };
 
