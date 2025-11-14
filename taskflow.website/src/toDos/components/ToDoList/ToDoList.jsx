@@ -1,11 +1,13 @@
 import { useMemo } from 'react';
 import { useToDos } from '../../../hooks/useToDos';
+import { useFilters } from '../../../hooks/useFilters';
 import { STATUS_FILTERS, PRIORITY_FILTERS, SORT_OPTIONS } from '../../../utils/constants';
 import ToDoItem from './components/ToDoItem';
 import EmptyState from './components/EmptyState';
 
 const ToDoList = () => {
-    const { toDos, statusFilter, priorityFilter, sortBy } = useToDos();
+    const { toDos } = useToDos();
+    const { statusFilter, priorityFilter, sortBy } = useFilters();
 
     const filteredAndSortedToDos = useMemo(() => {
         if (!Array.isArray(toDos)) return [];

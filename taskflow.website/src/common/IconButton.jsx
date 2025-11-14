@@ -3,7 +3,7 @@ import { cn } from '../utils/cn';
 const IconButton = ({
     icon,
     label,
-    variant = 'default',
+    variant = 'primary',
     disabled = false,
     className,
     onClick,
@@ -12,7 +12,6 @@ const IconButton = ({
     const baseClasses = 'transition-colors disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variantClasses = {
-        default: 'text-slate-400 hover:text-slate-100',
         primary: 'text-blue-400 hover:text-blue-300',
         danger: 'text-red-400 hover:text-red-300',
         success: 'text-green-400 hover:text-green-300',

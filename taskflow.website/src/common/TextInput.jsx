@@ -22,6 +22,7 @@ const TextInput = ({
             className={cn(
                 'bg-slate-800 text-slate-100 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent',
                 error ? 'border-red-500' : 'border-slate-700',
+                type === 'date' && '[color-scheme:dark]',
                 inputClassName
             )}
             {...props}

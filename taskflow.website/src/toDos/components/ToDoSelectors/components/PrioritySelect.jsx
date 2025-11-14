@@ -1,4 +1,4 @@
-import { useToDos } from '../../../../hooks/useToDos';
+import { useFilters } from '../../../../hooks/useFilters';
 import { PRIORITY_FILTERS } from '../../../../utils/constants';
 import Select from '../../../../common/Select';
 
@@ -6,7 +6,7 @@ import Select from '../../../../common/Select';
  * PrioritySelect component - Priority filter selector
  */
 const PrioritySelect = () => {
-  const { priorityFilter, setPriorityFilter } = useToDos();
+  const { priorityFilter, setPriorityFilter } = useFilters();
 
   const options = [
     { value: PRIORITY_FILTERS.ALL, label: 'All priorities' },

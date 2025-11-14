@@ -1,4 +1,4 @@
-import { useToDos } from '../../../../hooks/useToDos';
+import { useFilters } from '../../../../hooks/useFilters';
 import { SORT_OPTIONS } from '../../../../utils/constants';
 import Select from '../../../../common/Select';
 
@@ -6,7 +6,7 @@ import Select from '../../../../common/Select';
  * SortSelect component - Sort selector
  */
 const SortSelect = () => {
-  const { sortBy, setSortBy } = useToDos();
+  const { sortBy, setSortBy } = useFilters();
 
   const options = [
     { value: SORT_OPTIONS.CREATED, label: 'Created date' },

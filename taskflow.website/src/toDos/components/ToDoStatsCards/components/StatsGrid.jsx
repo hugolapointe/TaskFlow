@@ -1,4 +1,5 @@
 import { useToDos } from '../../../../hooks/useToDos';
+import { useFilters } from '../../../../hooks/useFilters';
 import { STATUS_FILTERS, PRIORITY_FILTERS, SORT_OPTIONS } from '../../../../utils/constants';
 import Card from '../../../../common/Card';
 import { cn } from '../../../../utils/cn';
@@ -36,7 +37,8 @@ const StatsCard = ({ title, value, color, onClick, isActive }) => {
 };
 
 const StatsGrid = () => {
-  const { stats, statusFilter, priorityFilter, setStatusFilter, setPriorityFilter, setSortBy } = useToDos();
+  const { stats } = useToDos();
+  const { statusFilter, priorityFilter, setStatusFilter, setPriorityFilter, setSortBy } = useFilters();
 
   const resetToDefault = () => {
     setStatusFilter(STATUS_FILTERS.ALL);
