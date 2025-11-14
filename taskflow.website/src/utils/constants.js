@@ -20,11 +20,11 @@ export const SORT_OPTIONS = {
 
 // Success messages
 export const SUCCESS_MESSAGES = {
-    CREATE: 'Task created successfully! ??',
-    UPDATE: 'Task updated! ?',
-    COMPLETE: 'Task completed! ??',
-    ARCHIVE: 'Task archived! ??',
-    TOGGLE_PRIORITY: 'Priority updated! ?',
+    CREATE: 'Task created successfully!',
+    UPDATE: 'Task updated!',
+    COMPLETE: 'Task completed!',
+    ARCHIVE: 'Task archived!',
+    TOGGLE_PRIORITY: 'Priority updated!',
 };
 
 // Error messages

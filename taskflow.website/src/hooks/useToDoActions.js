@@ -2,11 +2,6 @@ import { useAsyncAction } from './useAsyncAction';
 import { useToDoState } from './useToDoState';
 import { updateToDo, toggleToDoPriority, markToDoAsCompleted, archiveToDo } from '../api/toDosApi';
 import { SUCCESS_MESSAGES, ERROR_MESSAGES } from '../utils/constants';
-import {
-    calculatePriorityDelta,
-    calculateCompletionDelta,
-    calculateArchiveDelta
-} from '../utils/todoHelpers';
 
 export const useToDoActions = (todo) => {
     const { execute, isLoading } = useAsyncAction();
@@ -19,11 +14,13 @@ export const useToDoActions = (todo) => {
 
                 updateTodo(todo.id, updatedToDo);
 
-                const statsDelta = calculatePriorityDelta(
-                    todo.isPriority,
-                    updatedToDo.isPriority
-                );
-                updateStats(statsDelta);
+                if (todo.isPriority !== updatedToDo.isPriority) {
+                    const delta = updatedToDo.isPriority ? 1 : -1;
+                    updateStats({
+                        priority: delta,
+                        nonPriority: -delta
+                    });
+                }
 
                 return updatedToDo;
             },
@@ -41,11 +38,11 @@ export const useToDoActions = (todo) => {
 
                 updateTodo(todo.id, updatedToDo);
 
-                const statsDelta = calculatePriorityDelta(
-                    todo.isPriority,
-                    updatedToDo.isPriority
-                );
-                updateStats(statsDelta);
+                const delta = updatedToDo.isPriority ? 1 : -1;
+                updateStats({
+                    priority: delta,
+                    nonPriority: -delta
+                });
 
                 return updatedToDo;
             },
@@ -64,8 +61,7 @@ export const useToDoActions = (todo) => {
 
                 updateTodo(todo.id, updatedToDo);
 
-                const statsDelta = calculateCompletionDelta();
-                updateStats(statsDelta);
+                updateStats({ completed: 1 });
 
                 return updatedToDo;
             },
@@ -88,8 +84,12 @@ export const useToDoActions = (todo) => {
 
                 removeTodo(todo.id);
 
-                const statsDelta = calculateArchiveDelta(todo);
-                updateStats(statsDelta);
+                updateStats({
+                    total: -1,
+                    priority: todo.isPriority ? -1 : 0,
+                    nonPriority: !todo.isPriority ? -1 : 0,
+                    completed: todo.isCompleted ? -1 : 0
+                });
             },
             {
                 successMessage: SUCCESS_MESSAGES.ARCHIVE,

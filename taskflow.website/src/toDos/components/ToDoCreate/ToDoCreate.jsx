@@ -3,7 +3,6 @@ import { useAsyncAction } from '../../../hooks/useAsyncAction';
 import { useToDoState } from '../../../hooks/useToDoState';
 import { createToDo } from '../../../api/toDosApi';
 import { SUCCESS_MESSAGES, ERROR_MESSAGES, VALIDATION_MESSAGES } from '../../../utils/constants';
-import { calculateCreationDelta } from '../../../utils/todoHelpers';
 import toast from 'react-hot-toast';
 import Card from '../../../common/surfaces/Card';
 import Flex from '../../../common/layout/Flex';
@@ -41,8 +40,12 @@ const ToDoCreate = () => {
 
                 addTodo(createdToDo);
 
-                const statsDelta = calculateCreationDelta(createdToDo);
-                updateStats(statsDelta);
+                updateStats({
+                    total: 1,
+                    priority: createdToDo.isPriority ? 1 : 0,
+                    nonPriority: !createdToDo.isPriority ? 1 : 0,
+                    completed: 0
+                });
 
                 return createdToDo;
             },

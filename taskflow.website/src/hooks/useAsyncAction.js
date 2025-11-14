@@ -29,6 +29,7 @@ export const useAsyncAction = () => {
             }
 
             return { success: true, data: result };
+
         } catch (error) {
             if (errorMessage) {
                 toast.error(errorMessage);

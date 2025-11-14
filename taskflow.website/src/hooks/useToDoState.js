@@ -1,18 +1,19 @@
 import { useToDos } from './useToDos';
+import { updateItemInList, removeItemFromList, prependItemToList } from '../utils/listHelpers';
 
 export const useToDoState = () => {
     const { setToDos, setStats } = useToDos();
 
     const updateTodo = (todoId, updatedTodo) => {
-        setToDos(prev => prev.map(t => t.id === todoId ? updatedTodo : t));
+        setToDos(prev => updateItemInList(prev, todoId, updatedTodo));
     };
 
     const removeTodo = (todoId) => {
-        setToDos(prev => prev.filter(t => t.id !== todoId));
+        setToDos(prev => removeItemFromList(prev, todoId));
     };
 
     const addTodo = (newTodo) => {
-        setToDos(prev => [newTodo, ...prev]);
+        setToDos(prev => prependItemToList(prev, newTodo));
     };
 
     const updateStats = (delta) => {
