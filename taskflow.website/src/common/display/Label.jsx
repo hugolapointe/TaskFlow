@@ -5,43 +5,43 @@ const Label = ({
     children,
     size = 'base',
     weight = 'normal',
-    color = 'primary',
+  color = 'primary',
     strikethrough = false,
     truncate = false,
-    className
+className
 }) => {
     const sizeMap = {
         xs: 'text-xs',
-        sm: 'text-sm',
+    sm: 'text-sm',
         base: 'text-base',
         lg: 'text-lg',
     };
 
     const weightMap = {
-        normal: 'font-normal',
-        medium: 'font-medium',
+   normal: 'font-normal',
+  medium: 'font-medium',
         semibold: 'font-semibold',
-        bold: 'font-bold',
+ bold: 'font-bold',
     };
 
     const colorMap = {
-        primary: 'text-slate-100',
-        secondary: 'text-slate-400',
-        muted: 'text-slate-500',
-        danger: 'text-red-400',
+        primary: 'text-[var(--color-text-primary)]',
+   secondary: 'text-[var(--color-text-muted)]',
+        muted: 'text-[var(--color-button-secondary-hover)]',
+        danger: 'text-[var(--color-icon-danger)]',
     };
 
     return (
         <span className={cn(
-            sizeMap[size],
+  sizeMap[size],
             weightMap[weight],
             colorMap[color],
-            strikethrough && 'line-through',
+   strikethrough && 'line-through',
             truncate && 'truncate',
-            className
+      className
         )}>
-            {children}
-        </span>
+         {children}
+ </span>
     );
 };
 

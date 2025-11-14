@@ -1,12 +1,12 @@
 import { useFilters } from '../../../context/FilterContext';
-import { PRIORITY_FILTERS } from '@utils/constants';
+import { PRIORITY_FILTERS } from '../../../constants/toDoConstants';
 import Select from '@common/inputs/Select';
 
 const PrioritySelect = () => {
     const { priorityFilter, setPriorityFilter } = useFilters();
 
-    const handleChange = (e) => {
-        setPriorityFilter(e.target.value);
+    const handleChange = (value) => {
+        setPriorityFilter(value);
     };
 
     return (

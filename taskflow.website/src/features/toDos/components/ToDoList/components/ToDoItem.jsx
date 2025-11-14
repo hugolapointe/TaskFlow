@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToDos } from '../../../context/ToDoContext';
-import { VALIDATION_MESSAGES } from '@utils/constants';
+import { VALIDATION_MESSAGES } from '../../../constants/toDoConstants';
 import { formatDate } from '@utils/date';
 import { cn } from '@utils/cn';
 import toast from 'react-hot-toast';
@@ -11,7 +11,7 @@ import ToDoItemCompleted from './ToDoItemCompleted';
 import ToDoItemAudit from './ToDoItemAudit';
 
 const ToDoItem = ({ todo }) => {
-    const { updateTodo, togglePriority, completeTodo, deleteTodo } = useToDos();
+    const { updateTodo, togglePriority, completeTodo, archiveTodo } = useToDos();
 
     const [description, setDescription] = useState(todo.description);
     const [dueDate, setDueDate] = useState(todo.dueDate ? formatDate(todo.dueDate) : '');
@@ -90,7 +90,7 @@ const ToDoItem = ({ todo }) => {
         e.stopPropagation();
 
         try {
-            await deleteTodo(todo.id, true);
+            await archiveTodo(todo.id);
             setIsSelected(false);
         } catch (error) {
             // Toast déjà affiché
@@ -99,10 +99,10 @@ const ToDoItem = ({ todo }) => {
 
     const cardClasses = cn(
         'transition-all cursor-pointer',
-        isSelected || isEditing ? 'ring-2 ring-blue-500' : '',
+        isSelected || isEditing ? 'ring-2 ring-[var(--color-input-focus-ring)]' : '',
         todo.isCompleted && 'opacity-60',
-        todo.isPriority && !todo.isCompleted && 'border-orange-500/30',
-        !todo.isPriority && !todo.isCompleted && 'border-blue-500/30'
+        todo.isPriority && !todo.isCompleted && 'border-[var(--color-priority)]/30',
+        !todo.isPriority && !todo.isCompleted && 'border-[var(--color-primary)]/30'
     );
 
     return (

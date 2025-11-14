@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToDos } from '../../context/ToDoContext';
-import { VALIDATION_MESSAGES } from '@utils/constants';
+import { VALIDATION_MESSAGES } from '../../constants/toDoConstants';
 import toast from 'react-hot-toast';
 import Card from '@common/surfaces/Card';
 import Flex from '@common/layout/Flex';

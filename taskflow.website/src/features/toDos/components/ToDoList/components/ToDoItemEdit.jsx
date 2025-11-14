@@ -7,8 +7,8 @@ import CancelButton from '@features/toDos/common/buttons/CancelButton';
 
 const ToDoItemEdit = ({ description, setDescription, dueDate, setDueDate, isPriority, onTogglePriority, onSave, onCancel, isSubmitting }) => {
     return (
-        <Flex responsive gap="2">
-      <Flex grow gap="3">
+        <Flex responsive gap="2" className="min-h-[40px]">
+      <Flex grow gap="3" align="center">
          <PriorityToggle
       isPriority={isPriority}
             onToggle={onTogglePriority}
@@ -23,14 +23,14 @@ const ToDoItemEdit = ({ description, setDescription, dueDate, setDueDate, isPrio
        />
   </Flex>
 
-   <Flex justify="between" gap="3">
+   <Flex justify="between" gap="3" align="center">
      <DueDatePicker
       value={dueDate}
        onChange={setDueDate}
    onClick={(e) => e.stopPropagation()}
      />
 
-    <Flex gap="3" align="center">
+    <Flex gap="3" align="center" shrink={false} className="w-[68px] justify-end">
    <SaveButton onClick={onSave} disabled={isSubmitting} />
   <CancelButton onClick={onCancel} disabled={isSubmitting} />
    </Flex>

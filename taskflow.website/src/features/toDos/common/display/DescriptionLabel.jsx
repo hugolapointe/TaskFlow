@@ -4,14 +4,14 @@ import Label from '@common/display/Label';
 const DescriptionLabel = ({ description, isCompleted = false }) => {
     return (
         <Label
-            size="sm"
+          size="base"
             weight="medium"
             color={isCompleted ? 'muted' : 'primary'}
-            strikethrough={isCompleted}
-            className="flex-1 min-w-0"
+strikethrough={isCompleted}
+            className="flex-1 min-w-0 py-2"
         >
-            {description}
-        </Label>
+   {description}
+    </Label>
     );
 };
 

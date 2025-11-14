@@ -6,10 +6,11 @@ import DescriptionLabel from '@features/toDos/common/display/DescriptionLabel';
 import DueDateLabel from '@features/toDos/common/display/DueDateLabel';
 import EditButton from '@features/toDos/common/buttons/EditButton';
 import CompleteButton from '@features/toDos/common/buttons/CompleteButton';
+
 const ToDoItemView = ({ todo, onEdit, onComplete, onTogglePriority, disabled }) => {
     return (
-        <Flex responsive gap="2">
-            <Flex grow gap="3">
+        <Flex responsive gap="2" className="min-h-[40px]">
+            <Flex grow gap="3" align="center">
                 <PriorityToggle
                     isPriority={todo.isPriority}
                     onToggle={onTogglePriority}
@@ -22,13 +23,13 @@ const ToDoItemView = ({ todo, onEdit, onComplete, onTogglePriority, disabled }) 
                 />
             </Flex>
 
-            <Flex justify="between" gap="3">
+            <Flex justify="between" gap="1" align="center">
                 <DueDateLabel
                     dueDate={todo.dueDate}
                     isCompleted={todo.isCompleted}
                 />
 
-                <Flex gap="3" align="center">
+                <Flex gap="3" align="center" shrink={false} className="w-[68px] justify-end">
                     <EditButton onClick={onEdit} />
                     {!todo.isCompleted && <CompleteButton onClick={onComplete} />}
                 </Flex>

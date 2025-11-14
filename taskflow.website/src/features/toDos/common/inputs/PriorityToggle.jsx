@@ -17,8 +17,8 @@ const PriorityToggle = ({ isPriority, onToggle, disabled = false }) => {
             className={cn(
                 'transition-colors',
                 isPriority
-                    ? 'text-orange-400 hover:text-orange-300'
-                    : 'text-slate-500 hover:text-slate-400',
+                    ? 'text-[var(--color-priority)] hover:text-[var(--color-priority-hover)]'
+                    : 'text-[var(--color-button-secondary-hover)] hover:text-[var(--color-text-muted)]',
                 disabled && 'opacity-50 cursor-not-allowed'
             )}
         >

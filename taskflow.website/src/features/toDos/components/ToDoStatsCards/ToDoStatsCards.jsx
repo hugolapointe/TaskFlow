@@ -1,6 +1,6 @@
 import { useToDos } from '../../context/ToDoContext';
 import { useFilters } from '../../context/FilterContext';
-import { STATUS_FILTERS, PRIORITY_FILTERS, SORT_OPTIONS } from '@utils/constants';
+import { STATUS_FILTERS, PRIORITY_FILTERS, SORT_OPTIONS } from '../../constants/toDoConstants';
 import Grid from '@common/layout/Grid';
 import StatsCard from './components/StatsCard';
 
@@ -73,7 +73,7 @@ const ToDoStatsCards = () => {
             <StatsCard
                 title="Priority"
                 value={stats.priority}
-                color="orange"
+                color="yellow"
                 onClick={handlePriorityClick}
                 isActive={isPriorityActive}
             />

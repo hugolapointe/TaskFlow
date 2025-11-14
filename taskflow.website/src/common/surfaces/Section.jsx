@@ -1,13 +1,6 @@
 import { cn } from '@utils/cn';
 
-/**
- * Section avec fond et bordures
- * Container générique pour grouper du contenu
- * 
- * @param {string} variant - 'default' | 'elevated' | 'outlined' (défaut: 'default')
- * @param {string} padding - 'none' | 'sm' | 'md' | 'lg' (défaut: 'md')
- * @param {string} className - Classes additionnelles
- */
+
 const Section = ({ children, variant = 'default', padding = 'md', className }) => {
     const variantClasses = {
         default: 'bg-slate-800/50 border border-slate-700',

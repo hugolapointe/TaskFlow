@@ -6,29 +6,29 @@ const IconButton = ({
     variant = 'primary',
     disabled = false,
     className,
-  onClick,
+    onClick,
     ...props
 }) => {
     const baseClasses = 'transition-colors disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variantClasses = {
-     primary: 'text-blue-400 hover:text-blue-300',
-        secondary: 'text-slate-400 hover:text-slate-300',
-  danger: 'text-red-400 hover:text-red-300',
-     success: 'text-green-400 hover:text-green-300',
+        primary: 'text-[var(--color-icon-primary)] hover:text-[var(--color-icon-primary-hover)]',
+        secondary: 'text-[var(--color-icon-secondary)] hover:text-[var(--color-icon-secondary-hover)]',
+        danger: 'text-[var(--color-icon-danger)] hover:text-[var(--color-icon-danger-hover)]',
+        success: 'text-[var(--color-icon-success)] hover:text-[var(--color-icon-success-hover)]',
     };
 
     return (
-    <button
-   type="button"
- aria-label={label}
-         className={cn(baseClasses, variantClasses[variant], className)}
-        disabled={disabled}
+        <button
+            type="button"
+            aria-label={label}
+            className={cn(baseClasses, variantClasses[variant], className)}
+            disabled={disabled}
             onClick={onClick}
-       {...props}
+            {...props}
         >
-   {icon}
-    </button>
+            {icon}
+        </button>
     );
 };
 

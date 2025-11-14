@@ -3,7 +3,7 @@ import PageContainer from '@common/layout/PageContainer';
 import Section from '@common/surfaces/Section';
 import SectionPanel from '@common/surfaces/SectionPanel';
 import Divider from '@common/surfaces/Divider';
-import LoadingWrapper from '@common/feedback/LoadingWrapper';
+import LoadingPanel from '@common/feedback/LoadingPanel';
 import { useToDos } from '../context/ToDoContext';
 import ToDoCreate from '../components/ToDoCreate/ToDoCreate';
 import ToDoSelectors from '../components/ToDoSelectors/ToDoSelectors';
@@ -20,9 +20,7 @@ const TodosPage = () => {
 
                 <Section padding="none">
                     <SectionPanel>
-                        <LoadingWrapper loading={loading}>
-                            <ToDoStatsCards />
-                        </LoadingWrapper>
+                        <ToDoStatsCards />
                     </SectionPanel>
 
                     <Divider />
@@ -34,9 +32,9 @@ const TodosPage = () => {
                     <Divider />
 
                     <SectionPanel>
-                        <LoadingWrapper loading={loading}>
+                        <LoadingPanel loading={loading}>
                             <ToDoList />
-                        </LoadingWrapper>
+                        </LoadingPanel>
                     </SectionPanel>
                 </Section>
             </PageContainer>
