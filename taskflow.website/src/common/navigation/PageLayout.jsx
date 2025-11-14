@@ -1,4 +1,5 @@
 import PageHeader from './PageHeader';
+import Stack from '../layout/Stack';
 
 const PageLayout = ({ children }) => {
     return (

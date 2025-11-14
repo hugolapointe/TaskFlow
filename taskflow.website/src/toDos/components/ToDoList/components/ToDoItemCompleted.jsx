@@ -1,44 +1,36 @@
-import { cn } from '../../../../utils/cn';
-import { formatDate, isOverdue } from '../../../../utils/date';
 import Flex from '../../../../common/layout/Flex';
-import Stack from '../../../../common/layout/Stack';
-import PriorityToggle from '../../../common/PriorityToggle';
-import EditButton from '../../../common/EditButton';
-import ArchiveButton from '../../../common/ArchiveButton';
+import PriorityToggle from '../../../common/inputs/PriorityToggle';
+import DescriptionLabel from '../../../common/display/DescriptionLabel';
+import DueDateLabel from '../../../common/display/DueDateLabel';
+import EditButton from '../../../common/buttons/EditButton';
+import ArchiveButton from '../../../common/buttons/ArchiveButton';
 
 const ToDoItemCompleted = ({ todo, onEdit, onArchive, onTogglePriority, disabled }) => {
-    const textClasses = 'text-slate-100 line-through text-slate-500';
-    const isTaskOverdue = isOverdue(todo.dueDate);
-
     return (
         <Flex responsive align="center" gap="2 sm:gap-3">
-            <Flex grow gap="3">
+            <Flex grow gap="3" align="center">
                 <PriorityToggle
                     isPriority={todo.isPriority}
                     onToggle={onTogglePriority}
                     disabled={true}
                 />
 
-                <div className="flex-1 min-w-0">
-                    <p className={cn('text-sm sm:text-base font-medium', textClasses)}>
-                        {todo.description}
-                    </p>
-                </div>
+                <DescriptionLabel
+                    description={todo.description}
+                    isCompleted={true}
+                />
             </Flex>
 
-            <Flex justify="between" className="sm:justify-end" gap="2 sm:gap-3">
-                <div className="flex-1 sm:w-44 sm:flex sm:justify-end">
-                    {todo.dueDate && (
-                        <p className={cn('text-xs sm:text-sm', isTaskOverdue ? 'text-red-400 font-medium' : 'text-slate-400')}>
-                            {formatDate(todo.dueDate)}
-                        </p>
-                    )}
-                </div>
+            <Flex justify="between" gap="3">
+                <DueDateLabel
+                    dueDate={todo.dueDate}
+                    isCompleted={true}
+                />
 
-                <Stack spacing="2">
+                <Flex gap="3" align="center">
                     <EditButton onClick={onEdit} />
                     <ArchiveButton onClick={onArchive} />
-                </Stack>
+                </Flex>
             </Flex>
         </Flex>
     );

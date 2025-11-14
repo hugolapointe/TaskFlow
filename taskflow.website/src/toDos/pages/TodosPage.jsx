@@ -1,6 +1,6 @@
-import PageLayout from '../../common/PageLayout';
+import PageLayout from '../../common/navigation/PageLayout';
 import { useToDos } from '../../hooks/useToDos';
-import Spinner from '../../common/Spinner';
+import Spinner from '../../common/feedback/Spinner';
 import ToDoCreate from '../components/ToDoCreate/ToDoCreate';
 import ToDoSelectors from '../components/ToDoSelectors/ToDoSelectors';
 import ToDoStatsCards from '../components/ToDoStatsCards/ToDoStatsCards';

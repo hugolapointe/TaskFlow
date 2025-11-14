@@ -21,7 +21,6 @@ public static class DbSeeder {
 
         if (daysOffset != 0) {
             todo.CreatedAt = DateTime.UtcNow.AddDays(daysOffset);
-            todo.UpdatedAt = todo.CreatedAt;
         }
 
         return todo;

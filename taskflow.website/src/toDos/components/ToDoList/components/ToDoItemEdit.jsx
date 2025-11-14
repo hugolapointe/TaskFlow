@@ -1,15 +1,14 @@
 import Flex from '../../../../common/layout/Flex';
-import Stack from '../../../../common/layout/Stack';
-import PriorityToggle from '../../../common/PriorityToggle';
-import DescriptionInput from '../../../common/DescriptionInput';
-import DueDatePicker from '../../../common/DueDatePicker';
-import SaveButton from '../../../common/SaveButton';
-import CancelButton from '../../../common/CancelButton';
+import PriorityToggle from '../../../common/inputs/PriorityToggle';
+import DescriptionInput from '../../../common/inputs/DescriptionInput';
+import DueDatePicker from '../../../common/inputs/DueDatePicker';
+import SaveButton from '../../../common/buttons/SaveButton';
+import CancelButton from '../../../common/buttons/CancelButton';
 
 const ToDoItemEdit = ({ description, setDescription, dueDate, setDueDate, isPriority, onTogglePriority, onSave, onCancel, isSubmitting }) => {
     return (
-        <Flex responsive align="center" gap="2 sm:gap-3">
-            <Flex gap="3" className="sm:contents">
+        <Flex responsive gap="2">
+            <Flex grow gap="3">
                 <PriorityToggle
                     isPriority={isPriority}
                     onToggle={onTogglePriority}
@@ -24,19 +23,18 @@ const ToDoItemEdit = ({ description, setDescription, dueDate, setDueDate, isPrio
                 />
             </Flex>
 
-            <Stack spacing="2">
+            <Flex justify="between" gap="3">
                 <DueDatePicker
                     value={dueDate}
                     onChange={setDueDate}
                     onClick={(e) => e.stopPropagation()}
-                    className="flex-1 sm:w-44"
                 />
 
-                <Stack spacing="2" shrink>
+                <Flex gap="3" align="center">
                     <SaveButton onClick={onSave} disabled={isSubmitting} />
                     <CancelButton onClick={onCancel} disabled={isSubmitting} />
-                </Stack>
-            </Stack>
+                </Flex>
+            </Flex>
         </Flex>
     );
 };
