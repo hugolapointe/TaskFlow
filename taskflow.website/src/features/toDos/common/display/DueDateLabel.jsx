@@ -1,5 +1,5 @@
-import { cn } from '../../../../utils/cn';
-import { formatDate, isOverdue } from '../../../../utils/date';
+import { cn } from '@utils/cn';
+import { formatDate, isOverdue } from '@utils/date';
 
 
 const DueDateLabel = ({ dueDate, isCompleted = false }) => {

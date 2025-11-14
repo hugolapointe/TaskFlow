@@ -1,13 +1,13 @@
-import TextInput from '../../../../common/inputs/TextInput';
+import TextInput from '@common/inputs/TextInput';
 
 const DueDatePicker = ({ value, onChange, onClick }) => {
     return (
-    <TextInput
-        type="date"
-        value={value}
-         onChange={(e) => onChange(e.target.value)}
-      onClick={onClick}
-    />
+        <TextInput
+            type="date"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            onClick={onClick}
+        />
     );
 };
 

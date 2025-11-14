@@ -1,9 +1,9 @@
-import Flex from '../../../../../common/layout/Flex';
-import PriorityToggle from '../../../common/inputs/PriorityToggle';
-import DescriptionInput from '../../../common/inputs/DescriptionInput';
-import DueDatePicker from '../../../common/inputs/DueDatePicker';
-import SaveButton from '../../../common/buttons/SaveButton';
-import CancelButton from '../../../common/buttons/CancelButton';
+import Flex from '@common/layout/Flex';
+import PriorityToggle from '@features/toDos/common/inputs/PriorityToggle';
+import DescriptionInput from '@features/toDos/common/inputs/DescriptionInput';
+import DueDatePicker from '@features/toDos/common/inputs/DueDatePicker';
+import SaveButton from '@features/toDos/common/buttons/SaveButton';
+import CancelButton from '@features/toDos/common/buttons/CancelButton';
 
 const ToDoItemEdit = ({ description, setDescription, dueDate, setDueDate, isPriority, onTogglePriority, onSave, onCancel, isSubmitting }) => {
     return (

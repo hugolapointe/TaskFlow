@@ -1,15 +1,15 @@
-import TextInput from '../../../../common/inputs/TextInput';
+import TextInput from '@common/inputs/TextInput';
 
 const DescriptionInput = ({ value, onChange, placeholder = "What needs to be done?", onClick }) => {
     return (
         <TextInput
-      type="text"
-       value={value}
+            type="text"
+            value={value}
             onChange={onChange}
-  onClick={onClick}
-         placeholder={placeholder}
-    inputClassName="flex-1"
-  />
+            onClick={onClick}
+            placeholder={placeholder}
+            inputClassName="flex-1"
+        />
     );
 };
 

@@ -13,6 +13,7 @@ const IconButton = ({
 
     const variantClasses = {
      primary: 'text-blue-400 hover:text-blue-300',
+        secondary: 'text-slate-400 hover:text-slate-300',
   danger: 'text-red-400 hover:text-red-300',
      success: 'text-green-400 hover:text-green-300',
     };

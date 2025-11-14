@@ -1,15 +1,15 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
-import IconButton from '../../../../common/buttons/IconButton';
 
 const PlusButton = ({ disabled = false }) => {
     return (
-        <IconButton
-       icon={<PlusIcon className="w-5 h-5" />}
-      label="Add Task"
- variant="primary"
-   type="submit"
-   disabled={disabled}
-   />
+        <button
+  type="submit"
+         disabled={disabled}
+ className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-label="Add Task"
+        >
+    <PlusIcon className="w-5 h-5" />
+        </button>
     );
 };
 

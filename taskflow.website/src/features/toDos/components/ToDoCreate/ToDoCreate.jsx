@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { useAsyncAction } from '../../../../hooks/useAsyncAction';
-import { useToDoState } from '../../../../hooks/useToDoState';
-import { createToDo } from '../../../../api/toDosApi';
-import { SUCCESS_MESSAGES, ERROR_MESSAGES, VALIDATION_MESSAGES } from '../../../../utils/constants';
+import { useAsyncAction } from '@hooks/useAsyncAction';
+import { useToDoState } from '@hooks/useToDoState';
+import { createToDo } from '@api/toDosApi';
+import { SUCCESS_MESSAGES, ERROR_MESSAGES, VALIDATION_MESSAGES } from '@utils/constants';
 import toast from 'react-hot-toast';
-import Card from '../../../../common/surfaces/Card';
-import Flex from '../../../../common/layout/Flex';
-import Stack from '../../../../common/layout/Stack';
-import PriorityToggle from '../../common/inputs/PriorityToggle';
-import DescriptionInput from '../../common/inputs/DescriptionInput';
-import DueDatePicker from '../../common/inputs/DueDatePicker';
-import PlusButton from '../../common/buttons/PlusButton';
+import Card from '@common/surfaces/Card';
+import Flex from '@common/layout/Flex';
+import Stack from '@common/layout/Stack';
+import PriorityToggle from '@features/toDos/common/inputs/PriorityToggle';
+import DescriptionInput from '@features/toDos/common/inputs/DescriptionInput';
+import DueDatePicker from '@features/toDos/common/inputs/DueDatePicker';
+import PlusButton from '@features/toDos/common/buttons/PlusButton';
 
 const ToDoCreate = () => {
     const { execute, isLoading } = useAsyncAction();

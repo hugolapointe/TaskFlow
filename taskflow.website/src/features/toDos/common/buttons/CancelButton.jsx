@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import IconButton from '../../../../common/buttons/IconButton';
+import IconButton from '@common/buttons/IconButton';
 
 const CancelButton = ({ onClick, disabled = false }) => {
     return (

@@ -1,6 +1,6 @@
-import Stack from '../../../../../common/layout/Stack';
-import Card from '../../../../../common/surfaces/Card';
-import { cn } from '../../../../../utils/cn';
+import Stack from '@common/layout/Stack';
+import Card from '@common/surfaces/Card';
+import { cn } from '@utils/cn';
 
 const StatsCard = ({ title, value, color, onClick, isActive }) => {
     const colorClasses = {

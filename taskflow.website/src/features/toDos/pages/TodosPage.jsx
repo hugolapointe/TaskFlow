@@ -1,53 +1,45 @@
-import PageLayout from '../../../common/navigation/PageLayout';
-import { useToDos } from '../../../hooks/useToDos';
-import Spinner from '../../../common/feedback/Spinner';
-import ToDoCreate from '../components/ToDoCreate/ToDoCreate';
-import ToDoSelectors from '../components/ToDoSelectors/ToDoSelectors';
-import ToDoStatsCards from '../components/ToDoStatsCards/ToDoStatsCards';
-import ToDoList from '../components/ToDoList/ToDoList';
+import PageLayout from '@common/navigation/PageLayout';
+import PageContainer from '@common/layout/PageContainer';
+import Section from '@common/surfaces/Section';
+import SectionPanel from '@common/surfaces/SectionPanel';
+import Divider from '@common/surfaces/Divider';
+import LoadingWrapper from '@common/feedback/LoadingWrapper';
+import { useToDos } from '@hooks/useToDos';
+import ToDoCreate from '@features/toDos/components/ToDoCreate/ToDoCreate';
+import ToDoSelectors from '@features/toDos/components/ToDoSelectors/ToDoSelectors';
+import ToDoStatsCards from '@features/toDos/components/ToDoStatsCards/ToDoStatsCards';
+import ToDoList from '@features/toDos/components/ToDoList/ToDoList';
 
-/**
- * Page principale des ToDos
- * Affiche la liste des tâches avec tous les composants
- */
 const TodosPage = () => {
     const { loading } = useToDos();
 
     return (
         <PageLayout>
-            <div className="space-y-4 sm:space-y-6">
-                {/* Formulaire de création */}
+            <PageContainer>
                 <ToDoCreate />
 
-                {/* Statistiques */}
-                <div className="bg-slate-800/50 rounded-lg border border-slate-700 overflow-hidden">
-                    <div className="p-4 sm:p-6 border-b border-slate-700/50 min-h-[120px] sm:min-h-[140px]">
-                        {loading ? (
-                            <div className="flex justify-center items-center h-20 sm:h-24">
-                                <Spinner size="md" />
-                            </div>
-                        ) : (
+                <Section padding="none">
+                    <SectionPanel>
+                        <LoadingWrapper loading={loading}>
                             <ToDoStatsCards />
-                        )}
-                    </div>
+                        </LoadingWrapper>
+                    </SectionPanel>
 
-                    {/* Filtres et tri */}
-                    <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-slate-700/50">
+                    <Divider />
+
+                    <SectionPanel>
                         <ToDoSelectors />
-                    </div>
+                    </SectionPanel>
 
-                    {/* Liste des tâches */}
-                    <div className="p-4 sm:p-6 min-h-[250px] sm:min-h-[300px]">
-                        {loading ? (
-                            <div className="flex justify-center items-center h-40 sm:h-48">
-                                <Spinner size="lg" />
-                            </div>
-                        ) : (
+                    <Divider />
+
+                    <SectionPanel>
+                        <LoadingWrapper loading={loading}>
                             <ToDoList />
-                        )}
-                    </div>
-                </div>
-            </div>
+                        </LoadingWrapper>
+                    </SectionPanel>
+                </Section>
+            </PageContainer>
         </PageLayout>
     );
 };

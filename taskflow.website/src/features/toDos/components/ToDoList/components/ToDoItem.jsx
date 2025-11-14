@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useToDoActions } from '../../../../../hooks/useToDoActions';
-import { VALIDATION_MESSAGES } from '../../../../../utils/constants';
-import { formatDate } from '../../../../../utils/date';
-import { cn } from '../../../../../utils/cn';
+import { useToDoActions } from '@hooks/useToDoActions';
+import { VALIDATION_MESSAGES } from '@utils/constants';
+import { formatDate } from '@utils/date';
+import { cn } from '@utils/cn';
 import toast from 'react-hot-toast';
-import Card from '../../../../../common/surfaces/Card';
+import Card from '@common/surfaces/Card';
 import ToDoItemView from './ToDoItemView';
 import ToDoItemEdit from './ToDoItemEdit';
 import ToDoItemCompleted from './ToDoItemCompleted';
@@ -18,7 +18,7 @@ const ToDoItem = ({ todo }) => {
     const [isPriority, setIsPriority] = useState(todo.isPriority);
 
     const [isSelected, setIsSelected] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleClick = () => {
         if (isEditing) return;
@@ -31,49 +31,49 @@ const ToDoItem = ({ todo }) => {
         setDescription(todo.description);
         setDueDate(todo.dueDate ? formatDate(todo.dueDate) : '');
         setIsPriority(todo.isPriority);
-};
+    };
 
     const handleCancelEdit = () => {
-      setIsEditing(false);
-   setDescription(todo.description);
- setDueDate(todo.dueDate ? formatDate(todo.dueDate) : '');
-   setIsPriority(todo.isPriority);
+        setIsEditing(false);
+        setDescription(todo.description);
+        setDueDate(todo.dueDate ? formatDate(todo.dueDate) : '');
+        setIsPriority(todo.isPriority);
     };
 
     const handleSave = async () => {
         if (!description.trim()) {
             toast.error(VALIDATION_MESSAGES.DESCRIPTION_REQUIRED);
-      return;
+            return;
         }
 
-    const updates = {
-description: description.trim(),
+        const updates = {
+            description: description.trim(),
             dueDate: dueDate || null,
- isPriority,
-      };
+            isPriority,
+        };
 
         const result = await handleUpdate(updates);
 
         if (result.success) {
-        setIsEditing(false);
- }
+            setIsEditing(false);
+        }
     };
 
     const onTogglePriority = async (e) => {
         e.stopPropagation();
 
         if (isEditing) {
-        setIsPriority(!isPriority);
-         return;
+            setIsPriority(!isPriority);
+            return;
         }
 
         await handleTogglePriority();
     };
 
     const onComplete = async (e) => {
-  e.stopPropagation();
+        e.stopPropagation();
 
-  const result = await handleComplete();
+        const result = await handleComplete();
 
         if (result.success) {
             setIsSelected(false);
@@ -86,55 +86,55 @@ description: description.trim(),
         const result = await handleArchive(true);
 
         if (result.success) {
-       setIsSelected(false);
-    }
+            setIsSelected(false);
+        }
     };
 
     const cardClasses = cn(
- 'transition-all cursor-pointer',
+        'transition-all cursor-pointer',
         isSelected || isEditing ? 'ring-2 ring-blue-500' : '',
         todo.isCompleted && 'opacity-60',
-   todo.isPriority && !todo.isCompleted && 'border-orange-500/30',
-    !todo.isPriority && !todo.isCompleted && 'border-blue-500/30'
+        todo.isPriority && !todo.isCompleted && 'border-orange-500/30',
+        !todo.isPriority && !todo.isCompleted && 'border-blue-500/30'
     );
 
     return (
-   <Card className={cardClasses} onClick={handleClick}>
+        <Card className={cardClasses} onClick={handleClick}>
             <div>
-       {isEditing ? (
-              <ToDoItemEdit
-    description={description}
-                  setDescription={setDescription}
-       dueDate={dueDate}
-               setDueDate={setDueDate}
-     isPriority={isPriority}
- onTogglePriority={onTogglePriority}
-       onSave={handleSave}
-               onCancel={handleCancelEdit}
-      isSubmitting={isLoading}
-      />
+                {isEditing ? (
+                    <ToDoItemEdit
+                        description={description}
+                        setDescription={setDescription}
+                        dueDate={dueDate}
+                        setDueDate={setDueDate}
+                        isPriority={isPriority}
+                        onTogglePriority={onTogglePriority}
+                        onSave={handleSave}
+                        onCancel={handleCancelEdit}
+                        isSubmitting={isLoading}
+                    />
                 ) : todo.isCompleted ? (
-    <ToDoItemCompleted
-  todo={todo}
-               onEdit={handleEdit}
-  onArchive={onArchive}
-             onTogglePriority={onTogglePriority}
-        disabled={isEditing}
-        />
-          ) : (
-            <ToDoItemView
-     todo={todo}
-       onEdit={handleEdit}
-  onComplete={onComplete}
-onTogglePriority={onTogglePriority}
-         disabled={isEditing}
-    />
-     )}
+                    <ToDoItemCompleted
+                        todo={todo}
+                        onEdit={handleEdit}
+                        onArchive={onArchive}
+                        onTogglePriority={onTogglePriority}
+                        disabled={isEditing}
+                    />
+                ) : (
+                    <ToDoItemView
+                        todo={todo}
+                        onEdit={handleEdit}
+                        onComplete={onComplete}
+                        onTogglePriority={onTogglePriority}
+                        disabled={isEditing}
+                    />
+                )}
 
-    {(isSelected || isEditing) && (
-     <ToDoItemAudit createdAt={todo.createdAt} updatedAt={todo.updatedAt} />
-     )}
-  </div>
+                {(isSelected || isEditing) && (
+                    <ToDoItemAudit createdAt={todo.createdAt} updatedAt={todo.updatedAt} />
+                )}
+            </div>
         </Card>
     );
 };

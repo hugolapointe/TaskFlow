@@ -1,5 +1,5 @@
-import { useToDos } from './useToDos';
-import { updateItemInList, removeItemFromList, prependItemToList } from '../utils/listHelpers';
+import { useToDos } from '@hooks/useToDos';
+import { updateItemInList, removeItemFromList, prependItemToList } from '@utils/listHelpers';
 
 export const useToDoState = () => {
     const { setToDos, setStats } = useToDos();

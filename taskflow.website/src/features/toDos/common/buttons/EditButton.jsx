@@ -1,15 +1,15 @@
 import { PencilIcon } from '@heroicons/react/24/outline';
-import IconButton from '../../../../common/buttons/IconButton';
+import IconButton from '@common/buttons/IconButton';
 
 const EditButton = ({ onClick, disabled = false }) => {
-  return (
+    return (
         <IconButton
-   icon={<PencilIcon className="w-5 h-5" />}
+            icon={<PencilIcon className="w-5 h-5" />}
             label="Edit"
- variant="primary"
-         onClick={onClick}
-          disabled={disabled}
-  />
+            variant="primary"
+            onClick={onClick}
+            disabled={disabled}
+        />
     );
 };
 

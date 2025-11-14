@@ -1,9 +1,9 @@
-import Flex from '../../../../../common/layout/Flex';
-import PriorityToggle from '../../../common/inputs/PriorityToggle';
-import DescriptionLabel from '../../../common/display/DescriptionLabel';
-import DueDateLabel from '../../../common/display/DueDateLabel';
-import EditButton from '../../../common/buttons/EditButton';
-import ArchiveButton from '../../../common/buttons/ArchiveButton';
+import Flex from '@common/layout/Flex';
+import PriorityToggle from '@features/toDos/common/inputs/PriorityToggle';
+import DescriptionLabel from '@features/toDos/common/display/DescriptionLabel';
+import DueDateLabel from '@features/toDos/common/display/DueDateLabel';
+import EditButton from '@features/toDos/common/buttons/EditButton';
+import ArchiveButton from '@features/toDos/common/buttons/ArchiveButton';
 
 const ToDoItemCompleted = ({ todo, onEdit, onArchive, onTogglePriority, disabled }) => {
  return (
