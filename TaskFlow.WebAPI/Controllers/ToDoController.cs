@@ -64,13 +64,6 @@ public class ToDoController(ToDoService service, ToDoRepository repository) : Co
         return Ok(response);
     }
 
-    [HttpGet("stats")]
-    [ProducesResponseType(typeof(ToDoStats), StatusCodes.Status200OK)]
-    public async Task<ActionResult<ToDoStats>> GetStats() {
-        var statistics = await repository.GetStatsAsync();
-        return Ok(statistics.AsStatsDto());
-    }
-
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(ToDoDetails), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useToDos } from '@hooks/useToDos';
-import { useFilters } from '@hooks/useFilters';
+import { useToDos } from '../../context/ToDoContext';
+import { useFilters } from '../../context/FilterContext';
 import { STATUS_FILTERS, PRIORITY_FILTERS, SORT_OPTIONS } from '@utils/constants';
 import ToDoItem from './components/ToDoItem';
 import EmptyState from './components/EmptyState';

@@ -1,5 +1,4 @@
-import axiosClient from './axiosClient';
-
+import axiosClient from '@api/axiosClient';
 
 export const getToDos = async () => {
     const response = await axiosClient.get('/todos');
@@ -7,12 +6,7 @@ export const getToDos = async () => {
 };
 
 export const getToDoById = async (id) => {
-    const response = await axiosClient.get(`/todos/${id}`);
-    return response.data;
-};
-
-export const getToDoStats = async () => {
-    const response = await axiosClient.get('/todos/stats');
+  const response = await axiosClient.get(`/todos/${id}`);
     return response.data;
 };
 

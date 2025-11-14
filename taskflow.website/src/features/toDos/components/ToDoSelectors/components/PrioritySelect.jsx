@@ -1,7 +1,6 @@
-import { useFilters } from '@hooks/useFilters';
+import { useFilters } from '../../../context/FilterContext';
 import { PRIORITY_FILTERS } from '@utils/constants';
 import Select from '@common/inputs/Select';
-
 
 const PrioritySelect = () => {
     const { priorityFilter, setPriorityFilter } = useFilters();

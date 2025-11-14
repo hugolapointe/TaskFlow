@@ -1,5 +1,5 @@
-import { useToDos } from '@hooks/useToDos';
-import { useFilters } from '@hooks/useFilters';
+import { useToDos } from '../../context/ToDoContext';
+import { useFilters } from '../../context/FilterContext';
 import { STATUS_FILTERS, PRIORITY_FILTERS, SORT_OPTIONS } from '@utils/constants';
 import Grid from '@common/layout/Grid';
 import StatsCard from './components/StatsCard';

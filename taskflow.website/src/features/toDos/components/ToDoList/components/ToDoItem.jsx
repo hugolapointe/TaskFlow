@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useToDoActions } from '@hooks/useToDoActions';
+import { useToDos } from '../../../context/ToDoContext';
 import { VALIDATION_MESSAGES } from '@utils/constants';
 import { formatDate } from '@utils/date';
 import { cn } from '@utils/cn';
@@ -11,7 +11,7 @@ import ToDoItemCompleted from './ToDoItemCompleted';
 import ToDoItemAudit from './ToDoItemAudit';
 
 const ToDoItem = ({ todo }) => {
-    const { handleUpdate, handleTogglePriority, handleComplete, handleArchive, isLoading } = useToDoActions(todo);
+    const { updateTodo, togglePriority, completeTodo, deleteTodo } = useToDos();
 
     const [description, setDescription] = useState(todo.description);
     const [dueDate, setDueDate] = useState(todo.dueDate ? formatDate(todo.dueDate) : '');
@@ -52,10 +52,11 @@ const ToDoItem = ({ todo }) => {
             isPriority,
         };
 
-        const result = await handleUpdate(updates);
-
-        if (result.success) {
+        try {
+            await updateTodo(todo.id, updates);
             setIsEditing(false);
+        } catch (error) {
+            // Toast déjà affiché par l'action
         }
     };
 
@@ -67,26 +68,32 @@ const ToDoItem = ({ todo }) => {
             return;
         }
 
-        await handleTogglePriority();
+        try {
+            await togglePriority(todo.id);
+        } catch (error) {
+            // Toast déjà affiché
+        }
     };
 
     const onComplete = async (e) => {
         e.stopPropagation();
 
-        const result = await handleComplete();
-
-        if (result.success) {
+        try {
+            await completeTodo(todo.id);
             setIsSelected(false);
+        } catch (error) {
+            // Toast déjà affiché
         }
     };
 
     const onArchive = async (e) => {
         e.stopPropagation();
 
-        const result = await handleArchive(true);
-
-        if (result.success) {
+        try {
+            await deleteTodo(todo.id, true);
             setIsSelected(false);
+        } catch (error) {
+            // Toast déjà affiché
         }
     };
 
@@ -111,7 +118,7 @@ const ToDoItem = ({ todo }) => {
                         onTogglePriority={onTogglePriority}
                         onSave={handleSave}
                         onCancel={handleCancelEdit}
-                        isSubmitting={isLoading}
+                        isSubmitting={false}
                     />
                 ) : todo.isCompleted ? (
                     <ToDoItemCompleted

@@ -1,5 +1,4 @@
 using TaskFlow.Core.Domain.Entities;
-using TaskFlow.Core.Domain.ValueObjects;
 using TaskFlow.WebAPI.Models.Common;
 using TaskFlow.WebAPI.Models.ToDo;
 
@@ -43,14 +42,5 @@ public static class ToDoMappers {
     public static ItemList<ToDoItem> AsItemList(this IEnumerable<ToDo> todos) {
         var items = todos.Select(t => t.AsItem()).ToList();
         return new(items, items.Count);
-    }
-
-    public static ToDoStats AsStatsDto(this ToDoStatistics statistics) {
-        return new ToDoStats(
-            Total: statistics.Total,
-            Priority: statistics.Priority,
-            NonPriority: statistics.NonPriority,
-            Completed: statistics.Completed
-        );
     }
 }

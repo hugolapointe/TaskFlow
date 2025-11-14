@@ -4,11 +4,11 @@ import Section from '@common/surfaces/Section';
 import SectionPanel from '@common/surfaces/SectionPanel';
 import Divider from '@common/surfaces/Divider';
 import LoadingWrapper from '@common/feedback/LoadingWrapper';
-import { useToDos } from '@hooks/useToDos';
-import ToDoCreate from '@features/toDos/components/ToDoCreate/ToDoCreate';
-import ToDoSelectors from '@features/toDos/components/ToDoSelectors/ToDoSelectors';
-import ToDoStatsCards from '@features/toDos/components/ToDoStatsCards/ToDoStatsCards';
-import ToDoList from '@features/toDos/components/ToDoList/ToDoList';
+import { useToDos } from '../context/ToDoContext';
+import ToDoCreate from '../components/ToDoCreate/ToDoCreate';
+import ToDoSelectors from '../components/ToDoSelectors/ToDoSelectors';
+import ToDoStatsCards from '../components/ToDoStatsCards/ToDoStatsCards';
+import ToDoList from '../components/ToDoList/ToDoList';
 
 const TodosPage = () => {
     const { loading } = useToDos();

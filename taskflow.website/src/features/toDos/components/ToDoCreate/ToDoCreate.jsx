@@ -1,20 +1,17 @@
 import { useState } from 'react';
-import { useAsyncAction } from '@hooks/useAsyncAction';
-import { useToDoState } from '@hooks/useToDoState';
-import { createToDo } from '@api/toDosApi';
-import { SUCCESS_MESSAGES, ERROR_MESSAGES, VALIDATION_MESSAGES } from '@utils/constants';
+import { useToDos } from '../../context/ToDoContext';
+import { VALIDATION_MESSAGES } from '@utils/constants';
 import toast from 'react-hot-toast';
 import Card from '@common/surfaces/Card';
 import Flex from '@common/layout/Flex';
 import Stack from '@common/layout/Stack';
-import PriorityToggle from '@features/toDos/common/inputs/PriorityToggle';
-import DescriptionInput from '@features/toDos/common/inputs/DescriptionInput';
-import DueDatePicker from '@features/toDos/common/inputs/DueDatePicker';
-import PlusButton from '@features/toDos/common/buttons/PlusButton';
+import PriorityToggle from '../../common/inputs/PriorityToggle';
+import DescriptionInput from '../../common/inputs/DescriptionInput';
+import DueDatePicker from '../../common/inputs/DueDatePicker';
+import PlusButton from '../../common/buttons/PlusButton';
 
 const ToDoCreate = () => {
-    const { execute, isLoading } = useAsyncAction();
-    const { addTodo, updateStats } = useToDoState();
+    const { addTodo } = useToDos();
     
 	const [description, setDescription] = useState('');
     const [dueDate, setDueDate] = useState('');
@@ -34,31 +31,13 @@ const ToDoCreate = () => {
             isPriority,
         };
 
-        const result = await execute(
-            async () => {
-                const createdToDo = await createToDo(newToDo);
-
-                addTodo(createdToDo);
-
-                updateStats({
-                    total: 1,
-                    priority: createdToDo.isPriority ? 1 : 0,
-                    nonPriority: !createdToDo.isPriority ? 1 : 0,
-                    completed: 0
-                });
-
-                return createdToDo;
-            },
-            {
-                successMessage: SUCCESS_MESSAGES.CREATE,
-                errorMessage: ERROR_MESSAGES.CREATE
-            }
-        );
-
-        if (result.success) {
+        try {
+            await addTodo(newToDo);
             setDescription('');
             setDueDate('');
             setIsPriority(false);
+        } catch (error) {
+            // Toast déjà affiché par l'action
         }
     };
 
@@ -84,7 +63,7 @@ const ToDoCreate = () => {
                             onChange={setDueDate}
                         />
 
-                        <PlusButton disabled={isLoading} />
+                        <PlusButton />
                     </Stack>
                 </Flex>
             </form>
