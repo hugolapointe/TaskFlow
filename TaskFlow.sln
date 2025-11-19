@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Core", "TaskFlow.C
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TaskFlow.WebSite", "TaskFlow.WebSite\TaskFlow.WebSite.esproj", "{B32B77FC-461C-54A6-E486-533F84F9B3DB}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "TaskFlow.TaskTracker", "TaskFlow.TaskTracker\TaskFlow.TaskTracker.esproj", "{AF28E4BB-7BC1-E63E-3CDF-BB724310A53B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{B32B77FC-461C-54A6-E486-533F84F9B3DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B32B77FC-461C-54A6-E486-533F84F9B3DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B32B77FC-461C-54A6-E486-533F84F9B3DB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AF28E4BB-7BC1-E63E-3CDF-BB724310A53B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF28E4BB-7BC1-E63E-3CDF-BB724310A53B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF28E4BB-7BC1-E63E-3CDF-BB724310A53B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AF28E4BB-7BC1-E63E-3CDF-BB724310A53B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF28E4BB-7BC1-E63E-3CDF-BB724310A53B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF28E4BB-7BC1-E63E-3CDF-BB724310A53B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
