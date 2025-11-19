@@ -10,7 +10,15 @@ export const TaskList = () => {
     return (
         <>
             {tasks && tasks.length > 0 ? (
-                tasks.map(task => <Task key={task.id} task={task} />)
+                tasks.map(task => (
+                    <Task
+                        key={task.id}
+                        id={task.id}
+                        description={task.description}
+                        dueDate={task.dueDate}
+                        isPriority={task.isPriority}
+                    />
+                ))
             ) : (
                 <p>No task to show.</p>
             )}
