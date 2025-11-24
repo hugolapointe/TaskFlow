@@ -36,6 +36,7 @@ const ToDoCreate = () => {
             setDescription('');
             setDueDate('');
             setIsPriority(false);
+
         } catch (error) {
             // Toast déjà affiché par l'action
         }
