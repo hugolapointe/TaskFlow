@@ -1,0 +1,22 @@
+namespace TaskFlow.Application.UseCases.Tasks.MarkCompleted;
+
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
+using TaskFlow.Application.Common.Exceptions;
+using TaskFlow.Application.Common.Interfaces;
+using TaskFlow.Application.Common.Models;
+
+public sealed class MarkCompletedHandler(ITaskRepository repository, IMapper mapper)
+ : IRequestHandler<MarkCompletedCommand, TaskDetails>
+{
+ public async Task<TaskDetails> Handle(MarkCompletedCommand request, CancellationToken cancellationToken)
+ {
+ var task = await repository.GetByIdAsync(request.TaskId, cancellationToken)
+ ?? throw new NotFoundException("Task", request.TaskId);
+ task.MarkCompleted();
+ await repository.UpdateAsync(task, cancellationToken);
+ return mapper.Map<TaskDetails>(task);
+ }
+}
