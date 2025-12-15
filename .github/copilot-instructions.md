@@ -12,7 +12,7 @@ No tutorials, no guides, no JSDoc, no docstrings, no unnecessary comments.
 
 4-space indentation.
 
-Max line length: 80 characters.
+Max line length: 120 characters.
 
 Clean, minimal, readable code.
 
@@ -25,6 +25,8 @@ No dead, unused, or “just in case” code.
 # Comments — MINIMAL ONLY
 
 Allowed only for complex logic or temporary workarounds.
+
+Small comments may be used to organize property groups (e.g., core properties, audit properties).
 
 All other comments are forbidden.
 
@@ -39,6 +41,10 @@ Allowed only if explicitly requested.
 Validate only what is strictly required.
 
 Catch errors only when essential to functionality.
+
+# Formatting — METHODS
+
+Insert a blank line before the body of each method.
 
 # Workflow — FIXED PROCEDURE
 
