@@ -10,6 +10,7 @@ using TaskFlow.Application.Common.Interfaces;
 using TaskFlow.Application.Common.Models;
 
 public sealed class GetUsersHandler(IUserRepository users) : IRequestHandler<GetUsersQuery, PaginatedResult<UserProfile>> {
+
     public async Task<PaginatedResult<UserProfile>> Handle(GetUsersQuery request, CancellationToken cancellationToken) {
         var paginatedUsers = await users.GetUsersAsync(request.Limit, request.AfterCursor, cancellationToken);
         var profiles = paginatedUsers.Items.Select(u => new UserProfile {

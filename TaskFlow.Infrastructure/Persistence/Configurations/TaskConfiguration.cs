@@ -10,12 +10,11 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
     {
         builder.HasKey(t => t.Id);
 
-        builder.Property(t => t.Title)
-            .IsRequired()
-            .HasMaxLength(200);
-
         builder.Property(t => t.Description)
+            .IsRequired()
             .HasMaxLength(1000);
+
+
 
         builder.Property(t => t.Status)
             .IsRequired()
@@ -29,14 +28,14 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
             .IsRequired();
 
         // Configure Tags as a value object owned by TaskAggregate
-        builder.OwnsMany(t => t.Tags, tagBuilder =>
+        builder.OwnsMany<Tag>(t => t.Tags, tagBuilder =>
         {
-            tagBuilder.WithOwner().HasForeignKey("TaskId"); // Foreign key back to TaskAggregate
-            tagBuilder.Property(t => t.Value)
+            tagBuilder.WithOwner().HasForeignKey("TaskId");
+            tagBuilder.Property(t => t.Name)
                 .HasMaxLength(50)
                 .IsRequired();
-            tagBuilder.HasKey("Id"); // Primary key for the owned entity
-            tagBuilder.ToTable("TaskTags"); // Table name for tags
+            tagBuilder.HasKey("Id");
+            tagBuilder.ToTable("TaskTags");
         });
 
         builder.Property(t => t.IsArchived)
@@ -49,8 +48,8 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
         builder.Property(t => t.CreatedBy)
             .IsRequired();
 
-        builder.Property(t => t.LastModifiedAt);
+        builder.Property(t => t.LastUpdatedAt);
 
-        builder.Property(t => t.LastModifiedBy);
+        builder.Property(t => t.LastUpdatedBy);
     }
 }

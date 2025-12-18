@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TaskFlow.Domain.Tasks;
 
 public sealed class TaskDetails {
+
     public Guid Id { get; init; }
     public Guid OwnerId { get; init; }
     public string Description { get; init; } = string.Empty;

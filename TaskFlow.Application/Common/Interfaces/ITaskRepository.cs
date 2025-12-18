@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TaskFlow.Domain.Tasks;
 
 public interface ITaskRepository {
+
     Task<TaskAggregate?> GetByIdAsync(Guid id, CancellationToken ct);
     Task AddAsync(TaskAggregate task, CancellationToken ct);
     Task UpdateAsync(TaskAggregate task, CancellationToken ct);

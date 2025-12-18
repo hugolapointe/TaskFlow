@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 
 public interface ICurrentUserService {
+
     Guid? UserId { get; }
     bool IsAuthenticated { get; }
     IReadOnlyCollection<string> Roles { get; }

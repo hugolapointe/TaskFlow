@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TaskFlow.Domain.Tasks;
 
 public sealed class TaskItem {
+
     public Guid Id { get; init; }
     public string Description { get; init; } = string.Empty;
     public TaskImportance Importance { get; init; }

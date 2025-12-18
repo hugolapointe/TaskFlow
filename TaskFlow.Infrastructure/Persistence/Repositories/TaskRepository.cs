@@ -31,7 +31,7 @@ public class TaskRepository : ITaskRepository {
     public async Task<IReadOnlyList<TaskAggregate>> GetByTagAsync(string tagName, int limit, string? afterCursor, CancellationToken ct) {
         IQueryable<TaskAggregate> query = _context.Tasks
             .Include(t => t.Tags)
-            .Where(t => t.Tags.Any(tag => tag.Value == tagName))
+            .Where(t => t.Tags.Any(tag => tag.Name == tagName))
             .OrderByDescending(t => t.CreatedAt); // Default ordering for pagination
 
         if (!string.IsNullOrEmpty(afterCursor) && Guid.TryParse(afterCursor, out Guid cursorId)) {
@@ -44,7 +44,7 @@ public class TaskRepository : ITaskRepository {
 
     public async Task<IReadOnlyList<TaskAggregate>> SearchAsync(
         string? search,
-        TaskStatus? status,
+        TaskFlow.Domain.Tasks.TaskStatus? status,
         TaskImportance? importance,
         DateTime? scheduledAt,
         TaskSortBy sortBy,
@@ -55,13 +55,21 @@ public class TaskRepository : ITaskRepository {
         IQueryable<TaskAggregate> query = _context.Tasks
             .Include(t => t.Tags);
 
-        if (!string.IsNullOrEmpty(search)) {
-            query = query.Where(t => t.Title.Contains(search) || t.Description!.Contains(search));
-        }
+                if (!string.IsNullOrEmpty(search))
 
-        if (status.HasValue) {
-            query = query.Where(t => t.Status == status.Value);
-        }
+                {
+
+                    query = query.Where(t => t.Description.Contains(search));
+
+                }
+
+                if (status.HasValue)
+
+                {
+
+                    query = query.Where(t => t.Status == (TaskFlow.Domain.Tasks.TaskStatus)status.Value);
+
+                }
 
         if (importance.HasValue) {
             query = query.Where(t => t.Importance == importance.Value);
@@ -72,12 +80,12 @@ public class TaskRepository : ITaskRepository {
         }
 
         // Apply sorting
-        query = sortBy switch {
-            TaskSortBy.CreatedAt => desc ? query.OrderByDescending(t => t.CreatedAt) : query.OrderBy(t => t.CreatedAt),
-            TaskSortBy.DueDate => desc ? query.OrderByDescending(t => t.DueDate) : query.OrderBy(t => t.DueDate),
-            TaskSortBy.Importance => desc ? query.OrderByDescending(t => t.Importance) : query.OrderBy(t => t.Importance),
-            _ => query.OrderByDescending(t => t.CreatedAt) // Default sort
-        };
+                query = sortBy switch
+                {
+                    TaskSortBy.CreatedAt => desc ? query.OrderByDescending(t => t.CreatedAt) : query.OrderBy(t => t.CreatedAt),
+                    TaskSortBy.DueDate => desc ? query.OrderByDescending(t => t.DueDate) : query.OrderBy(t => t.DueDate),
+                    _ => query.OrderByDescending(t => t.CreatedAt) // Default sort
+                };
 
         if (!string.IsNullOrEmpty(afterCursor) && Guid.TryParse(afterCursor, out Guid cursorId)) {
             // Assuming cursor is based on the primary key for simplicity

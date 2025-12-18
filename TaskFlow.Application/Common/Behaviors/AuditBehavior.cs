@@ -7,9 +7,13 @@ using MediatR;
 
 using TaskFlow.Application.Common.Interfaces;
 
-public sealed class AuditBehavior<TRequest, TResponse>(
-    ICurrentUserService currentUser
-) : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull {
+public sealed class AuditBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull {
+    // ICurrentUserService _currentUser;
+
+    // public AuditBehavior(ICurrentUserService currentUser)
+    // {
+    //     _currentUser = currentUser;
+    // }
 
     public async Task<TResponse> Handle(
     TRequest request,

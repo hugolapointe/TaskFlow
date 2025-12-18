@@ -66,9 +66,12 @@ public class UserRepository : IUserRepository
             .Take(limit)
             .ToListAsync(ct);
 
-        var nextCursor = users.LastOrDefault()?.Id.ToString();
         var hasNextPage = users.Count == limit;
 
-        return new PaginatedResult<ApplicationUser>(users, hasNextPage, nextCursor);
+        return new PaginatedResult<ApplicationUser>
+        {
+            Items = users,
+            NextCursor = hasNextPage ? users.LastOrDefault()?.Id.ToString() : null
+        };
     }
 }

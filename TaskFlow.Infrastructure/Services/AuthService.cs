@@ -43,7 +43,7 @@ public class AuthService : IAuthService
         var user = await _userManager.FindByEmailAsync(email);
         if (user == null)
         {
-            throw new NotFoundException($"User with email '{email}' not found.");
+            throw new NotFoundException("User", email);
         }
 
         var result = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
@@ -74,6 +74,10 @@ public class AuthService : IAuthService
         // 4. Creating JwtSecurityToken
         // 5. Writing the token
 
+        if (user.Email is null)
+        {
+            throw new InvalidOperationException("User email is null.");
+        }
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
