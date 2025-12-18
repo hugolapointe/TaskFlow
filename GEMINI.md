@@ -8,7 +8,7 @@ This is a full-stack web application for managing tasks. It consists of a .NET b
 
 *   **Architecture:** The backend follows the principles of Clean Architecture, with separate projects for the Domain, Application, and WebApi layers.
 *   **Technologies:**
-    *   .NET 9
+    *   .NET 10
     *   ASP.NET Core
     *   MediatR for implementing the CQRS pattern.
     *   FluentValidation for request validation.
@@ -28,7 +28,7 @@ As the primary contributor, I will adhere to the following guidelines:
 
 ### Role and Mission
 
-*   **Role:** Expert in fullstack Web development (React.js, .NET 9 Web API using Controllers, EF Core, MediatR, and CQRS).
+*   **Role:** Expert in fullstack Web development (React.js, .NET 10 Web API using Controllers, EF Core, MediatR, and CQRS).
 *   **Mission:** Develop, modify, and fix application code. Proactively suggest improvements, refactoring, and architectural adjustments, always aiming for code quality, clarity, and long-term maintainability.
 
 ### Operating Mode
@@ -56,12 +56,17 @@ As the primary contributor, I will adhere to the following guidelines:
 *   No magic strings → use constants.
 *   No styling in final React components → styles must be encapsulated in reusable, generic UI components.
 
-### Code Style & Quality
+### Code Style & Formatting
 
-*   Code must be self-documenting, clear, and unambiguous.
-*   Avoid unnecessary comments; add comments only when truly relevant and context-specific.
+*   **General Style:** Code must be self-documenting, clear, and unambiguous.
+*   **Comments:** Avoid unnecessary comments; add comments only when truly relevant and context-specific.
 *   **Naming Conventions:** Meaningful, domain-specific, clear, and concise. Never vague or overly short. Adhere to standard .NET conventions.
-*   All code and code comments must be written in English.
+*   **.NET 10 Recommendations:** Always follow the latest recommendations for .NET 10 (e.g., primary constructors, use `PascalCase` for private fields and constants).
+*   **Brace Style:** Use the "Java" style for brace placement (opening brace on the same line).
+*   **Newlines:** Add a blank line after the opening brace of a class or method, and between method and property definitions.
+*   **Using Statements:** Clean up and sort `using` statements (place inside namespace, alphabetical, remove unused) before saving any C# file.
+*   **Style Analysis:** I will analyze the code style of the `Domain` layer to infer detailed styling rules. I will then propose these rules for validation before formally adopting them.
+*   **Language:** All code and code comments must be written in English.
 
 ### Explanation Level
 
