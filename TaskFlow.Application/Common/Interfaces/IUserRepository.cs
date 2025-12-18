@@ -12,5 +12,5 @@ public interface IUserRepository
  Task<ApplicationUser?> GetByEmailAsync(string email, CancellationToken ct);
  Task AddAsync(ApplicationUser user, CancellationToken ct);
  Task UpdateAsync(ApplicationUser user, CancellationToken ct);
- Task<IReadOnlyList<ApplicationUser>> GetUsersAsync(int limit, string? afterCursor, CancellationToken ct);
+ Task<PaginatedResult<ApplicationUser>> GetUsersAsync(int limit, string? afterCursor, CancellationToken ct);
 }
