@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using TaskFlow.Application.Common.Interfaces;
 using TaskFlow.Domain.Users;
 using TaskFlow.Infrastructure.Persistence;
 using TaskFlow.Infrastructure.Persistence.Repositories;
 using TaskFlow.Infrastructure.Services;
 
-public static class DependencyInjection
-{
-    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
-    {
+public static class DependencyInjection {
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration) {
+
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services.AddDbContext<ApplicationDbContext>(options =>
