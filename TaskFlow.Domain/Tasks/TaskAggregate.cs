@@ -62,6 +62,7 @@ public partial class TaskAggregate : AggregateRoot<Guid>, IOwnedBy, IArchivable,
     Guid ownerId,
     DateTime? dueDate = null,
     DateTime? scheduledAt = null) {
+
         return new TaskAggregate(Guid.NewGuid(), description, importance, ownerId, dueDate, scheduledAt);
     }
 }
