@@ -24,7 +24,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // Apply entity configurations here
-        // builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }
