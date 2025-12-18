@@ -3,6 +3,7 @@ namespace TaskFlow.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaskFlow.Domain.Tasks;
+using TaskFlow.Domain.Users;
 
 public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
 {
@@ -14,18 +15,26 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
             .IsRequired()
             .HasMaxLength(1000);
 
-
-
         builder.Property(t => t.Status)
             .IsRequired()
-            .HasConversion<string>(); // Store enum as string
+            .HasConversion<string>();
 
         builder.Property(t => t.Importance)
             .IsRequired()
-            .HasConversion<string>(); // Store enum as string
+            .HasConversion<string>();
 
-        builder.Property(t => t.OwnerId)
-            .IsRequired();
+        builder.Property(t => t.DueDate);
+
+        builder.Property(t => t.ScheduledAt);
+
+        builder.Property(t => t.CompletedAt);
+
+        // Foreign key relationship with ApplicationUser
+        builder.HasOne<ApplicationUser>()
+            .WithMany()
+            .HasForeignKey(t => t.OwnerId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Configure Tags as a value object owned by TaskAggregate
         builder.OwnsMany<Tag>(t => t.Tags, tagBuilder =>
@@ -51,5 +60,8 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
         builder.Property(t => t.LastUpdatedAt);
 
         builder.Property(t => t.LastUpdatedBy);
+
+        // Ignore domain events - they are not persisted
+        builder.Ignore(t => t.Events);
     }
 }

@@ -12,12 +12,22 @@ using TaskFlow.Infrastructure.Persistence.Repositories;
 using TaskFlow.Infrastructure.Services;
 
 public static class DependencyInjection {
+
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration) {
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var useInMemoryDatabase = string.IsNullOrWhiteSpace(connectionString);
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionString));
+        if (useInMemoryDatabase) {
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("TaskFlowDb"));
+        }
+        else {
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
+        }
 
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<ITaskRepository, TaskRepository>();
@@ -26,7 +36,7 @@ public static class DependencyInjection {
         // Add Identity services
         services.AddIdentity<ApplicationUser, IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders(); // For password reset tokens etc.
+                .AddDefaultTokenProviders();
 
         // Register custom services
         services.AddScoped<IAuthService, AuthService>();
