@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet --version:*)",
+      "Bash(dotnet ef migrations add:*)",
+      "Bash(dotnet tool install:*)",
+      "Bash(dotnet tool list:*)",
+      "Bash(~/.dotnet/tools/dotnet-ef migrations add:*)",
+      "Bash(dotnet build:*)",
+      "Bash(ls:*)",
+      "Bash(dotnet tool update:*)",
+      "Bash(export PATH=\"$HOME/.dotnet/tools:$PATH\")",
+      "Bash(dotnet ef:*)",
+      "Bash(hostname.exe:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(timeout 5 bash -c \"cat < /dev/null > /dev/tcp/Hugo-EliteBook/1433\")",
+      "Bash(dotnet add:*)",
+      "Bash(export GIT_DISCOVERY_ACROSS_FILESYSTEM=1)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow status)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow status --short)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow log --oneline -5)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow diff TaskFlow.Infrastructure/DependencyInjection.cs)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow diff TaskFlow.Infrastructure/TaskFlow.Infrastructure.csproj)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow diff TaskFlow.Application/TaskFlow.Application.csproj)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow add TaskFlow.Infrastructure/DependencyInjection.cs TaskFlow.Infrastructure/Persistence/Configurations/TaskConfiguration.cs TaskFlow.Infrastructure/TaskFlow.Infrastructure.csproj TaskFlow.WebApi/appsettings.Development.json TaskFlow.Application/TaskFlow.Application.csproj TaskFlow.Domain/TaskFlow.Domain.csproj TaskFlow.WebApi/TaskFlow.WebApi.csproj)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow commit -m \"$(cat <<''EOF''\nfeat(db): Add InMemory database support and complete EF Core configuration\n\n- Configure InMemory database for development (WSL compatibility)\n- Add EF Core InMemory package to Infrastructure\n- Complete TaskConfiguration: FK relationship to ApplicationUser, ignore domain events\n- Update appsettings.Development.json with empty connection string for InMemory mode\n- Upgrade all projects to .NET 10\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git -C /mnt/d/Projects/TaskFlow push origin new-api)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow remote:*)",
+      "Bash(git config:*)",
+      "Bash(cat:*)",
+      "SlashCommand(/review)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow diff --cached --name-only --diff-filter=AM)",
+      "Bash(git -C /mnt/d/Projects/TaskFlow diff --name-only)"
+    ]
+  }
+}

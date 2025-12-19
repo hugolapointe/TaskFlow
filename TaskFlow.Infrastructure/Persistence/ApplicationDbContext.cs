@@ -8,10 +8,8 @@ using TaskFlow.Application.Common.Interfaces;
 using TaskFlow.Domain.Tasks;
 using TaskFlow.Domain.Users;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>, IUnitOfWork {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options) {
-    }
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>(options), IUnitOfWork {
 
     public DbSet<TaskAggregate> Tasks { get; init; }
 

@@ -13,21 +13,11 @@ using TaskFlow.Infrastructure.Services;
 
 public static class DependencyInjection {
 
+    private const string DatabaseName = "TaskFlowDb";
+
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration) {
 
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
-        var useInMemoryDatabase = string.IsNullOrWhiteSpace(connectionString);
-
-        if (useInMemoryDatabase) {
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("TaskFlowDb"));
-        }
-        else {
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
-        }
+        ConfigureDatabase(services, configuration);
 
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<ITaskRepository, TaskRepository>();
@@ -46,5 +36,37 @@ public static class DependencyInjection {
         services.AddHttpContextAccessor();
 
         return services;
+    }
+
+    private static void ConfigureDatabase(IServiceCollection services, IConfiguration configuration) {
+
+        var useInMemoryDatabase = configuration.GetValue<bool>("UseInMemoryDatabase");
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        if (useInMemoryDatabase) {
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase(DatabaseName));
+        }
+        else {
+
+            if (string.IsNullOrWhiteSpace(connectionString)) {
+
+                throw new InvalidOperationException(
+                    "Connection string 'DefaultConnection' is required when UseInMemoryDatabase is false. " +
+                    "Please configure a valid connection string in appsettings.json.");
+            }
+
+            if (!connectionString.Contains("Server=", StringComparison.OrdinalIgnoreCase) &&
+                !connectionString.Contains("Data Source=", StringComparison.OrdinalIgnoreCase)) {
+
+                throw new InvalidOperationException(
+                    "Connection string 'DefaultConnection' appears to be malformed. " +
+                    "It must contain either 'Server=' or 'Data Source='.");
+            }
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
+        }
     }
 }

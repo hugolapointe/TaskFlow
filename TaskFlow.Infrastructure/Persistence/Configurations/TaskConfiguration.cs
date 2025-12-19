@@ -17,11 +17,13 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
 
         builder.Property(t => t.Status)
             .IsRequired()
-            .HasConversion<string>();
+            .HasConversion<string>()
+            .HasMaxLength(20);
 
         builder.Property(t => t.Importance)
             .IsRequired()
-            .HasConversion<string>();
+            .HasConversion<string>()
+            .HasMaxLength(20);
 
         builder.Property(t => t.DueDate);
 
@@ -50,7 +52,6 @@ public class TaskConfiguration : IEntityTypeConfiguration<TaskAggregate>
         builder.Property(t => t.IsArchived)
             .HasDefaultValue(false);
 
-        // Audit properties
         builder.Property(t => t.CreatedAt)
             .IsRequired();
 

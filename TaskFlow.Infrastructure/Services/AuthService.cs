@@ -8,48 +8,32 @@ using Microsoft.AspNetCore.Identity;
 using TaskFlow.Application.Common.Interfaces;
 using TaskFlow.Application.Common.Exceptions;
 using TaskFlow.Domain.Users;
-using System.IdentityModel.Tokens.Jwt; // This is for JWT token generation. Need to add this as a package later
+using System.IdentityModel.Tokens.Jwt;
 
-public class AuthService : IAuthService
-{
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    // Potentially IJwtService for generating JWT tokens
+public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService {
 
-    public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
-
-    public async Task<Guid> SignUpAsync(string email, string name, string password, CancellationToken ct)
-    {
+    public async Task<Guid> SignUpAsync(string email, string name, string password, CancellationToken ct) {
         var user = new ApplicationUser { UserName = email, Email = email, Name = name };
-        var result = await _userManager.CreateAsync(user, password);
+        var result = await userManager.CreateAsync(user, password);
 
-        if (!result.Succeeded)
-        {
+        if (!result.Succeeded) {
             throw new InvalidOperationException($"Failed to create user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
         }
 
-        // Optionally sign in the user immediately after sign-up
-        await _signInManager.SignInAsync(user, isPersistent: false);
+        await signInManager.SignInAsync(user, isPersistent: false);
 
         return user.Id;
     }
 
-    public async Task<string> LogInAsync(string email, string password, CancellationToken ct)
-    {
-        var user = await _userManager.FindByEmailAsync(email);
-        if (user == null)
-        {
+    public async Task<string> LogInAsync(string email, string password, CancellationToken ct) {
+        var user = await userManager.FindByEmailAsync(email);
+        if (user == null) {
             throw new NotFoundException("User", email);
         }
 
-        var result = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
+        var result = await signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
 
-        if (!result.Succeeded)
-        {
+        if (!result.Succeeded) {
             throw new UnauthorizedAccessException("Invalid credentials.");
         }
 
@@ -60,13 +44,11 @@ public class AuthService : IAuthService
         return await GenerateJwtToken(user);
     }
 
-    public async Task LogOutAsync(CancellationToken ct)
-    {
-        await _signInManager.SignOutAsync();
+    public async Task LogOutAsync(CancellationToken ct) {
+        await signInManager.SignOutAsync();
     }
 
-    private async Task<string> GenerateJwtToken(ApplicationUser user)
-    {
+    private async Task<string> GenerateJwtToken(ApplicationUser user) {
         // This is a placeholder. Real JWT generation involves:
         // 1. Defining claims (e.g., UserId, Email, Roles)
         // 2. Creating SymmetricSecurityKey
@@ -74,8 +56,7 @@ public class AuthService : IAuthService
         // 4. Creating JwtSecurityToken
         // 5. Writing the token
 
-        if (user.Email is null)
-        {
+        if (user.Email is null) {
             throw new InvalidOperationException("User email is null.");
         }
         var claims = new List<Claim>

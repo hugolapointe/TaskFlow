@@ -2,20 +2,16 @@ namespace TaskFlow.Infrastructure.Services;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+
 using Microsoft.AspNetCore.Http;
+
 using TaskFlow.Application.Common.Interfaces;
 
-public class CurrentUserService : ICurrentUserService
-{
-    private readonly IHttpContextAccessor _httpContextAccessor;
+public class CurrentUserService(IHttpContextAccessor httpContextAccessor) : ICurrentUserService {
 
-    public CurrentUserService(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
-
-    private ClaimsPrincipal? User => _httpContextAccessor.HttpContext?.User;
+    private ClaimsPrincipal? User => httpContextAccessor.HttpContext?.User;
 
     public Guid? UserId => User?.FindFirstValue(ClaimTypes.NameIdentifier) is string id && Guid.TryParse(id, out Guid userId) ? userId : null;
 
